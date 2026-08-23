@@ -1,0 +1,1358 @@
+================================================================================
+# ÁRBOL DE LA SUITE DE DOCUMENTACIÓN Y PRODUCT BACKLOG (IS2)
+================================================================================
+
+honeymetrics-documentacion/
+├── README_backlog.md
+├── analisis_profundo_honeymetrics_v2.md
+├── context
+│   ├── contexto_documentacion.txt
+│   └── generate_context.py
+├── hu_sprint1_honeymetrics.md
+├── hu_sprint2_honeymetrics.md
+├── hu_sprint3_honeymetrics.md
+├── implementation_plan.md
+├── mockups
+│   ├── mockup_dashboard_kpis_1787432688887.jpg
+│   ├── mockup_gestion_usuarios_1787432740779.jpg
+│   ├── mockup_kill_chain_visualizer_1787432890592.jpg
+│   ├── mockup_landing_login_1787432668250.jpg
+│   ├── mockup_logs_historial_1787432807551.jpg
+│   ├── mockup_mapa_calor_1787432770813.jpg
+│   ├── mockup_patch_intelligence_1787432846482.jpg
+│   ├── mockup_perfil_2fa_1787432936474.jpg
+│   └── mockup_threat_intelligence_1787432712377.jpg
+└── product_backlog_honeymetrics.md
+
+
+================================================================================
+# CONTENIDO DE LOS DOCUMENTOS Y ESPECIFICACIONES
+================================================================================
+
+------------------------------------------------------------
+--- ARCHIVO: README_backlog.md ---
+------------------------------------------------------------
+
+# 📚 HoneyMetrics v2.0 — Índice Maestro de Requerimientos
+
+Este directorio contiene todos los entregables de requerimientos, diseño y análisis de HoneyMetrics, listos para ser entregados en la materia IS2.
+
+---
+
+## 📋 1. Product Backlog (Hoja 1)
+
+El archivo principal que lista todos los requerimientos funcionales, priorizados y valorados en puntos de historia.
+- **Archivo:** [`product_backlog_honeymetrics.md`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/product_backlog_honeymetrics.md)
+- **Novedades:** Incluye 70 ítems. Del 61 al 70 representan la visión de Inteligencia Artificial, Forense y Machine Learning descubiertos tras el análisis de datos reales.
+
+---
+
+## 📖 2. Historias de Usuario BDD (Hoja 2)
+
+Debido al volumen (~150 historias con criterios Dado/Cuando/Entonces), están divididas en 3 Sprints.
+Están formateadas usando listas simples de clave-valor. 
+> 💡 *Tip para Claude:* Puedes pasarle estos archivos `.md` a Claude y pedirle: "Conviérteme este texto estructurado en una tabla .xlsx de Excel donde las columnas sean Código, Actor, Puntos, Estado, Narrativa, y Criterios".
+
+- **Sprint 1 (Auth, Usuarios, Threat Intel):** [`hu_sprint1_honeymetrics.md`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/hu_sprint1_honeymetrics.md)
+- **Sprint 2 (Dashboards, Botnets, Heatmap):** [`hu_sprint2_honeymetrics.md`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/hu_sprint2_honeymetrics.md)
+- **Sprint 3 (Patch Intel, Forense, Compliance):** [`hu_sprint3_honeymetrics.md`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/hu_sprint3_honeymetrics.md)
+
+---
+
+## 🎨 3. Mockups de Diseño UI (IA)
+
+Generados con Inteligencia Artificial, siguiendo estrictamente el sistema de diseño del monolito original (Modo Oscuro `#0d1117`, Tarjetas `#161b22`, Acentos Dorados `#d4af37`):
+
+1. **M01 - Login / Landing (con Globo 3D):** [`mockup_landing_login_1787432668250.jpg`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/mockup_landing_login_1787432668250.jpg)
+2. **M02 - Dashboard KPIs (Gráficos Reales):** [`mockup_dashboard_kpis_1787432688887.jpg`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/mockup_dashboard_kpis_1787432688887.jpg)
+3. **M03 - Threat Intelligence Center (Blacklist v2):** [`mockup_threat_intelligence_1787432712377.jpg`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/mockup_threat_intelligence_1787432712377.jpg)
+4. **M04 - Gestión de Usuarios:** [`mockup_gestion_usuarios_1787432740779.jpg`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/mockup_gestion_usuarios_1787432740779.jpg)
+5. **M05 - Mapa de Calor Mundial:** [`mockup_mapa_calor_1787432770813.jpg`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/mockup_mapa_calor_1787432770813.jpg)
+6. **M06 - Historial Exportación Logs (JSONL):** [`mockup_logs_historial_1787432807551.jpg`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/mockup_logs_historial_1787432807551.jpg)
+7. **M07 - Patch Intelligence (Priorización CVE):** [`mockup_patch_intelligence_1787432846482.jpg`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/mockup_patch_intelligence_1787432846482.jpg)
+8. **M08 - Kill Chain Visualizer (MITRE ATT&CK):** [`mockup_kill_chain_visualizer_1787432890592.jpg`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/mockup_kill_chain_visualizer_1787432890592.jpg)
+9. **M09 - Perfil y Configuración 2FA:** [`mockup_perfil_2fa_1787432936474.jpg`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/mockup_perfil_2fa_1787432936474.jpg)
+
+---
+
+## 🧠 4. Artefactos de Respaldo Técnico
+- **Análisis de Datos Reales:** [`analisis_profundo_honeymetrics_v2.md`](file:///home/sebas/.gemini/antigravity/brain/9a2f044c-063e-4f4e-88ce-1affe523e2ca/analisis_profundo_honeymetrics_v2.md)
+
+
+------------------------------------------------------------
+--- ARCHIVO: implementation_plan.md ---
+------------------------------------------------------------
+
+# Plan: Hoja 2 — Historias de Usuario + Mockups (Monolito + Advanced AI/ML)
+
+## Descripción
+
+Este plan detalla la generación de las **Historias de Usuario (Hoja 2)** y **Mockups** para HoneyMetrics v2.0.
+Tras revisar el análisis estadístico exhaustivo de los 165.247 eventos reales de Wazuh, el plan se estructura en base a las **3 grandes evoluciones arquitectónicas (features "estrella")** que separan a HoneyMetrics de un simple visor de logs para convertirlo en una plataforma Enterprise:
+
+1. **Rediseño de la Blacklist → Threat Intelligence Center:** Incorporando Threat Score (0-100) y Detección de Enjambres/Botnets por CIDR.
+2. **Nuevo módulo correlacionado → Patch Intelligence Panel:** Cruzando CVEs críticos activos con FIM (File Integrity Monitoring) y Rootcheck con validación "Human-in-the-Loop".
+3. **Nueva pantalla interactiva → Kill Chain Visualizer:** Trazabilidad completa basada en MITRE ATT&CK.
+
+> [!TIP]
+> **Compatibilidad con Claude y Excel:** Todos los entregables `.md` (Hoja 2) utilizarán una estructura semántica estricta (Listas Markdown de clave-valor). Esto garantiza que si le pasas los archivos a Claude, él pueda convertirlos en un archivo `.xlsx` perfecto en un solo prompt, sin que las celdas o saltos de línea se rompan.
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Nuevas Características Agregadas al Backlog (PB-HM-61 a PB-HM-70):**
+> El backlog base original (SRS v6) no contemplaba los hallazgos reales. Se modificará `product_backlog_honeymetrics.md` para incluir:
+> - **Threat Intelligence Center:** Threat Score, Agrupación CIDR (Botnets) y categorización (🤖 Bot automatizado >100ev/h vs 🧑 Ataque dirigido).
+> - **Honeypot Advisor ("Esto buscan hoy"):** Análisis del diccionario SSH (ej. Odoo, Jenkins, Cripto).
+> - **Patch Intelligence:** Priorización de 1.915 CVEs activos correlacionados con intentos de ataque.
+> - **Human-in-the-Loop (HITL) para Rootcheck:** Flujo para que el analista valide si cambios en `/bin/passwd` son reales o falsos positivos.
+> - **Heatmap de Riesgo Predictivo:** Identificación de patrones temporales (ej. Picos recurrentes 11-12 UTC).
+> - **Kill Chain Visualizer:** Mapa visual del ataque.
+> - **Dashboard de Compliance:** CIS Benchmark (ej. score estancado en 45%) con planes de remediación accionables.
+
+> [!WARNING]
+> **Ajuste de Prioridades:**
+> - `PB-HM-54` y `PB-HM-55` (Hardware Monitor de Orange Pi) bajan a prioridad **Baja** para dar paso a las características de ML/IA que aportan valor de negocio real.
+
+---
+
+## Proposed Changes
+
+### Componente 1 — Expansión del Product Backlog (Hoja 1)
+#### [MODIFY] `product_backlog_honeymetrics.md`
+- Reescribir el archivo agregando las historias de IA/ML bajo los nuevos PBs.
+- Mantener la tabla Markdown estricta.
+
+### Componente 2 — Mockups de IA (Diseño Fiel al Monolito)
+Generaremos **9 Mockups PNG** inyectando los tokens extraídos del código de `global-theme.css` (GitHub Dark `#0d1117`, Cards `#161b22`, Dorado HoneyMetrics `#d4af37`). 
+*Nuevos mockups agregados por el análisis:*
+- `mockup_threat_intelligence.png` (Reemplaza a la vieja lista negra).
+- `mockup_patch_intelligence.png` (Cruce CVE + FIM).
+- `mockup_kill_chain_visualizer.png`.
+
+### Componente 3 — Hoja 2: Sprint 1 (Auth + Usuarios + Threat Intel)
+#### [NEW] `hu_sprint1_honeymetrics.md`
+- ~65 Historias de usuario estructuradas.
+- Flujos reales del monolito (animación globo 3D, OTP QR dinámico).
+- El CRUD básico de IPs evoluciona a la base del **Threat Intelligence Center**.
+
+### Componente 4 — Hoja 2: Sprint 2 (Dashboards + Botnets + Heatmap)
+#### [NEW] `hu_sprint2_honeymetrics.md`
+- ~70 Historias de usuario.
+- Integración del **Heatmap de Riesgo Predictivo**, **Clasificador Bot vs Humano**, y **Honeypot Advisor**. Gráficos Plotly reales mapeados a HUs.
+
+### Componente 5 — Hoja 2: Sprint 3 (Forense + Patch Intel + Compliance)
+#### [NEW] `hu_sprint3_honeymetrics.md`
+- ~60 Historias de usuario.
+- Desglose BDD del **Patch Intelligence**, el flujo **Human-in-the-Loop** para FIM/Rootcheck, **Kill Chain Visualizer** y **CIS Compliance Panel**.
+
+---
+
+## Verification Plan
+
+### Criterio de Éxito para Exportación a Excel
+Formato lineal para la Hoja 2:
+```markdown
+### HU: PB-HM-61.1
+- **Código PB Padre:** PB-HM-61
+- **Actor:** Analista SOC
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista SOC quiero ver el Threat Score dinámico de una IP atacante para priorizar la respuesta ante Amenazas Persistentes.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que accedo al Threat Intelligence Center...
+```
+
+### Orden de Ejecución en `/agent`
+1. Re-escribir `product_backlog_honeymetrics.md` (Integrando los nuevos PBs Enterprise).
+2. Generar 9 Mockups de UI (Incluyendo Kill Chain y Patch Intel).
+3. Generar `hu_sprint1_honeymetrics.md`.
+4. Generar `hu_sprint2_honeymetrics.md`.
+5. Generar `hu_sprint3_honeymetrics.md`.
+6. Generar `README_backlog.md` (Índice maestro).
+
+*Plan actualizado por Antigravity — Integrando Monolito, SRS v6 y Análisis Forense Real (165k eventos).*
+
+
+------------------------------------------------------------
+--- ARCHIVO: hu_sprint1_honeymetrics.md ---
+------------------------------------------------------------
+
+### HU: PB-HM-01.1
+- **Código PB Padre:** PB-HM-01
+- **Actor:** Visitante / Todos
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Visitante quiero visualizar la página de inicio pública para conocer el propósito de HoneyMetrics y acceder al sistema.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que ingreso a la raíz del sitio, Cuando carga la página, Entonces veo un navbar, sección hero, muestra de código y el mapa de calor ilustrativo.
+  - **Escenario 2:** Dado que estoy en la Landing Page, Cuando hago clic en el punto de acceso, Entonces soy redirigido al formulario de Login.
+
+### HU: PB-HM-02.1
+- **Código PB Padre:** PB-HM-02
+- **Actor:** Todos
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero iniciar sesión con credenciales institucionales para acceder al dashboard que me corresponde.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que tengo credenciales válidas, Cuando ingreso mi correo @ucundinamarca.edu.co y contraseña, Entonces el sistema identifica mi rol y me redirige al dashboard.
+  - **Escenario 2:** Dado que inicio sesión exitosamente, Cuando el sistema procesa mi petición, Entonces se me asigna un token JWT de sesión válido.
+
+### HU: PB-HM-03.1
+- **Código PB Padre:** PB-HM-03
+- **Actor:** Todos
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero que se bloquee el acceso por credenciales inválidas para mantener la seguridad de mi cuenta.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy en el formulario de Login, Cuando ingreso una contraseña incorrecta, Entonces el sistema rechaza el ingreso mostrando un mensaje genérico.
+  - **Escenario 2:** Dado que el sistema rechaza el acceso, Cuando muestra el mensaje de error, Entonces no revela si el fallo fue en el correo o en la contraseña (anti-enumeración).
+
+### HU: PB-HM-04.1
+- **Código PB Padre:** PB-HM-04
+- **Actor:** Todos
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero forzar el cambio de contraseña en mi primer inicio de sesión para asegurar que no quede con la clave temporal.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que es mi primer inicio de sesión, Cuando ingreso con mi contraseña temporal, Entonces soy redirigido obligatoriamente a la vista de cambio de clave antes del dashboard.
+  - **Escenario 2:** Dado que estoy en la vista forzada de cambio de clave, Cuando intento navegar a otra ruta, Entonces el sistema me bloquea hasta actualizar la contraseña.
+
+### HU: PB-HM-05.1
+- **Código PB Padre:** PB-HM-05
+- **Actor:** Todos
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario autenticado quiero cambiar mi contraseña voluntariamente para mantener la seguridad de mi cuenta actualizada.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy en mi perfil, Cuando solicito cambiar mi contraseña ingresando una que cumple los criterios de seguridad (min. 8, no común, alfanumérica), Entonces la contraseña se actualiza exitosamente verificando la clave actual.
+  - **Escenario 2:** Dado que ingreso una nueva contraseña, Cuando esta no cumple la longitud de 8 caracteres o no es alfanumérica, Entonces el sistema rechaza el cambio y me muestra un error.
+
+### HU: PB-HM-06.1
+- **Código PB Padre:** PB-HM-06
+- **Actor:** Todos
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero restablecer mi contraseña olvidada vía correo electrónico para recuperar el acceso a mi cuenta.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que olvidé mi contraseña, Cuando solicito restablecerla, Entonces recibo un enlace de uso único en mi correo institucional.
+  - **Escenario 2:** Dado que recibí el enlace, Cuando intento usarlo después de 24 horas, Entonces el sistema me indica que el token expiró y debo solicitar otro.
+
+### HU: PB-HM-07.1
+- **Código PB Padre:** PB-HM-07
+- **Actor:** Todos
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero autenticar con un segundo factor (2FA-OTP) condicional para agregar una capa extra de seguridad.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que ya configuré el 2FA en el pasado, Cuando ingreso usuario y contraseña correctamente, Entonces el sistema solo me pide el input de 6 dígitos OTP de forma condicional.
+  - **Escenario 2:** Dado que ingreso el código OTP correcto, Cuando el sistema lo valida con Google Authenticator, Entonces se completa el acceso al dashboard.
+
+### HU: PB-HM-08.1
+- **Código PB Padre:** PB-HM-08
+- **Actor:** Todos
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero vincular Google Authenticator en mi primer inicio para habilitar el 2FA.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que no he configurado 2FA previamente (OTP condicional), Cuando ingreso mis credenciales válidas, Entonces el sistema muestra un código QR para que configure el autenticador.
+  - **Escenario 2:** Dado que escaneo el código QR, Cuando ingreso el primer token OTP generado, Entonces el sistema verifica la sincronización y me concede el acceso.
+
+### HU: PB-HM-09.1
+- **Código PB Padre:** PB-HM-09
+- **Actor:** Todos
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero cerrar sesión de forma segura para evitar accesos no autorizados a mi cuenta.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy en el dashboard, Cuando hago clic en cerrar sesión, Entonces el sistema invalida el token JWT en el servidor y limpia el almacenamiento local.
+  - **Escenario 2:** Dado que cerré mi sesión, Cuando intento usar el botón "Atrás" del navegador, Entonces el sistema me bloquea y me exige iniciar sesión nuevamente.
+
+### HU: PB-HM-10.1
+- **Código PB Padre:** PB-HM-10
+- **Actor:** Todos
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero que el sistema me redireccione al login al acceder a rutas protegidas sin sesión para mantener el control de acceso.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que no tengo un token de sesión válido, Cuando intento acceder a una ruta protegida del dashboard, Entonces soy redirigido automáticamente al Login.
+  - **Escenario 2:** Dado que mi sesión expiró, Cuando intento recargar una vista del dashboard, Entonces el sistema detecta la falta de sesión y me envía al Login.
+
+### HU: PB-HM-11.1
+- **Código PB Padre:** PB-HM-11
+- **Actor:** Todos
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario sin rol asignado quiero ver un banner informativo para saber que debo solicitar permisos al Administrador.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que me autentico correctamente pero no tengo rol asignado, Cuando ingreso al sistema, Entonces veo una interfaz con acceso mínimo.
+  - **Escenario 2:** Dado que tengo acceso mínimo, Cuando reviso la pantalla, Entonces veo un banner informativo indicando que debo solicitar permisos al Administrador.
+
+### HU: PB-HM-12.1
+- **Código PB Padre:** PB-HM-12
+- **Actor:** Administrador
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero acceder al panel de administración profunda desde el frontend para gestionar el sistema sin escribir URLs manualmente.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que tengo el rol de Administrador, Cuando hago clic en el botón "Gestión", Entonces accedo directamente al panel de administración.
+  - **Escenario 2:** Dado que un usuario sin rol de Administrador intenta ver el botón "Gestión", Cuando carga el navbar, Entonces el botón no es visible.
+
+### HU: PB-HM-13.1
+- **Código PB Padre:** PB-HM-13
+- **Actor:** Administrador
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero crear un nuevo Rol/Grupo de permisos para estructurar mejor el control de accesos.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy en el panel de Gestión, Cuando creo un nuevo rol con nombre único y le asigno permisos, Entonces se registra exitosamente en el sistema.
+  - **Escenario 2:** Dado que intento crear un rol, Cuando uso un nombre que ya existe (ej. Consultor de Ciberseguridad repetido), Entonces el sistema muestra un error impidiendo la duplicidad.
+
+### HU: PB-HM-14.1
+- **Código PB Padre:** PB-HM-14
+- **Actor:** Administrador
+- **Puntos:** 1
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero consultar la lista de Roles/Grupos existentes para ver cómo están distribuidos los usuarios.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que accedo a la sección de Roles, Cuando carga la vista, Entonces veo todos los grupos registrados y la cantidad de usuarios asociados.
+  - **Escenario 2:** Dado que la lista se muestra en pantalla, Cuando reviso los registros, Entonces puedo identificar claramente el nombre de cada grupo existente.
+
+### HU: PB-HM-15.1
+- **Código PB Padre:** PB-HM-15
+- **Actor:** Administrador
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero modificar un Rol/Grupo de permisos existente para ajustar sus capacidades en el sistema.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que selecciono un rol existente, Cuando edito su nombre o permisos asignados, Entonces los cambios se guardan correctamente.
+  - **Escenario 2:** Dado que edité un rol, Cuando un usuario con ese rol realiza una acción, Entonces los nuevos permisos se aplican inmediatamente.
+
+### HU: PB-HM-16.1
+- **Código PB Padre:** PB-HM-16
+- **Actor:** Administrador
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero eliminar un Rol/Grupo de permisos para limpiar el sistema de grupos obsoletos.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que intento borrar un grupo, Cuando solicito la eliminación, Entonces el sistema me avisa cuántos usuarios quedarán sin rol.
+  - **Escenario 2:** Dado que veo la advertencia, Cuando confirmo explícitamente, Entonces el grupo se borra permanentemente del sistema.
+
+### HU: PB-HM-17.1
+- **Código PB Padre:** PB-HM-17
+- **Actor:** Administrador
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero crear la cuenta de un nuevo usuario para integrar nuevos miembros al equipo.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy en la gestión de usuarios, Cuando ingreso nombre, correo institucional, clave temporal y asigno un único rol (Directivo, Consultor o Analista), Entonces se registra el nuevo usuario.
+  - **Escenario 2:** Dado que intento crear un usuario, Cuando intento asignar más de un rol simultáneamente, Entonces el sistema me bloquea.
+
+### HU: PB-HM-18.1
+- **Código PB Padre:** PB-HM-18
+- **Actor:** Administrador
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero consultar la lista de usuarios registrados para administrar las cuentas activas e inactivas.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que accedo a la sección de Usuarios, Cuando visualizo la tabla, Entonces veo columnas de nombre, correo, rol y estado.
+  - **Escenario 2:** Dado que la tabla tiene registros, Cuando uso la barra de búsqueda o filtros, Entonces puedo encontrar un usuario específico rápidamente.
+
+### HU: PB-HM-19.1
+- **Código PB Padre:** PB-HM-19
+- **Actor:** Administrador
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero modificar los datos de un usuario existente para mantener su perfil actualizado sin recrear su cuenta.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que selecciono un usuario, Cuando edito su nombre, correo o rol asignado, Entonces la información se actualiza correctamente.
+  - **Escenario 2:** Dado que modifico el rol de un usuario, Cuando este intenta acceder, Entonces se le aplican sus nuevos permisos inmediatamente sin eliminar su cuenta.
+
+### HU: PB-HM-20.1
+- **Código PB Padre:** PB-HM-20
+- **Actor:** Administrador
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero eliminar un usuario del sistema de forma segura para remover el acceso de miembros que ya no pertenecen al equipo.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que solicito borrar un usuario, Cuando inicio el proceso, Entonces el sistema muestra un aviso detallado de los datos en cascada que serán eliminados.
+  - **Escenario 2:** Dado que reviso la advertencia, Cuando realizo la confirmación explícita, Entonces el usuario se elimina definitivamente y permanentemente.
+
+### HU: PB-HM-21.1
+- **Código PB Padre:** PB-HM-21
+- **Actor:** Todos
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero visualizar y editar mi perfil propio para personalizar mi experiencia y gestionar mi información.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que accedo a mi perfil, Cuando visualizo mis datos, Entonces puedo ver mi rol y cambiar mi zona horaria.
+  - **Escenario 2:** Dado que edito mis preferencias, Cuando subo una foto (JPG/PNG máx. 2MB) o cambio entre tema claro/oscuro, Entonces los cambios se guardan con éxito.
+
+### HU: PB-HM-22.1
+- **Código PB Padre:** PB-HM-22
+- **Actor:** Todos
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero consultar la Lista Negra de IPs para identificar las amenazas registradas de manera interactiva.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que accedo a la Lista Negra, Cuando se carga la tabla mediante Fetch DataTables (paginación del servidor a 10 por página), Entonces veo las columnas de IP, tipo, país, ataque y reportador.
+  - **Escenario 2:** Dado que visualizo los registros, Cuando reviso las IPs, Entonces veo insignias visuales de IP Pública/Privada, y si soy "Directivo de T.I.", veo candados visuales indicando solo lectura.
+
+### HU: PB-HM-23.1
+- **Código PB Padre:** PB-HM-23
+- **Actor:** Adm. / Consultor / Analista
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario Operativo quiero agregar una IP a la Lista Negra para reportar nuevas amenazas en el sistema con un modal.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que uso el formulario modal, Cuando ingreso una IP, Entonces el sistema valida su formato (IPv4/IPv6) y calcula la insignia de IP Pública/Privada.
+  - **Escenario 2:** Dado que completo el formulario correctamente, Cuando lo guardo, Entonces el sistema asigna automáticamente al usuario en sesión como creador del reporte.
+
+### HU: PB-HM-24.1
+- **Código PB Padre:** PB-HM-24
+- **Actor:** Adm. / Consultor / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario Operativo quiero eliminar una IP de la Lista Negra para corregir falsos positivos o remover IPs limpias.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy viendo la tabla de Lista Negra, Cuando selecciono la opción de remover en una fila, Entonces el sistema pide confirmación explícita para evitar borrados accidentales.
+  - **Escenario 2:** Dado que confirmo la eliminación, Cuando se procesa, Entonces el registro desaparece permanentemente de la lista de amenazas.
+
+### HU: PB-HM-25.1
+- **Código PB Padre:** PB-HM-25
+- **Actor:** Dir. T.I / Consultor / Analista
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Usuario quiero exportar la Lista Negra de IPs para analizar los datos en herramientas externas.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que la tabla contiene datos y tiene filtros activos, Cuando hago clic en exportar a CSV/Excel, Entonces el sistema descarga el archivo respetando dichos filtros.
+  - **Escenario 2:** Dado que la tabla no contiene ningún dato, Cuando intento exportar, Entonces el botón de exportación se encuentra deshabilitado visualmente.
+
+### HU: PB-HM-61.1
+- **Código PB Padre:** PB-HM-61
+- **Actor:** Analista
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero visualizar un Threat Score Dinámico para cada IP con el fin de evaluar su nivel de peligrosidad.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que observo una IP en el Threat Intelligence Center, Cuando el sistema procesa sus métricas, Entonces veo un Threat Score dinámico de 0 a 100 calculado por volumen, persistencia, tácticas y severidad.
+  - **Escenario 2:** Dado que la IP recibe su puntaje dinámico, Cuando rebasa los umbrales configurados, Entonces se le asigna una categoría adecuada (Ej. APT, Botnet, Scanner) visible en pantalla.
+
+
+------------------------------------------------------------
+--- ARCHIVO: hu_sprint2_honeymetrics.md ---
+------------------------------------------------------------
+
+# Historias de Usuario — Sprint 2 — HoneyMetrics v2.0
+
+### HU: PB-HM-26.1
+- **Código PB Padre:** PB-HM-26
+- **Actor:** Dir. T.I / Consultor / Analista / Adm.
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario autorizado quiero visualizar un dashboard principal con KPIs y cuatro gráficos dinámicos (torta para distribución por módulo, líneas spline para histórico, y barras horizontales max 40 caracteres para top agentes y eventos) para monitorear el estado general de las amenazas de forma rápida.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que ingreso al sistema exitosamente, Cuando navego a la vista de "Dashboard", Entonces el sistema carga por defecto los datos de los últimos 7 días.
+  - **Escenario 2:** Dado que visualizo los gráficos de "Top Agentes" y "Top Eventos", Cuando los nombres exceden la longitud permitida, Entonces el sistema recorta el texto a un máximo de 40 caracteres con puntos suspensivos en los gráficos de barras horizontales.
+
+### HU: PB-HM-27.1
+- **Código PB Padre:** PB-HM-27
+- **Actor:** Dir. T.I / Consultor / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero filtrar la información del dashboard principal por rangos de fechas definidos (ej. now-7d/d) para analizar períodos específicos de actividad maliciosa.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que me encuentro en el dashboard principal, Cuando selecciono el filtro de "Últimas 24 horas", Entonces todos los gráficos y KPIs se actualizan instantáneamente sin recargar la página completa.
+  - **Escenario 2:** Dado que selecciono un rango de fechas personalizado, Cuando el rango no tiene datos registrados, Entonces los gráficos muestran un mensaje amigable indicando "No hay datos disponibles para el rango seleccionado".
+
+### HU: PB-HM-28.1
+- **Código PB Padre:** PB-HM-28
+- **Actor:** Dir. T.I / Consultor / Analista
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero visualizar un Mapa de Calor Interactivo mundial para identificar visualmente de qué países provienen la mayor cantidad de ataques.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que ingreso a la sección del mapa de calor, Cuando el mapa termina de cargar, Entonces los países atacantes se pintan en una escala de verde a rojo dependiendo de la intensidad del ataque y se muestra una tabla de "Top 10 Países Atacantes".
+  - **Escenario 2:** Dado que observo el mapa interactivo, Cuando paso el cursor (hover) sobre un país en rojo, Entonces aparece un tooltip mostrando el nombre del país y la cantidad total de eventos registrados.
+
+### HU: PB-HM-29.1
+- **Código PB Padre:** PB-HM-29
+- **Actor:** Dir. T.I / Consultor / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero filtrar el Mapa de Calor por tipo de ataque específico para entender la distribución geográfica de amenazas particulares.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que visualizo el mapa de calor, Cuando selecciono "Fuerza Bruta SSH" en el selector de tipo de ataque, Entonces el mapa y el ranking se recalculan únicamente con los datos de ese tipo de ataque.
+  - **Escenario 2:** Dado que aplico un filtro de ataque, Cuando deseo ver todos los ataques nuevamente, Entonces puedo limpiar el filtro y el mapa restaura la vista global original.
+
+### HU: PB-HM-30.1
+- **Código PB Padre:** PB-HM-30
+- **Actor:** Dir. T.I / Consultor / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero ver un panel lateral con información detallada al seleccionar un país en el mapa de calor para obtener un desglose profundo de los incidentes provenientes de esa región.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que navego en el mapa de calor, Cuando hago clic izquierdo sobre "Rusia", Entonces se despliega un panel lateral derecho mostrando el top de IPs, los tipos de ataque y los periodos de actividad de ese país.
+  - **Escenario 2:** Dado que tengo el panel lateral abierto, Cuando hago clic fuera del panel o en el botón "Cerrar", Entonces el panel se oculta y puedo seguir interactuando con el mapa mundial completo.
+
+### HU: PB-HM-31.1
+- **Código PB Padre:** PB-HM-31
+- **Actor:** Dir. T.I / Analista
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario autorizado quiero acceder a una vista de Estadística Descriptiva (media, mediana, moda, varianza, histograma, boxplot) para analizar el comportamiento profundo de las variables numéricas de los ataques.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que ingreso a la vista de estadísticas descriptivas, Cuando selecciono la variable "Volumen de alertas por hora", Entonces se calculan la media, mediana, moda y desviación estándar, mostrándose un histograma de frecuencias.
+  - **Escenario 2:** Dado que analizo la misma variable, Cuando visualizo la sección inferior de la pantalla, Entonces observo un diagrama de caja (boxplot) que me permite identificar visualmente los valores atípicos (outliers).
+
+### HU: PB-HM-32.1
+- **Código PB Padre:** PB-HM-32
+- **Actor:** Dir. T.I / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero filtrar las estadísticas descriptivas por diferentes variables y rangos de fecha para personalizar mi análisis según el contexto temporal requerido.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy viendo estadísticas descriptivas, Cuando cambio la variable analizada a "Duración del ataque en segundos", Entonces todos los cálculos y gráficos se actualizan inmediatamente con la nueva variable.
+  - **Escenario 2:** Dado que ajusto el rango de fechas al "Mes pasado", Cuando se aplican los filtros, Entonces los resultados estadísticos reflejan de manera exacta únicamente los eventos que sucedieron en ese mes.
+
+### HU: PB-HM-33.1
+- **Código PB Padre:** PB-HM-33
+- **Actor:** Analista
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero poder descargar la tabla de métricas estadísticas en formato CSV para poder integrar estos resultados en reportes externos o presentaciones de gestión.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que he calculado medidas estadísticas, Cuando hago clic en el botón "Exportar CSV", Entonces el sistema genera y descarga un archivo CSV con las métricas actualmente mostradas en pantalla.
+  - **Escenario 2:** Dado que no hay datos para el rango seleccionado, Cuando intento exportar, Entonces el botón de exportación se encuentra deshabilitado para evitar archivos vacíos.
+
+### HU: PB-HM-34.1
+- **Código PB Padre:** PB-HM-34
+- **Actor:** Dir. T.I / Consultor / Analista
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario autorizado quiero visualizar una Matriz de Confusión interactiva (VP, FP, VN, FN) y sus indicadores derivados (Accuracy, Precision, Recall, F1) para evaluar la eficacia del modelo de IA en la detección.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que navego al panel de IA, Cuando el componente carga, Entonces visualizo una matriz 2x2 coloreada con tooltips explicativos que indican el significado de Verdaderos Positivos, Falsos Positivos, etc.
+  - **Escenario 2:** Dado que visualizo el panel de IA, Cuando observo la parte inferior, Entonces veo tarjetas (cards) resaltando los porcentajes de Accuracy, Precision, Recall y F1-Score calculados.
+
+### HU: PB-HM-35.1
+- **Código PB Padre:** PB-HM-35
+- **Actor:** Dir. T.I / Consultor / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero aplicar filtros temporales y de tipo de ataque a la Matriz de Confusión para medir cómo se comporta el modelo bajo condiciones y periodos específicos.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy en el dashboard de la Matriz de Confusión, Cuando aplico el filtro de ataque "Inyección SQL", Entonces la matriz y las métricas F1/Recall se recalculan solo con los intentos de SQLi.
+  - **Escenario 2:** Dado que selecciono un rango muy pequeño donde no hay predicciones, Cuando se actualiza la matriz, Entonces el sistema muestra 0 en las celdas y N/A en las métricas de rendimiento.
+
+### HU: PB-HM-36.1
+- **Código PB Padre:** PB-HM-36
+- **Actor:** Consultor / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero hacer clic en una celda de la Matriz de Confusión (ej. Falsos Positivos) para desplegar una tabla con el detalle de las predicciones fallidas y analizarlas.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que visualizo la matriz, Cuando hago clic en el cuadrante de "Falsos Positivos", Entonces se abre una tabla expansible listando la IP, fecha, clasificación real vs predicha y el % de confianza de la predicción.
+  - **Escenario 2:** Dado que estoy analizando la tabla de Falsos Positivos, Cuando termino la inspección, Entonces puedo contraer la tabla fácilmente pulsando el botón de cierre para volver a la matriz completa.
+
+### HU: PB-HM-37.1
+- **Código PB Padre:** PB-HM-37
+- **Actor:** Consultor / Analista
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero solicitar la extracción de logs crudos (JSONL) estableciendo un rango de fechas de manera que el sistema lo procese de forma asíncrona sin bloquear la interfaz.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy en el panel de extracción de logs, Cuando solicito logs de la última semana y hago clic en "Procesar", Entonces el sistema registra la petición con estado "Procesando" y me permite seguir navegando por la web.
+  - **Escenario 2:** Dado que la solicitud se encuentra en segundo plano, Cuando el backend termina de construir el archivo JSONL, Entonces el estado de la tarea cambia automáticamente a "Listo".
+
+### HU: PB-HM-38.1
+- **Código PB Padre:** PB-HM-38
+- **Actor:** Consultor / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero consultar el historial de mis solicitudes de descarga de logs en una tabla que se actualiza periódicamente para rastrear cuáles están listas.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que abro la vista de historial de descargas, Cuando el componente carga, Entonces muestra mis solicitudes pasadas con ID, rango, total de registros, estado y fecha de creación.
+  - **Escenario 2:** Dado que tengo una extracción en estado "Procesando", Cuando mantengo la vista abierta por 10 segundos, Entonces el frontend realiza un chequeo silencioso (polling/SSE) y actualiza el estado a "Listo" si finalizó, sin necesidad de refrescar el navegador.
+
+### HU: PB-HM-39.1
+- **Código PB Padre:** PB-HM-39
+- **Actor:** Consultor / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero descargar el archivo de logs JSONL una vez procesado haciendo clic en un botón para almacenarlo en mi equipo local.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que tengo una solicitud en estado "Listo", Cuando presiono el icono de descarga, Entonces el navegador inicia la descarga del archivo .jsonl y el sistema me advierte que expirará en 7 días.
+  - **Escenario 2:** Dado que una solicitud lleva más de 7 días lista, Cuando intento verla, Entonces el sistema la marca como "Expirada" y el botón de descarga desaparece, informando que el archivo fue eliminado para liberar espacio.
+
+### HU: PB-HM-40.1
+- **Código PB Padre:** PB-HM-40
+- **Actor:** Consultor / Analista
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero que las solicitudes de descarga de logs masivos (>50,000 registros) queden "Pendientes" y envíen una alerta al Administrador vía Telegram para obtener aprobación y evitar abusos del sistema.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que configuro una solicitud de logs que abarcará 75,000 eventos, Cuando hago clic en "Procesar", Entonces la UI me avisa que requiere aprobación manual y el estado inicial es "Pendiente de Aprobación".
+  - **Escenario 2:** Dado que la solicitud supera el umbral crítico, Cuando se registra en base de datos, Entonces el backend despacha instantáneamente un webhook o mensaje al bot de Telegram del Administrador informando de los detalles de la solicitud y botones interactivos.
+
+### HU: PB-HM-41.1
+- **Código PB Padre:** PB-HM-41
+- **Actor:** Administrador
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador quiero poder aprobar o rechazar desde Telegram (mediante el Bot interactivo) las descargas masivas de logs para tener control inmediato sin necesidad de entrar a la plataforma web.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que recibo el mensaje de alerta en Telegram, Cuando presiono el botón "Aprobar", Entonces el backend valida mi cuenta de Telegram, marca la solicitud como "Aprobada" y encola la generación asíncrona del archivo JSONL.
+  - **Escenario 2:** Dado que determino que la petición es sospechosa o muy costosa computacionalmente, Cuando presiono "Rechazar" en Telegram, Entonces el estado en el frontend cambia a "Rechazada" y la descarga se bloquea.
+
+### HU: PB-HM-42.1
+- **Código PB Padre:** PB-HM-42
+- **Actor:** Analista
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero generar client-side un Diccionario de Datos en PDF con el esquema de campos Wazuh para tener documentación estandarizada lista para presentar o para entrenar modelos.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que estoy en la vista de Logs, Cuando hago clic en "Generar Diccionario PDF", Entonces la aplicación web (React) construye en local el documento utilizando jsPDF + AutoTable y lanza la descarga de forma rápida.
+  - **Escenario 2:** Dado que abro el PDF descargado, Cuando reviso el contenido, Entonces el documento incluye logotipo de HoneyMetrics, marca de tiempo de la generación, y una tabla describiendo el atributo, tipo de dato y descripción del modelo Wazuh.
+
+### HU: PB-HM-43.1
+- **Código PB Padre:** PB-HM-43
+- **Actor:** Dir. T.I / Consultor
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero generar informes ejecutivos en CSV o Excel de manera asíncrona, con barra de progreso, para poder consolidar el resumen gerencial de incidentes de un periodo dado.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que selecciono un informe de tipo "Ejecutivo", Cuando pulso en "Generar Reporte", Entonces se muestra una barra de progreso que consulta el estado asíncrono y, al finalizar, me entrega el .xlsx listo.
+  - **Escenario 2:** Dado que la solicitud del reporte implica un archivo extremadamente pesado, Cuando el servidor finaliza la construcción, Entonces el peso final no debe superar el límite duro configurado de 50 MB, informando en caso de truncamiento.
+
+### HU: PB-HM-44.1
+- **Código PB Padre:** PB-HM-44
+- **Actor:** Consultor
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como Consultor quiero recibir alertas emergentes en pantalla cada vez que el sistema detecte anomalías críticas (ej. pico >300%) para poder actuar inmediatamente frente a ráfagas de ataques.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que el backend identifica un pico anómalo de severidad máxima, Cuando el frontend recibe el evento (via WebSocket/SSE), Entonces lanza un pop-up rojo persistente en mi pantalla con resumen y los botones "Ver Detalle" y "Descartar".
+  - **Escenario 2:** Dado que hay múltiples anomalías sucesivas, Cuando el sistema lanza alertas, Entonces se aplica una política de "Debounce" que asegura que no haya más de un pop-up crítico cada 30 segundos para evitar saturación de la interfaz (alert fatigue).
+
+### HU: PB-HM-45.1
+- **Código PB Padre:** PB-HM-45
+- **Actor:** Consultor
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Consultor quiero tener un panel lateral con el historial de alertas críticas recibidas en las últimas 24 horas para revisar eventos que pude haber descartado o ignorado rápidamente.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que abro el Drawer/Panel lateral de notificaciones, Cuando cargo la vista, Entonces veo la lista de anomalías del último día con estado claro (Atendida, Descartada, Ignorada).
+  - **Escenario 2:** Dado que busco una alerta del día anterior, Cuando han pasado más de 24 horas, Entonces dicha alerta ya no figura en el panel lateral de "alertas rápidas" (aunque siga registrada en base de datos).
+
+### HU: PB-HM-46.1
+- **Código PB Padre:** PB-HM-46
+- **Actor:** Consultor
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Consultor quiero hacer clic en "Ver Detalle" de una alerta para acceder a la radiografía completa del evento y tomar decisiones operativas.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que interactúo con una alerta crítica, Cuando presiono "Ver Detalle", Entonces se abre un modal con el historial de la IP, gráfico temporal y tabla de los eventos específicos involucrados.
+  - **Escenario 2:** Dado que analizo el detalle del evento en el modal, Cuando observo la parte inferior, Entonces el sistema me expone los botones rápidos "Agregar a Lista Negra" y "Marcar como Falso Positivo".
+
+### HU: PB-HM-47.1
+- **Código PB Padre:** PB-HM-47
+- **Actor:** Consultor
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Consultor quiero marcar una alerta como Falso Positivo desde su panel de detalle para que el modelo de IA se reentrene y deje de catalogar tráfico benigno similar como ataque.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que verifico que la IP de la alerta es un escáner interno autorizado, Cuando hago clic en "Marcar como Falso Positivo", Entonces el sistema pide confirmación y actualiza el estado de la alerta.
+  - **Escenario 2:** Dado que se marca como Falso Positivo, Cuando la base de datos se actualiza, Entonces el registro es etiquetado internamente (flag) de manera que se excluya de métricas de riesgo y se envíe a la cola de "Dataset para Reentrenamiento".
+
+### HU: PB-HM-62.1
+- **Código PB Padre:** PB-HM-62
+- **Actor:** Analista
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero que el sistema me sugiera el bloqueo de rangos CIDR (/24) tras identificar subredes (Botnets) que atacan coordinadamente para mitigar ataques distribuidos masivos más eficientemente.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que el sistema analiza tráfico en tiempo real, Cuando detecta múltiples IPs de la misma subred (ej. 192.168.1.x/24) atacando el honeypot simultáneamente, Entonces genera una recomendación visual de bloqueo CIDR.
+  - **Escenario 2:** Dado que consulto la sugerencia, Cuando reviso el detalle, Entonces veo el volumen consolidado del bloque completo en lugar de ver registros aislados IP por IP.
+
+### HU: PB-HM-63.1
+- **Código PB Padre:** PB-HM-63
+- **Actor:** Analista
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero un clasificador de comportamiento que distinga entre Bots automatizados y Humanos manuales utilizando su velocidad de eventos para priorizar amenazas dirigidas.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que una IP dispara más de 100 eventos maliciosos por hora en el honeypot, Cuando es analizada por el sistema, Entonces se etiqueta automáticamente como "Bot".
+  - **Escenario 2:** Dado que una IP intenta accesos espaciados y lentos, Cuando la velocidad es inferior a los umbrales de ataque automatizado, Entonces el sistema la etiqueta como "Humano" y aumenta su prioridad en el dashboard de revisiones manuales.
+
+### HU: PB-HM-70.1
+- **Código PB Padre:** PB-HM-70
+- **Actor:** Todos
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero visualizar un Heatmap de Riesgo Predictivo (días vs horas) para anticipar los horarios de mayor exposición y preparar defensas o ventanas de mantenimiento.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que ingreso al dashboard, Cuando visualizo la sección del Heatmap Predictivo, Entonces veo una cuadrícula que compara los 7 días de la semana contra las 24 horas del día.
+  - **Escenario 2:** Dado que el heatmap carga la historia, Cuando observo celdas coloreadas de rojo oscuro (Ej. Lunes de 11:00 a 12:00 UTC), Entonces interpreto que, según el patrón histórico, ese bloque de tiempo presentará el mayor volumen probable de ataques en el futuro.
+
+
+------------------------------------------------------------
+--- ARCHIVO: analisis_profundo_honeymetrics_v2.md ---
+------------------------------------------------------------
+
+# 🔬 Análisis Exhaustivo de Datos Reales — HoneyMetrics v2.0
+
+> **Base de datos analizada:** 165.247 eventos únicos | 5 meses consecutivos (Abril — Agosto 2026)  
+> **Fuentes:** 22 archivos JSONL + API Wazuh Indexer en tiempo real  
+> **Agentes monitoreados:** `srvotsub1`, `svm100`, `sprox1`, `wazuh.manager`
+
+---
+
+## 📊 Tabla Maestra: Lo que encontramos vs lo que podemos hacer
+
+| Dimensión Analizada | Hallazgo Clave | Feature para v2.0 |
+|---|---|---|
+| Horario de ataques | Pico consistente 11-12 UTC todos los meses | Heatmap predictivo + alertas proactivas |
+| Rotación de IPs | 9 IPs vuelven en 2-3 meses distintos | Threat Score dinámico + "Enemigos Recurrentes" |
+| Diccionario SSH | 1.412 usuarios distintos probados, categorizados | Honeypot Advisor: "esto buscan hoy" |
+| Botnets por subred | 4 subredes con 6-13 IPs coordinadas | Bloqueo automático por rango CIDR |
+| Velocidad de ataque | Hasta 6.315 eventos/hora (un bot solo) | Detector de bots vs humanos real-time |
+| CVEs | 2.516 CVEs únicos, 6.017 activos, 1.721 críticos | Panel de Priorización de Parches |
+| FIM | 441 archivos con cambios, 50+ en rutas críticas | Timeline de integridad del sistema |
+| Rootcheck | 1.139 detecciones de posibles troyanos en `/bin/passwd`, `/usr/bin/chsh` | Monitor de Troyanos con veredicto humano |
+| MITRE ATT&CK | 8 tácticas mapeadas, la cadena de ataque real visible | Kill Chain Visualizer |
+| SCA / Compliance | Score 45-50% en todos los agentes (reprobado CIS Benchmark) | Panel de Cumplimiento con plan de acción |
+| Software (dpkg) | 156 paquetes con cambios, kernel actualizado 5 veces | Línea de tiempo de cambios de software |
+| Correlación | Los meses de más CVEs activos NO coinciden con más ataques | Insight: las oleadas SSH son oportunistas, no dirigidas |
+| Solo 49 reglas | De miles posibles en Wazuh, solo 49 se dispararon | Simplificación de UI: mostrar solo lo relevante |
+
+---
+
+## 1. 🕐 El Horario del Crimen: El Sistema Nunca Duerme
+
+### Hallazgo real
+Los ataques no son aleatorios. Cada mes sin excepción, el pico está en **11:00-12:00 UTC**:
+- Abril: pico a las 11h con 11.987 eventos
+- Mayo, Junio, Julio: pico a las 12h con 1.805 a 3.637 eventos
+
+Los ataques bajan drásticamente de 18:00 a 00:00 UTC. Esto corresponde a zonas horarias de Europa del Este / Asia Central (donde el mediodía UTC es hora de trabajo).
+
+### Por día de la semana (sorprendente)
+- **Lunes: 40.062 eventos** (el día más atacado)
+- Sábado/Domingo: ~13.000-9.000 (los bots también "descansan" más)
+- Esto sugiere infraestructura botnet administrada por humanos que la activan durante la semana laboral.
+
+### Feature v2.0: **Heatmap de Riesgo Temporal**
+- Un calendario de calor (como GitHub contributions pero de amenazas) que muestre intensidad de ataques por hora y día de semana.
+- **Alerta proactiva:** "Los lunes entre 11-12 UTC históricamente concentran el 28% de todos tus ataques. Activa reglas reforzadas automáticamente en ese horario."
+- **Ventaja de negocio:** Ninguna herramienta open source de honeypot hace esto. Es diferenciador inmediato.
+
+---
+
+## 2. 🧟 Los Atacantes Persistentes: Los que Vuelven
+
+### Hallazgo real
+De 1.107 IPs externas únicas, **9 volvieron a atacar en meses distintos**:
+
+| IP | Meses en que atacó | Nivel promedio |
+|---|---|---|
+| `45.227.254.170` | Abril, Junio, Julio | 5.5 |
+| `45.148.10.151` | Abril, Junio, Julio | 5.5 |
+| `45.148.10.141` | Abril, Junio, Julio | 5.5 |
+| `45.148.10.147` | Abril, Junio, Julio | 5.5 |
+| `2.57.122.238` | Abril, Junio | — |
+| `75.111.120.108` | Abril, Junio | — |
+
+El grupo `45.148.10.X` es claramente **una botnet coordinada** — múltiples IPs de la misma subred atacando en los mismos meses.
+
+### Feature v2.0: **Threat Score Dinámico (0-100)**
+
+La Blacklist actual es binaria (sí/no). El nuevo sistema calcula:
+
+```
+Threat Score = (Volumen × 0.3) + (Persistencia × 0.4) + (Severidad × 0.2) + (Variedad táctica × 0.1)
+
+Ejemplo IP 45.148.10.151:
+  Volumen: 1.172 eventos → 25 puntos
+  Persistencia: 3 meses distintos → 40 puntos
+  Severidad promedio 5.5 → 18 puntos
+  Tácticas: Credential Access + Lateral Movement → 10 puntos
+  TOTAL: 93/100 → "Amenaza Persistente Avanzada"
+```
+
+**Badge visual automático:** 🔴 APT / 🟠 Botnet / 🟡 Scanner / 🟢 Único
+
+---
+
+## 3. 🎯 El Diccionario de los Atacantes: Saben a Quién Buscan
+
+### Hallazgo real: 1.412 usuarios únicos probados, clasificados por categoría
+
+| Categoría | Intentos | Qué significa |
+|---|---|---|
+| Administración (`root`, `admin`) | **108.282** | Objetivo principal: tomar control total |
+| Cloud/SaaS (`ubuntu`, `debian`, `centos`) | 3.350 | Buscan servidores cloud mal configurados |
+| Usuarios genéricos (`user`, `test`, `guest`) | 5.946 | Diccionario básico automatizado |
+| Software empresarial (`odoo`, `vpn`, `confluence`) | 552 | **Ataques dirigidos a empresas** |
+| Bases de datos (`postgres`, `oracle`, `mysql`) | 981 | Buscan datos, no solo acceso |
+| DevOps (`deploy`, `git`, `jenkins`, `gitlab`) | 978 | Buscan pipelines CI/CD para comprometer |
+| Entretenimiento (`steam`, `minecraft`) | 558 | Buscan servidores de juego para usar como proxies |
+
+**Dato alarmante:** Se encontraron usuarios probados **solo por una IP específica**:
+- `ethereum` — probado solo por `2.57.122.238` (8 veces) → buscan wallets de cripto
+- `dircreate` — probado solo por `87.251.64.149` (42 veces) → exploit específico
+- `chia` — probado solo por `89.190.156.34` (24 veces) → otro minero de cripto
+
+### Feature v2.0: **Honeypot Advisor — "Esto buscan hoy"**
+- Panel que muestra en tiempo real qué tipo de usuario/servicio están intentando explotar los atacantes esta semana.
+- Recomendación automática: *"Esta semana el 8% de los atacantes buscan acceso a `odoo`. Si tienes Odoo expuesto, te recomendamos verificar permisos y activar 2FA inmediatamente."*
+- **Monetización:** Esta inteligencia es valiosa como suscripción semanal para empresas que tienen esos servicios expuestos.
+
+---
+
+## 4. 🕸️ Botnets: Enemigos Coordinados
+
+### Hallazgo real: 4 botnets identificadas por patrón de subred
+
+| Subred | Eventos | IPs coordinadas | Característica |
+|---|---|---|---|
+| `2.57.122.0/24` | 9.394 | **13 IPs** | La botnet más diversa y coordinada |
+| `87.251.64.0/24` | 8.454 | 6 IPs | Cada IP prueba 84-323 usuarios distintos |
+| `45.148.10.0/24` | 5.613 | 7 IPs | **Persistente en 3 meses** — APT |
+| `2.57.121.0/24` | 5.555 | 7 IPs | Coordina con `2.57.122.X` (mismo /16) |
+
+La botnet `87.251.64.X` es especialmente sofisticada: una sola IP de esa red probó **323 usuarios distintos** en 1.998 intentos — tiene el diccionario más completo.
+
+### Feature v2.0: **Detección Automática de Botnets**
+- Cuando 3+ IPs de la misma subred /24 atacan en la misma ventana de tiempo → alerta automática de "Posible botnet coordinada".
+- Sugerencia automática de bloqueo CIDR: *"Detectamos coordinación entre 7 IPs en `45.148.10.0/24`. ¿Bloquear el rango completo?"*
+- El analista aprueba con un clic → se registra en la Blacklist v2 con categoría "Botnet confirmada".
+
+---
+
+## 5. ⚡ Velocidad de Ataque: Midiendo la Agresividad
+
+### Hallazgo real: Bots de hasta 6.315 eventos/HORA
+
+| IP | Velocidad | Total eventos | Ventana activa |
+|---|---|---|---|
+| `200.69.204.22` | **6.315 ev/hora** | 1.703 | Solo 0.3 horas (18 min) |
+| `177.101.164.50` | 3.593 ev/hora | 1.718 | 0.5 horas |
+| Grupo Vietnam (`116.99.X`, `116.110.X`) | ~2.400 ev/hora | ~140 c/u | 0.1 horas (6 min) |
+
+La IP `200.69.204.22` disparó **~100 intentos por minuto** durante 18 minutos y desapareció. Eso es un ataque de barrido automatizado ultra-agresivo.
+
+### Feature v2.0: **Clasificador Bot vs Humano**
+- Un bot tiene velocidad > 100 ev/hora. Un humano nunca puede pasar de 10-20.
+- Clasificación automática en la UI: 🤖 Bot automatizado / 🧑 Ataque manual dirigido
+- Los ataques manuales son **MÁS PELIGROSOS** aunque sean menos en volumen — el analista debe priorizarlos.
+
+---
+
+## 6. 🐛 Las 1.721 Vulnerabilidades Que No Han Sido Parchadas
+
+### Hallazgo real: Sistema bajo ataque con CVEs críticos activos hace meses
+
+**2.516 CVEs únicos detectados. 6.017 eventos de CVEs activos (sin parche). 1.721 son Críticos o Altos (score ≥ 7.0).**
+
+Los CVEs más graves tienen score **9.8/10** en el kernel de Linux — la pieza más crítica del sistema operativo.
+
+Lo más preocupante: **1.915 CVEs aparecen en múltiples meses** (abril, mayo, junio, julio) — llevan 4 meses sin parcharse.
+
+| CVE | Presente desde | Score | Paquete afectado |
+|---|---|---|---|
+| `CVE-2022-25837` | Abril → Julio (4 meses) | Alto | Kernel Linux |
+| `CVE-2020-14304` | Abril → Julio (4 meses) | Alto | Kernel Linux |
+| `CVE-2026-23241` | Abril → Julio (4 meses) | Crítico | Kernel Linux |
+
+### Feature v2.0: **Panel de Priorización de Parches (Patch Intelligence)**
+
+El dolor número uno de los equipos de TI es que tienen miles de vulnerabilidades y no saben por cuál empezar. HoneyMetrics resuelve eso cruzando dos fuentes:
+
+```
+CVE activo en tus servidores + Atacante intentando explotarlo = PRIORIDAD 1
+CVE activo sin actividad atacante relacionada = PRIORIDAD 3
+```
+
+**El dashboard mostraría:**
+- 🔴 **Parchar HOY:** CVEs con score ≥ 9 que llevan >30 días activos
+- 🟠 **Esta semana:** CVEs con score 7-8.9
+- 🟡 **Este mes:** CVEs con score < 7
+
+**Monetización:** Esta pantalla sola justifica un tier Enterprise. Los equipos de TI en empresas medianas pagarían por un reporte semanal automático de "qué parchar primero".
+
+---
+
+## 7. 📁 El Sistema por Dentro: FIM y Rootcheck
+
+### Hallazgo real: 50+ archivos críticos del SO cambiaron
+
+Los 1.716 eventos FIM muestran cambios en archivos que deberían ser inmutables:
+- `/boot/vmlinuz` (el kernel del sistema) — cambió **5 veces**
+- `/usr/bin/openssl` — cambió **3 veces**
+- `/usr/bin/curl` — cambió **3 veces**  
+- `/usr/bin/sshd` — cambió **2 veces**
+
+> ⚠️ Algunos de estos cambios son actualizaciones legítimas del sistema (dpkg lo corrobora). Pero `/usr/bin/sshd` cambiando 2 veces en un honeypot que está siendo atacado activamente es algo que un analista debe verificar manualmente.
+
+### Hallazgo Rootcheck: Troyanos detectados en binarios básicos
+
+El sistema detectó repetidamente firmas de troyanos en:
+- `/bin/passwd` — **195 detecciones**
+- `/usr/bin/chsh` — **191 detecciones**
+- `/usr/bin/chfn` — **188 detecciones**
+
+Wazuh usa comparación de firmas para detectar versiones "troyanizadas" de estos binarios. La pregunta para el analista: ¿son falsos positivos (firmas desactualizadas) o compromisos reales?
+
+### Feature v2.0: **Timeline de Integridad del Sistema**
+
+Una línea de tiempo cronológica que correlaciona:
+1. Cuándo llegó un ataque externo
+2. Cuándo cambió un archivo del sistema después
+3. Si hay un CVE relacionado con ese binario
+
+Si los tres coinciden en el tiempo → **alerta roja correlacionada**: "Posible compromiso post-explotación".
+
+---
+
+## 8. 🛡️ El Diagnóstico de Cumplimiento: Reprobado
+
+### Hallazgo real: Score CIS Benchmark 45-50% en todos los agentes
+
+| Fecha | Agente | Score | Pasó | Falló |
+|---|---|---|---|---|
+| 2026-04-02 | `srvotsub1` | 45% 🔴 | 83/207 | 101 |
+| 2026-07-12 | `svm100` | 47% 🔴 | 112/279 | 125 |
+| 2026-07-28 | `svm100` | 47% 🔴 | 112/279 | 125 |
+| 2026-08-11 | `svm100` | 47% 🔴 | 113/279 | 124 |
+
+**El mismo servidor falló el mismo CIS Benchmark con casi los mismos números durante 4 meses.** Nadie está revisando ni actuando sobre estas recomendaciones.
+
+### Feature v2.0: **Panel de Cumplimiento con Plan de Acción**
+
+En lugar de solo mostrar "47% — Reprobado", HoneyMetrics v2 muestra:
+- Las **top 10 fallas más críticas** con instrucción exacta de cómo corregirla
+- Tracking de progreso: si el score sube de 47% a 52%, la UI lo celebra
+- Exportable como **reporte de auditoría PDF** para presentar al área de seguridad
+- **Monetización:** Las empresas pagan por demostrar cumplimiento ante auditores (ISO 27001, SOC2, PCI-DSS). Un reporte automático de CIS Benchmark bien formateado vale dinero.
+
+---
+
+## 9. 🔗 La Correlación Más Valiosa: El Kill Chain Completo
+
+Con todos los datos juntos, podemos reconstruir la **cadena de ataque (Kill Chain)** completa:
+
+```
+RECONOCIMIENTO           ARMAMENTO        ENTREGA           EXPLOTACIÓN        POST-EXPLOTACIÓN
+─────────────────────────────────────────────────────────────────────────────────────────────────
+Bot escanea puertos  →  Diccionario SSH → Intento brute   → CVE en kernel   → Modifica /bin/passwd
+(Discovery: L3)          de 1.412 users   force masivo      activo sin parche  (FIM + Rootcheck)
+                                          (Credential Access) (Vulnerability)   (Defense Evasion)
+                                              ↓
+                                         Si entra:
+                                         SSH lateral movement
+                                         entre VMs (Lateral Movement)
+```
+
+### Feature v2.0: **Kill Chain Visualizer**
+
+Una pantalla interactiva que muestra, para una IP seleccionada, todo el recorrido que intentó hacer:
+- Qué hora empezó a escanear
+- Qué usuarios probó y en qué orden
+- Si tuvo éxito en algún intento (y cuándo)
+- Si después de entrar hay evidencia FIM o Rootcheck correlacionada
+
+Esto transforma a HoneyMetrics de "lector de logs" en **"narrador forense de ataques"** — una capacidad que solo tienen herramientas enterprise como Darktrace o CrowdStrike.
+
+---
+
+## 🗺️ Roadmap de Features para HoneyMetrics v2.0
+
+### Tier Gratuito (fidelización y adquisición)
+| # | Feature | Fuente de Datos | Esfuerzo |
+|---|---|---|---|
+| F1 | Dashboard básico de eventos (lo que ya existe) | sshd/pam | Ya implementado |
+| F2 | Heatmap de ataques por hora y día de semana | @timestamp | Bajo |
+| F3 | Top 10 IPs atacantes con categoría (Bot/Humano/Botnet) | srcip + velocidad | Medio |
+| F4 | Kill Chain básico por IP | MITRE + timestamp | Medio |
+
+### Tier Pro (suscripción individual ~$15-30/mes)
+| # | Feature | Fuente de Datos | Esfuerzo |
+|---|---|---|---|
+| P1 | Threat Score dinámico (0-100) con historial | Multi-campo | Medio |
+| P2 | Detección automática de botnets por subred CIDR | srcip clustering | Medio |
+| P3 | Timeline de integridad del sistema (FIM correlacionado) | syscheck + dpkg + CVE | Alto |
+| P4 | Panel de Cumplimiento CIS Benchmark con plan de acción | SCA data | Medio |
+| P5 | Honeypot Advisor: "esto buscan esta semana" | users_tried + mitre | Bajo |
+
+### Tier Enterprise (contrato anual ~$200-500/mes por organización)
+| # | Feature | Fuente de Datos | Esfuerzo |
+|---|---|---|---|
+| E1 | Panel de Priorización de Parches (CVE activo + ataque correlacionado) | vulnerability + sshd | Alto |
+| E2 | Kill Chain Visualizer completo e interactivo | Todos los decoders | Alto |
+| E3 | Reportes PDF automáticos firmados para auditorías | Todos | Medio |
+| E4 | API de Threat Intelligence (exportar lista de IPs peligrosas) | ip_events + scoring | Alto |
+| E5 | Alertas predictivas: "el lunes habrá pico de ataques" | Time series ML | Muy Alto |
+
+---
+
+## ✅ Conclusión: Lo que HoneyMetrics puede hacer que nadie más hace gratis
+
+1. **Correlacionar el momento del ataque externo con cambios internos del sistema** — eso es forense real.
+2. **Puntuar la peligrosidad de un atacante considerando su historial de meses** — no solo el evento de hoy.
+3. **Decirle al administrador qué parchar PRIMERO** cruzando CVEs activos con actividad de ataque.
+4. **Mostrar que el compliance CIS está fallando** de forma accionable, no solo como número.
+5. **Identificar ataques dirigidos** (usuarios custom por IP única) vs ataques genéricos de diccionario.
+
+Ninguna de estas capacidades está disponible en herramientas open source gratuitas. Todas están documentadas con datos reales de tus propios logs.
+
+
+------------------------------------------------------------
+--- ARCHIVO: hu_sprint3_honeymetrics.md ---
+------------------------------------------------------------
+
+# Historias de Usuario - Sprint 3 (HoneyMetrics v2.0)
+
+### HU: PB-HM-48.1
+- **Código PB Padre:** PB-HM-48
+- **Actor:** Analista
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero visualizar el resumen de rendimiento de algoritmos de ML en un dashboard técnico para evaluar de manera integral la efectividad del modelo de clasificación de amenazas vigente.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que accedo al dashboard técnico de ML, Cuando visualizo las métricas principales, Entonces veo los KPIs actualizados de Accuracy, Precision, Recall, F1-Score y ROC AUC.
+  - **Escenario 2:** Dado que necesito analizar la capacidad de discriminación del modelo, Cuando examino el dashboard en detalle, Entonces visualizo gráficamente la curva ROC y los promedios de tiempo de ejecución del algoritmo.
+
+### HU: PB-HM-49.1
+- **Código PB Padre:** PB-HM-49
+- **Actor:** Analista
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero comparar el rendimiento entre múltiples versiones del modelo de IA para identificar cuál de los modelos iterados es más efectivo frente a los patrones de ataque recientes.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que existen múltiples modelos entrenados, Cuando selecciono dos o más versiones en el menú, Entonces visualizo un gráfico de barras comparativo que contrapone sus métricas de rendimiento.
+  - **Escenario 2:** Dado que estoy viendo la gráfica comparativa, Cuando deselecciono una de las versiones, Entonces el gráfico se actualiza en tiempo real mostrando únicamente los modelos restantes.
+
+### HU: PB-HM-50.1
+- **Código PB Padre:** PB-HM-50
+- **Actor:** Analista
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero exportar las métricas de rendimiento de algoritmos en formato CSV para integrarlas en informes externos, reportes académicos y llevar un control histórico detallado.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que visualizo el panel con el historial de rendimiento de los modelos, Cuando hago clic en el botón de exportar, Entonces se descarga localmente un archivo CSV con todas las métricas en crudo.
+  - **Escenario 2:** Dado que aún no hay datos ni métricas de ML calculadas, Cuando visualizo el panel de exportación, Entonces el botón correspondiente se encuentra deshabilitado.
+
+### HU: PB-HM-51.1
+- **Código PB Padre:** PB-HM-51
+- **Actor:** Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero guardar filtros predeterminados de la Lista Negra para reutilizarlos de forma ágil y facilitar la preparación de nuevos datasets de entrenamiento.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que apliqué una configuración específica de filtros a la Lista Negra, Cuando hago clic en "Guardar Filtros" y le asigno un nombre único, Entonces esa combinación queda guardada en mi perfil de usuario.
+  - **Escenario 2:** Dado que quiero guardar una nueva combinación, Cuando intento hacerlo y ya he alcanzado el límite de 10 filtros, Entonces el sistema me muestra un mensaje de advertencia indicando que debo eliminar uno existente.
+
+### HU: PB-HM-52.1
+- **Código PB Padre:** PB-HM-52
+- **Actor:** Analista
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero consultar mis filtros guardados de la Lista Negra para aplicar rápidamente configuraciones complejas sobre la tabla de amenazas con un solo clic.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que abro el panel de la Lista Negra, Cuando despliego el menú de filtros rápidos, Entonces visualizo la lista con los nombres de todos mis filtros previamente almacenados.
+  - **Escenario 2:** Dado que he localizado un filtro guardado específico en el menú, Cuando hago clic sobre su nombre, Entonces la tabla se recarga aplicando inmediatamente todos los parámetros de filtrado correspondientes.
+
+### HU: PB-HM-53.1
+- **Código PB Padre:** PB-HM-53
+- **Actor:** Analista
+- **Puntos:** 1
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero eliminar un filtro predeterminado guardado que ya no utilizo para mantener limpia mi lista de filtros y liberar espacio (slots) para configuraciones más recientes.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que reviso mi lista de filtros guardados, Cuando selecciono la opción de borrar sobre uno de ellos, Entonces el sistema despliega un mensaje pidiendo mi confirmación antes de proceder.
+  - **Escenario 2:** Dado que he confirmado la acción de borrado, Cuando la operación finaliza, Entonces el filtro desaparece de la vista y el contador de mis filtros disponibles se incrementa en uno.
+
+### HU: PB-HM-54.1
+- **Código PB Padre:** PB-HM-54
+- **Actor:** Administrador / Consultor
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador / Consultor quiero monitorear el estado de recursos del Honeypot (Orange Pi 5) en tiempo real para verificar si el equipo cuenta con la capacidad de hardware necesaria para seguir registrando amenazas.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que ingreso a la vista de monitoreo del Honeypot, Cuando finaliza la carga inicial, Entonces veo los gráficos de rendimiento: CPU (gráfico de anillo), RAM (barras) y almacenamiento (tipo gauge).
+  - **Escenario 2:** Dado que mantengo activa la pestaña del dashboard de recursos, Cuando transcurren 60 segundos, Entonces el sistema sondea la telemetría y actualiza todos los gráficos dinámicamente sin recargar la página.
+
+### HU: PB-HM-55.1
+- **Código PB Padre:** PB-HM-55
+- **Actor:** Administrador / Consultor
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Administrador / Consultor quiero alertar cuando el Honeypot pierde conectividad para estar al tanto de posibles caídas críticas del hardware o denegaciones de servicio y poder gestionar la reactivación rápida.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que el agente de telemetría del Honeypot dejó de enviar datos, Cuando el sistema cuenta 5 minutos sin recibir paquetes nuevos, Entonces muestra una alerta roja global indicando que se ha perdido la comunicación con la Orange Pi 5.
+  - **Escenario 2:** Dado que la alerta de desconexión está activa, Cuando el hardware recupera la conexión y se reanuda el envío de métricas al servidor, Entonces el sistema detecta los paquetes y oculta automáticamente la alerta.
+
+### HU: PB-HM-56.1
+- **Código PB Padre:** PB-HM-56
+- **Actor:** Todos
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero aplicar el cierre automático de sesión por inactividad tras 30 minutos para garantizar la seguridad de mi cuenta y evitar exposiciones en caso de dejar el equipo desatendido.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que me encuentro autenticado en el sistema, Cuando registro un periodo ininterrumpido de 30 minutos sin realizar interacciones (mouse/teclado), Entonces el sistema invalida mi token y me redirige forzosamente a la pantalla de Login.
+  - **Escenario 2:** Dado que llevo 25 minutos inactivo, Cuando realizo un movimiento del mouse o pulsación de tecla, Entonces el temporizador interno del sistema se resetea inmediatamente a 0, evitando el cierre de mi sesión.
+
+### HU: PB-HM-57.1
+- **Código PB Padre:** PB-HM-57
+- **Actor:** Todos
+- **Puntos:** 2
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero visualizar los mensajes de error del sistema en lenguaje natural (español) para entender los problemas o advertencias sin ser confundido por texto técnico incomprensible ni detalles del código fuente.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que introduzco datos inválidos en un formulario, Cuando envío la información, Entonces aparece una alerta en español que me dice exactamente qué debo corregir, utilizando colores amigables (ej. amarillo/naranja).
+  - **Escenario 2:** Dado que ocurre una falla interna (Status 500) en los servidores del backend, Cuando el frontend procesa la respuesta, Entonces despliega un mensaje rojo estándar tipo "Ha ocurrido un error inesperado, contacte soporte" sin mostrar trazas del código ni tecnologías implicadas.
+
+### HU: PB-HM-58.1
+- **Código PB Padre:** PB-HM-58
+- **Actor:** Todos
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como usuario quiero tener soporte para modo oscuro y modo claro en toda la interfaz para adaptar la visualización de la plataforma a mi comodidad visual y condiciones lumínicas del entorno.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que me encuentro en las configuraciones de mi perfil, Cuando altero el switch a "Modo Oscuro", Entonces todas las vistas, fondos, tipografías y paletas de color de los gráficos se actualizan de forma instantánea.
+  - **Escenario 2:** Dado que he seleccionado una preferencia visual previamente, Cuando inicio una nueva sesión en un dispositivo distinto, Entonces la plataforma recuerda el tema que guardé y lo aplica desde el primer pantallazo de carga.
+
+### HU: PB-HM-59.1
+- **Código PB Padre:** PB-HM-59
+- **Actor:** Consultor / Analista
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Consultor / Analista quiero recibir una notificación vía Telegram cuando mis descargas de logs o informes están listas para poder seguir trabajando sin tener que estar comprobando la plataforma manualmente.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que he solicitado una descarga asíncrona masiva de logs y tengo vinculado mi Telegram, Cuando el backend termina de generar el archivo, Entonces el Bot me envía un mensaje avisándome que está listo para ser descargado.
+  - **Escenario 2:** Dado que la solicitud de exportación falla a mitad de proceso, Cuando el backend cancela la tarea, Entonces el sistema envía una notificación vía Telegram indicando la falla y sugiriendo que intente de nuevo.
+
+### HU: PB-HM-60.1
+- **Código PB Padre:** PB-HM-60
+- **Actor:** Sistema
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Sistema quiero eliminar automáticamente los archivos de logs expirados pasados los 7 días para optimizar y asegurar la disponibilidad del espacio en disco del servidor de forma constante.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que existen archivos JSONL generados por descargas pasadas, Cuando el sistema ejecuta el cronjob programado de mantenimiento, Entonces evalúa su fecha de creación y borra permanentemente todos los que superan el límite de 7 días.
+  - **Escenario 2:** Dado que el cron evalúa un archivo generado hace 4 días, Cuando detecta su fecha, Entonces lo ignora y lo mantiene disponible en el volumen de almacenamiento sin realizar ninguna acción.
+
+### HU: PB-HM-64.1
+- **Código PB Padre:** PB-HM-64
+- **Actor:** Analista / Administrador
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista / Administrador quiero contar con un panel de Patch Intelligence (Priorización CVEs) para cruzar los ataques reales recibidos con las vulnerabilidades reportadas y saber qué debo parchar con mayor urgencia.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que un CVE con severidad alta (>7.0) está pendiente por parchar y Wazuh detecta eventos relacionados, Cuando consulto el panel, Entonces el sistema clasifica esta vulnerabilidad con una prioridad crítica como "Parchar HOY".
+  - **Escenario 2:** Dado que reviso los CVEs priorizados, Cuando hago clic en ver el detalle de uno, Entonces la interfaz me muestra el número de ataques externos recientes que han intentado explotar esa brecha específica de mi sistema.
+
+### HU: PB-HM-65.1
+- **Código PB Padre:** PB-HM-65
+- **Actor:** Consultor
+- **Puntos:** 3
+- **Estado:** Sin empezar
+- **Narrativa:** Como Consultor quiero disponer del Honeypot Advisor para visualizar los diccionarios SSH y nombres de usuario clasificados que emplean los atacantes con el fin de anticipar posibles amenazas dirigidas a perfiles específicos.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que los atacantes han intentado múltiples combinaciones de contraseñas por fuerza bruta, Cuando accedo al Advisor, Entonces se despliegan en listas estadísticas los nombres de usuario más probados en el periodo evaluado.
+  - **Escenario 2:** Dado que consulto la lista de usuarios atacados, Cuando reviso el desglose, Entonces veo la información clasificada y categorizada según la industria del software o su finalidad (Ej. nombres de Odoo, Jenkins, Bases de datos, etc.).
+
+### HU: PB-HM-66.1
+- **Código PB Padre:** PB-HM-66
+- **Actor:** Analista
+- **Puntos:** 8
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero visualizar un Timeline de Integridad (FIM Correlacionado) para rastrear de forma temporal los intentos de penetración y cruzarlos de inmediato con cualquier alteración anómala interna en archivos críticos.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que ha ocurrido un potencial compromiso post-explotación, Cuando accedo a la línea de tiempo FIM, Entonces puedo contrastar sincrónicamente sobre el mismo gráfico los intentos de acceso del atacante con la alteración detectada por dpkg.
+  - **Escenario 2:** Dado que encuentro un evento anómalo del sistema FIM en el timeline, Cuando clico sobre él, Entonces el panel expande el registro exacto mostrándome qué archivo crítico fue modificado por el posible atacante.
+
+### HU: PB-HM-67.1
+- **Código PB Padre:** PB-HM-67
+- **Actor:** Analista
+- **Puntos:** 13
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero disponer del Kill Chain Visualizer alineado a MITRE ATT&CK para mapear el comportamiento entero de un atacante desde que hace el escaneo hasta los posibles indicios de post-explotación de manera gráfica.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que la IA o Wazuh ha enlazado múltiples eventos de un mismo actor malicioso, Cuando accedo a la vista Kill Chain, Entonces visualizo un diagrama paso a paso acomodando las acciones bajo las tácticas de reconocimiento, persistencia o impacto según MITRE.
+  - **Escenario 2:** Dado que selecciono un atacante cuya IP cruzó varias fases, Cuando observo la representación visual, Entonces visualizo flechas y secuencias claras desde la fase exploratoria inicial hasta los eventos críticos más recientes en tiempo real.
+
+### HU: PB-HM-68.1
+- **Código PB Padre:** PB-HM-68
+- **Actor:** Analista
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Analista quiero poder utilizar un entorno HITL (Human-in-the-Loop) sobre Rootcheck para validar o rechazar alertas complejas de forma manual y reentrenar de mejor forma el modelo de detección.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que Rootcheck lanza una alerta por un posible troyano en un directorio del sistema (/bin/passwd), Cuando evalúo la información en el panel HITL, Entonces puedo decidir con botones explícitos marcarlo como "Compromiso Confirmado" o "Falso Positivo".
+  - **Escenario 2:** Dado que marco el evento como falso positivo, Cuando confirmo mi acción, Entonces el sistema ajusta la alerta en el histórico y etiqueta internamente la firma de ese evento para ser descartado como amenaza en el próximo ciclo de ML.
+
+### HU: PB-HM-69.1
+- **Código PB Padre:** PB-HM-69
+- **Actor:** Consultor
+- **Puntos:** 5
+- **Estado:** Sin empezar
+- **Narrativa:** Como Consultor quiero consultar un Dashboard de Compliance basado en el estándar CIS Benchmark para identificar deficiencias de hardening y saber exactamente cómo remediarlas.
+- **Criterios de Aceptación:**
+  - **Escenario 1:** Dado que Wazuh terminó sus tareas de auditoría de configuración SCA, Cuando cargo el dashboard de Compliance, Entonces observo de manera destacada el porcentaje de cumplimiento CIS general de mi entorno (ej. 45%).
+  - **Escenario 2:** Dado que deseo aumentar mi nivel de hardening, Cuando bajo al desglose del reporte, Entonces encuentro listadas las recomendaciones de reparación (remediaciones) jerarquizadas por su peso o impacto sobre el score total del sistema.
+
+
+------------------------------------------------------------
+--- ARCHIVO: product_backlog_honeymetrics.md ---
+------------------------------------------------------------
+
+# 📋 Product Backlog — HoneyMetrics v2.0
+
+> **Materia:** Ingeniería de Software II (IS2) — UDEC Facatativá
+> **Equipo:** Johan Sebastián Posada Beltrán · Juan Pablo Fonseca Celis · Manuel Alejandro Aldana Rincón
+> **Arquitectura v2.0:** FastAPI (backend) + React 18 (frontend) — Polyrepo
+> **Fuente:** SRS v6 (4.795 líneas) + Análisis de datos reales Wazuh (165.247 eventos)
+> **Fecha:** 2026-08-22
+
+---
+
+> [!IMPORTANT]
+> **Convención del Profesor — Reglas Críticas**
+> - Código: `PB-HM-01`, `PB-HM-02` ... (nunca saltar números)
+> - Perspectiva: **QUÉ** necesita el usuario, **nunca** el CÓMO técnico
+> - CRUD: cada operación (Create, Read, Update, Delete) = ítem separado
+> - Trazabilidad HU: `PB-HM-01.1`, `PB-HM-01.2` ... (se usa en Hoja 2 - HU)
+> - Estado inicial de TODOS: `Sin empezar`
+> - Prioridad: **Alta / Media / Baja**
+> - Puntos Fibonacci: 1, 2, 3, 5, 8, 13
+
+---
+
+## 🗂️ HOJA 1 — PRODUCT BACKLOG
+
+| CÓDIGO PB | NOMBRE / DESCRIPCIÓN (perspectiva PO) | CU ORIGEN | ACTOR(ES) | PRIORIDAD | PUNTOS | ESTADO |
+|-----------|---------------------------------------|-----------|-----------|-----------|--------|--------|
+| **PB-HM-01** | **Visualizar página de inicio pública (Landing Page)** — El sistema debe mostrar una página de bienvenida profesional que explique el propósito de HoneyMetrics y ofrezca el punto de acceso (Login). Incluye navbar, sección hero, muestra de código y mapa de calor ilustrativo. | CU-G-0 | Visitante / Todos | Alta | 3 | Sin empezar |
+| **PB-HM-02** | **Iniciar sesión con credenciales institucionales** — El usuario debe poder autenticarse en la plataforma usando su correo @ucundinamarca.edu.co y contraseña. El sistema debe validar credenciales, identificar el rol y redirigir al dashboard correspondiente. | CU-G-01 | Todos | Alta | 5 | Sin empezar |
+| **PB-HM-03** | **Bloquear acceso por credenciales inválidas** — El sistema debe rechazar el ingreso cuando el correo o contraseña sean incorrectos, mostrando un mensaje de error claro sin revelar cuál campo falló (anti-enumeración). | CU-G-01 | Todos | Alta | 2 | Sin empezar |
+| **PB-HM-04** | **Forzar cambio de contraseña en primer inicio de sesión** — Al detectar que el usuario tiene contraseña temporal, el sistema debe redirigirlo obligatoriamente a una vista de cambio de clave antes de permitir el acceso al dashboard. | CU-G-02 | Todos | Alta | 3 | Sin empezar |
+| **PB-HM-05** | **Cambiar contraseña voluntariamente (usuario autenticado)** — Cualquier usuario con sesión activa debe poder actualizar su contraseña desde su perfil, verificando la clave actual y cumpliendo los criterios de seguridad (min. 8 caracteres, no común, alfanumérica). | CU-G-02 | Todos | Alta | 3 | Sin empezar |
+| **PB-HM-06** | **Restablecer contraseña olvidada vía correo electrónico** — Un usuario que no pueda iniciar sesión debe poder solicitar un enlace de restablecimiento enviado a su correo institucional. El token debe ser de un solo uso y expirar en 24 horas. | CU-G-10 | Todos | Alta | 5 | Sin empezar |
+| **PB-HM-07** | **Autenticar con segundo factor (2FA-OTP)** — Después de ingresar usuario y contraseña correctamente, el sistema debe solicitar un código OTP de 6 dígitos generado por Google Authenticator para completar el acceso. | CU-G-07 | Todos | Alta | 5 | Sin empezar |
+| **PB-HM-08** | **Vincular Google Authenticator en el primer inicio** — Si el usuario no ha configurado el 2FA previamente, el sistema debe mostrar un código QR para que escanee con su app autenticadora, verificando la sincronización antes de conceder acceso. | CU-G-07 | Todos | Alta | 3 | Sin empezar |
+| **PB-HM-09** | **Cerrar sesión de forma segura** — El usuario debe poder finalizar su sesión desde cualquier vista del dashboard. El sistema debe invalidar el token JWT en el servidor y limpiar el almacenamiento local del navegador, impidiendo re-acceso con el botón "Atrás". | CU-G-09 | Todos | Alta | 2 | Sin empezar |
+| **PB-HM-10** | **Redireccionar al login al acceder a rutas protegidas sin sesión** — Cualquier intento de acceso a rutas del dashboard sin token de sesión válido debe resultar en redirección automática al Login. | CU-G-01 | Todos | Alta | 2 | Sin empezar |
+| **PB-HM-11** | **Mostrar banner informativo a usuarios sin rol asignado** — Si un usuario se autentica correctamente pero no tiene ningún rol asignado, el sistema debe mostrarlo con acceso mínimo y un mensaje informativo indicando que debe solicitar permisos al Administrador. | CU-G-01 | Todos | Media | 2 | Sin empezar |
+| **PB-HM-12** | **Acceder al panel de administración del sistema** — El Administrador debe poder acceder desde el frontend al panel de administración profunda haciendo clic en "Gestión", sin necesidad de escribir la URL manualmente. | CU-G-03 | Administrador | Alta | 2 | Sin empezar |
+| **PB-HM-13** | **Crear un nuevo Rol/Grupo de permisos** — El Administrador debe poder crear nuevos grupos de permisos con nombre único (ej. "Consultor de Ciberseguridad") y asignarles los permisos específicos disponibles en el sistema. | CU-ADM-01 | Administrador | Alta | 3 | Sin empezar |
+| **PB-HM-14** | **Consultar la lista de Roles/Grupos existentes** — El Administrador debe poder visualizar todos los grupos de permisos registrados en el sistema, con su nombre y la cantidad de usuarios asociados. | CU-ADM-02 | Administrador | Alta | 1 | Sin empezar |
+| **PB-HM-15** | **Modificar un Rol/Grupo de permisos existente** — El Administrador debe poder editar el nombre o los permisos asignados a un grupo. Los cambios deben aplicarse inmediatamente a todos los usuarios que posean ese rol. | CU-ADM-03 | Administrador | Alta | 2 | Sin empezar |
+| **PB-HM-16** | **Eliminar un Rol/Grupo de permisos** — El Administrador debe poder borrar permanentemente un grupo del sistema, previo aviso de cuántos usuarios quedarán sin ese rol. La eliminación debe requerir confirmación explícita. | CU-ADM-04 | Administrador | Alta | 2 | Sin empezar |
+| **PB-HM-17** | **Crear cuenta de nuevo usuario** — El Administrador debe poder registrar a un nuevo miembro del equipo (Directivo, Consultor o Analista) con nombre, correo institucional, contraseña temporal y rol asignado (máximo uno). | CU-ADM-05 | Administrador | Alta | 5 | Sin empezar |
+| **PB-HM-18** | **Consultar la lista de usuarios registrados** — El Administrador debe poder visualizar todos los usuarios del sistema en una tabla con columnas de: nombre, correo, rol y estado (activo/inactivo), con búsqueda y filtros. | CU-ADM-06 | Administrador | Alta | 2 | Sin empezar |
+| **PB-HM-19** | **Modificar datos de un usuario existente** — El Administrador debe poder editar la información de perfil de cualquier usuario (nombre, correo, rol asignado) sin necesidad de eliminar y recrear la cuenta. | CU-ADM-07 | Administrador | Alta | 3 | Sin empezar |
+| **PB-HM-20** | **Eliminar un usuario del sistema** — El Administrador debe poder borrar definitivamente un usuario y todos sus datos relacionados (en cascada), previo aviso detallado de los objetos que serán eliminados y confirmación explícita. | CU-ADM-08 | Administrador | Alta | 3 | Sin empezar |
+| **PB-HM-21** | **Visualizar y editar perfil de usuario propio** — Cualquier usuario debe poder acceder a su perfil personal para ver su rol, zona horaria, cambiar su foto de perfil (JPG/PNG, máx. 2MB) y su preferencia de tema (claro/oscuro). | CU-G-08 | Todos | Media | 3 | Sin empezar |
+| **PB-HM-22** | **Consultar la Lista Negra de IPs** — Todos los roles deben poder visualizar el repositorio de IPs marcadas como amenaza en una tabla interactiva con paginación del lado del servidor (10 registros/página por defecto), búsqueda global y columnas de: IP, tipo, país, ataque y usuario reportador. | CU-G-04 | Todos | Alta | 5 | Sin empezar |
+| **PB-HM-23** | **Agregar una IP a la Lista Negra** — Los usuarios con rol operativo (Administrador, Consultor, Analista) deben poder registrar una nueva IP amenaza mediante un formulario modal, con validación de formato IPv4/IPv6 y asignación automática del usuario en sesión como creador. | CU-G-05 | Adm. / Consultor / Analista | Alta | 5 | Sin empezar |
+| **PB-HM-24** | **Eliminar una IP de la Lista Negra** — Los usuarios con rol operativo deben poder remover un registro de la lista negra directamente desde la fila de la tabla, con confirmación previa para evitar borrados accidentales. | CU-G-06 | Adm. / Consultor / Analista | Alta | 3 | Sin empezar |
+| **PB-HM-25** | **Exportar la Lista Negra de IPs (CSV / Excel)** — Los usuarios deben poder descargar la lista negra completa o filtrada en formato CSV o Excel (.xlsx), respetando los filtros activos al momento de la exportación. El botón de exportación debe deshabilitarse si no hay datos. | CU-DASH-07 | Dir. T.I / Consultor / Analista | Media | 5 | Sin empezar |
+| **PB-HM-26** | **Visualizar el Dashboard principal de ataques y estadísticas** — Los usuarios deben poder ver un dashboard operativo con KPIs (total alertas, severidad promedio) y cuatro gráficos dinámicos: distribución por módulo (torta), histórico temporal (líneas), top agentes afectados (barras) y top eventos frecuentes (barras). El rango por defecto es la última semana. | CU-DASH-01 | Dir. T.I / Consultor / Analista / Adm. | Alta | 8 | Sin empezar |
+| **PB-HM-27** | **Filtrar el Dashboard por rango de fechas** — Los usuarios deben poder cambiar el rango temporal de los gráficos del dashboard (ej. últimas 24h, última semana, último mes) y ver los KPIs y gráficos actualizarse instantáneamente. | CU-DASH-01 | Dir. T.I / Consultor / Analista | Alta | 3 | Sin empezar |
+| **PB-HM-28** | **Visualizar el Mapa de Calor Interactivo de ataques** — Los usuarios deben poder visualizar un mapa mundial interactivo que muestre la procedencia geográfica de los ataques con escala de colores (verde a rojo según intensidad), tooltips por país y tabla "Top 10 Países Atacantes". | CU-DASH-02 | Dir. T.I / Consultor / Analista | Alta | 8 | Sin empezar |
+| **PB-HM-29** | **Filtrar el Mapa de Calor por tipo de ataque** — Los usuarios deben poder seleccionar un tipo de ataque específico (ej. "Fuerza Bruta SSH") y ver el mapa de calor actualizarse mostrando únicamente los ataques de ese tipo. | CU-DASH-02 | Dir. T.I / Consultor / Analista | Media | 3 | Sin empezar |
+| **PB-HM-30** | **Ver panel de detalle de país al hacer clic en el mapa** — Al hacer clic en un país del mapa de calor, el sistema debe desplegar un panel lateral con el desglose de IPs, tipos de ataque y períodos de actividad para ese territorio. | CU-DASH-02 | Dir. T.I / Consultor / Analista | Media | 3 | Sin empezar |
+| **PB-HM-31** | **Visualizar Medidas de Tendencia Central (Estadística Descriptiva)** — Los usuarios autorizados deben poder ver una vista de estadísticas con media, mediana, moda, desviación estándar y varianza de las variables de ataque, junto con un histograma de frecuencia y un diagrama de caja (boxplot). | CU-DASH-04 | Dir. T.I / Analista | Alta | 8 | Sin empezar |
+| **PB-HM-32** | **Filtrar estadísticas descriptivas por variable de análisis y rango de fechas** — Los usuarios deben poder seleccionar qué variable analizar y un rango de fechas, actualizando automáticamente todas las métricas y gráficos estadísticos. | CU-DASH-04 | Dir. T.I / Analista | Media | 3 | Sin empezar |
+| **PB-HM-33** | **Exportar tabla de estadísticas descriptivas en CSV** — El Analista debe poder descargar la tabla de medidas estadísticas en formato CSV con un solo clic. | CU-DASH-04 | Analista | Media | 2 | Sin empezar |
+| **PB-HM-34** | **Visualizar Matriz de Confusión interactiva del modelo de IA** — Los usuarios autorizados deben poder ver la matriz de confusión (VP, FP, VN, FN) comparando predicciones del modelo de IA vs. clasificaciones reales, con indicadores derivados (Accuracy, Precision, Recall, F1-Score) y tooltips explicativos por celda. | CU-DASH-03 | Dir. T.I / Consultor / Analista | Media | 8 | Sin empezar |
+| **PB-HM-35** | **Filtrar la Matriz de Confusión por tipo de ataque y rango de fechas** — Los usuarios deben poder filtrar la matriz de confusión para un tipo de ataque específico y un período de tiempo, recalculando todos los indicadores de rendimiento. | CU-DASH-03 | Dir. T.I / Consultor / Analista | Media | 3 | Sin empezar |
+| **PB-HM-36** | **Ver tabla de detalle al hacer clic en una celda de la Matriz** — Al hacer clic en una celda de la matriz (ej. "Falsos Positivos"), el sistema debe desplegar una tabla expandible con los registros específicos (IP, fecha, tipo predicho, clasificación real, confianza del modelo). | CU-DASH-03 | Consultor / Analista | Media | 3 | Sin empezar |
+| **PB-HM-37** | **Solicitar descarga de logs crudos (JSONL)** — Los usuarios autorizados deben poder seleccionar un rango de fechas y solicitar la extracción de eventos del Wazuh Indexer. El sistema procesa la petición en segundo plano (asincrónico) y notifica al usuario cuando el archivo esté listo. | CU-DASH-06 / CU-LOG-01 | Consultor / Analista | Alta | 8 | Sin empezar |
+| **PB-HM-38** | **Consultar historial de solicitudes de descarga de logs** — Los usuarios deben poder visualizar una tabla con todas sus solicitudes de descarga previas: ID, rango de fechas, cantidad de registros, estado (Pendiente, Procesando, Listo, Rechazada, Fallida) y fecha. La tabla se actualiza automáticamente cada 10 segundos. | CU-DASH-06 | Consultor / Analista | Alta | 3 | Sin empezar |
+| **PB-HM-39** | **Descargar archivo JSONL de logs generado** — Una vez que el archivo de logs está en estado "Listo", el usuario debe poder descargarlo con un clic. El archivo tiene una vigencia de 7 días y es eliminado automáticamente después de ese período. | CU-DASH-06 | Consultor / Analista | Alta | 3 | Sin empezar |
+| **PB-HM-40** | **Solicitar descarga masiva que requiere aprobación del Administrador** — Si la solicitud de logs supera el umbral de 50.000 registros, el sistema debe bloquear la descarga directa, crear una solicitud con estado "Pendiente" y notificar al Administrador vía Telegram con botones de Aprobar/Rechazar. | CU-DASH-08 / CU-ADM-09 | Consultor / Analista | Alta | 8 | Sin empezar |
+| **PB-HM-41** | **Aprobar o rechazar solicitud de descarga masiva (vía Telegram)** — El Administrador debe poder aprobar o rechazar solicitudes masivas directamente desde el Bot de Telegram de HoneyMetrics, con el sistema validando su identidad y actuando conforme a la decisión. | CU-ADM-09 | Administrador | Alta | 8 | Sin empezar |
+| **PB-HM-42** | **Generar y descargar el Diccionario de Datos en PDF** — El Analista debe poder generar, desde la vista de Logs, un documento PDF con el esquema técnico completo de los campos del evento Wazuh (atributo, tipo, descripción para ML), con logotipo de HoneyMetrics y marca de tiempo. Generado en el navegador del usuario (client-side). | CU-LOG-02 | Analista | Media | 5 | Sin empezar |
+| **PB-HM-43** | **Generar y descargar informes ejecutivos y de rendimiento** — Los usuarios autorizados deben poder generar informes en formato CSV o Excel seleccionando un rango de fechas y tipo de informe (Ejecutivo u Operativo). La generación se realiza en segundo plano con barra de progreso. Peso máximo: 50 MB. | CU-DASH-05 | Dir. T.I / Consultor | Media | 8 | Sin empezar |
+| **PB-HM-44** | **Recibir alertas emergentes ante anomalías críticas en pantalla** — El sistema debe detectar automáticamente anomalías críticas (picos de ataque >300%) y mostrar una ventana emergente clasificada por severidad (Roja/Naranja/Amarilla) con el resumen del evento, botón "Ver Detalle" y botón "Descartar". Máximo una alerta cada 30 segundos. | CU-CON-01 | Consultor | Alta | 8 | Sin empezar |
+| **PB-HM-45** | **Consultar historial de alertas recibidas** — El Consultor debe poder acceder a un panel lateral con todas las alertas generadas en las últimas 24 horas, su estado (Atendida, Descartada, Ignorada) y detalles del evento. | CU-CON-01 | Consultor | Media | 3 | Sin empezar |
+| **PB-HM-46** | **Ver detalle completo de una anomalía detectada** — Al hacer clic en "Ver Detalle" de una alerta, el sistema debe mostrar: tabla de registros asociados, historial de la IP, gráfico temporal de la anomalía y botones de acción ("Agregar a Lista Negra" y "Marcar como Falso Positivo"). | CU-CON-01 | Consultor | Alta | 5 | Sin empezar |
+| **PB-HM-47** | **Marcar una alerta como Falso Positivo** — El Consultor debe poder clasificar un evento detectado como falso positivo con confirmación del sistema, lo que debe actualizar el estado de la alerta y etiquetar el registro para el reentrenamiento futuro de la IA. | CU-CON-01 | Consultor | Media | 3 | Sin empezar |
+| **PB-HM-48** | **Visualizar el Resumen de Rendimiento de Algoritmos de ML** — El Analista debe poder ver un dashboard técnico con métricas del modelo vigente: KPIs (Accuracy, Precision, Recall, F1, ROC AUC), curva ROC, gráfico comparativo entre versiones y tiempos de ejecución. | CU-ANA-01 | Analista | Media | 8 | Sin empezar |
+| **PB-HM-49** | **Comparar el rendimiento entre múltiples versiones del modelo de IA** — El Analista debe poder seleccionar dos o más versiones del modelo y ver sus métricas de rendimiento comparadas en un gráfico de barras actualizado. | CU-ANA-01 | Analista | Media | 5 | Sin empezar |
+| **PB-HM-50** | **Exportar métricas de rendimiento de algoritmos en CSV** — El Analista debe poder descargar el historial completo de métricas de rendimiento de los modelos en formato CSV. | CU-ANA-01 | Analista | Baja | 2 | Sin empezar |
+| **PB-HM-51** | **Guardar filtros predeterminados de Lista Negra (Analista)** — El Analista debe poder guardar combinaciones de filtros recurrentes sobre la Lista Negra (hasta 10 por usuario) con nombre único y reutilizarlos rápidamente para preparar datasets de entrenamiento. | CU-ANA-02 | Analista | Media | 3 | Sin empezar |
+| **PB-HM-52** | **Consultar filtros guardados de Lista Negra** — El Analista debe poder ver su lista de filtros guardados y aplicar cualquiera con un solo clic para cargar automáticamente la configuración en la tabla de Lista Negra. | CU-ANA-02 | Analista | Media | 2 | Sin empezar |
+| **PB-HM-53** | **Eliminar un filtro predeterminado guardado** — El Analista debe poder borrar un filtro guardado que ya no necesite, con confirmación previa del sistema. | CU-ANA-02 | Analista | Baja | 1 | Sin empezar |
+| **PB-HM-54** | **Monitorear el estado de recursos del Honeypot en tiempo real** — El Administrador y el Consultor deben poder visualizar el rendimiento actual del hardware de la Orange Pi 5: CPU (gráfico de anillo), RAM (barras) y almacenamiento (gauge). Los gráficos se actualizan automáticamente cada 60 segundos. | CU-ADM-10 | Adm. / Consultor | Baja | 8 | Sin empezar |
+| **PB-HM-55** | **Alertar cuando el Honeypot pierde conectividad** — Si el sistema no recibe telemetría nueva del Honeypot en 5 minutos, debe mostrar una alerta roja persistente indicando la pérdida de comunicación con la Orange Pi 5. | CU-ADM-10 | Adm. / Consultor | Baja | 5 | Sin empezar |
+| **PB-HM-56** | **Aplicar cierre automático de sesión por inactividad (30 min)** — Si un usuario deja la plataforma abierta sin interacción (mouse/teclado) durante 30 minutos, el sistema debe cerrar la sesión automáticamente y redirigir al Login. | RNF-01 | Todos | Alta | 3 | Sin empezar |
+| **PB-HM-57** | **Mostrar mensajes de error del sistema en lenguaje natural** — Todos los errores de sistema, datos inválidos o fallos de conexión deben mostrarse con alertas de colores (rojo error, amarillo precaución) en español, sin revelar trazas de código al usuario. | RNF-03 | Todos | Alta | 2 | Sin empezar |
+| **PB-HM-58** | **Soportar modo oscuro y modo claro en toda la interfaz** — La plataforma debe ofrecer al usuario la opción de alternar entre tema claro y oscuro desde su perfil. La preferencia debe persistir entre sesiones. Los gráficos deben adaptarse automáticamente al tema activo. | CU-G-08 / CU-DASH-01 | Todos | Media | 5 | Sin empezar |
+| **PB-HM-59** | **Notificar al usuario vía Telegram cuando su descarga está lista** — Al finalizar el procesamiento de logs en segundo plano, el sistema debe enviar un mensaje de notificación al identificador de Telegram registrado en el perfil del usuario. | CU-LOG-01 / RNF-05 | Consultor / Analista | Media | 3 | Sin empezar |
+| **PB-HM-60** | **Eliminar automáticamente archivos de logs expirados (7 días)** — El sistema debe ejecutar una tarea programada periódica que elimine del servidor todos los archivos JSONL que superen los 7 días de vigencia, liberando espacio en disco de forma autónoma. | CU-LOG-01 / RNF-05 | Sistema | Media | 3 | Sin empezar |
+
+---
+
+## 📊 Resumen por Categorías
+
+| CATEGORÍA | ÍTEMS | PUNTOS |
+|-----------|-------|--------|
+| 🔐 Autenticación y Control de Acceso | PB-01 a PB-12 (12 ítems) | 35 pts |
+| 👥 Gestión de Usuarios y Roles | PB-13 a PB-21 (9 ítems) | 24 pts |
+| 🚫 Lista Negra de IPs | PB-22 a PB-25 (4 ítems) | 15 pts |
+| 📊 Dashboards y Visualización | PB-26 a PB-36 (11 ítems) | 53 pts |
+| 📥 Logs y Procesamiento Asíncrono | PB-37 a PB-43 (7 ítems) | 43 pts |
+| 🚨 Alertas y Anomalías | PB-44 a PB-47 (4 ítems) | 19 pts |
+| 🤖 Machine Learning y Analítica | PB-48 a PB-53 (6 ítems) | 21 pts |
+| 🖥️ Monitoreo de Hardware | PB-54 a PB-55 (2 ítems) | 13 pts |
+| ⚙️ Requisitos No Funcionales | PB-56 a PB-60 (5 ítems) | 16 pts |
+| **TOTAL** | **60 ítems** | **239 pts** |
+
+---
+
+## 🗓️ PROPUESTA DE SPRINTS (Cronograma IS2)
+> Fecha de entrega: mediados de octubre 2026 (~8 semanas desde ahora)
+
+| SPRINT | PERÍODO APROX. | FOCO | ÍTEMS |
+|--------|---------------|------|-------|
+| **Sprint 0** | Semana 1 | Infraestructura base, CI/CD, Docker, repositorios | Setup (sin PBs entregables) |
+| **Sprint 1** | Semanas 2–3 | Autenticación completa + Gestión Usuarios/Roles + Lista Negra CRUD | PB-01 a PB-25 |
+| **Sprint 2** | Semanas 4–6 | Dashboard + Mapa de Calor + Estadísticas + Logs asíncronos + Alertas | PB-26 a PB-47 |
+| **Sprint 3** | Semanas 7–8 | ML/Analítica + Monitoreo HW + Telegram + RNF + Pulido final | PB-48 a PB-60 |
+
+---
+
+## 📝 NOTAS PARA LA HOJA 2 (HISTORIAS DE USUARIO)
+
+Los ítems del backlog se **desglosarán en HUs individuales** en la Hoja 2 usando la convención:
+- `PB-HM-02.1` → HU: Formulario de Login (frontend React)
+- `PB-HM-02.2` → HU: Endpoint POST /api/v1/auth/login que retorna JWT
+- `PB-HM-02.3` → HU: Guard de rutas protegidas en React Router
+
+Cada HU incluirá:
+- Narrativa: "Como [ROL] quiero [ACCIÓN] para [BENEFICIO]"
+- Criterios de aceptación BDD (Dado/Cuando/Entonces)
+- Puntos Fibonacci
+- Referencia a Mockup (Figma links del SRS v6)
+- Estado: `Sin empezar`
+
+---
+*Generado por Antigravity — Basado en SRS v6 (4.795 líneas) + 165.247 eventos Wazuh — HoneyMetrics v2.0*
+| **PB-HM-61** | **Visualizar Threat Score Dinámico** — El Analista debe ver un score de peligrosidad (0-100) para cada IP en el Threat Intelligence Center, calculado por volumen, persistencia, tácticas y severidad, categorizándola (APT, Botnet, Scanner, etc.). | CU-ANA-03 | Analista | Alta | 8 | Sin empezar |
+| **PB-HM-62** | **Identificar botnets por rango CIDR** — El sistema debe agrupar automáticamente las IPs atacantes que pertenezcan a la misma subred /24 que ataquen coordinadamente y sugerir el bloqueo del bloque completo. | CU-ANA-03 | Analista | Media | 5 | Sin empezar |
+| **PB-HM-63** | **Clasificador Bot vs Humano (Velocidad)** — El sistema debe etiquetar como Bot a atacantes con métricas de ataque automatizadas (>100 eventos/hora) y como Humano a los que tengan comportamiento lento y dirigido, priorizando a estos últimos en el dashboard. | CU-ANA-03 | Analista | Media | 5 | Sin empezar |
+| **PB-HM-64** | **Panel Patch Intelligence (Priorización CVEs)** — El Analista debe ver un panel que cruce CVEs críticos sin parchear (>7.0) con actividad de atacantes recientes que intentan explotarlos, clasificándolos en prioridad de parchado (Ej. "Parchar HOY"). | CU-ANA-04 | Analista / Adm | Alta | 8 | Sin empezar |
+| **PB-HM-65** | **Honeypot Advisor (Inteligencia de Diccionario)** — El Consultor debe visualizar estadísticas de los nombres de usuario más probados por los atacantes en un periodo de tiempo, categorizados por industria (Ej. Odoo, Jenkins, Bases de datos) para prever objetivos dirigidos. | CU-ANA-03 | Consultor | Media | 3 | Sin empezar |
+| **PB-HM-66** | **Timeline de Integridad (FIM Correlacionado)** — El Analista debe poder cruzar en una línea de tiempo los intentos de acceso externo con los eventos del sistema FIM y dpkg para detectar manipulaciones post-explotación en archivos críticos. | CU-ANA-04 | Analista | Alta | 8 | Sin empezar |
+| **PB-HM-67** | **Kill Chain Visualizer (MITRE ATT&CK)** — El Analista debe ver un diagrama secuencial interactivo que mapee los pasos del atacante contra la matriz MITRE, desde el escaneo (Reconocimiento) hasta las anomalías internas (Post-explotación). | CU-ANA-04 | Analista | Alta | 13 | Sin empezar |
+| **PB-HM-68** | **Human-in-the-Loop para Rootcheck** — El Analista debe poder validar manualmente eventos de Rootcheck (ej. troyanos detectados en /bin/passwd), marcándolos como "Falso Positivo" o "Compromiso Confirmado" para entrenar futuras alertas. | CU-ANA-04 | Analista | Media | 5 | Sin empezar |
+| **PB-HM-69** | **Dashboard de Compliance CIS Benchmark** — El Consultor debe ver los resultados de los escaneos SCA de Wazuh (Cumplimiento CIS) y visualizar un listado de acciones correctivas ordenadas por impacto para subir el score (ej. > 45%). | CU-ANA-05 | Consultor | Media | 5 | Sin empezar |
+| **PB-HM-70** | **Heatmap de Riesgo Predictivo** — El Dashboard debe incluir un mapa de calor temporal (días vs horas) para predecir cuándo el sistema recibirá los mayores volúmenes de ataques basándose en datos históricos (ej. Lunes 11-12 UTC). | CU-DASH-02 | Todos | Baja | 3 | Sin empezar |
+
+
