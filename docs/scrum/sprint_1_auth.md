@@ -172,9 +172,9 @@
 > Como Usuario quiero restablecer mi contraseña olvidada vía correo electrónico para recuperar el acceso a mi cuenta.
 
 **Tareas de Desarrollo:**
-- [ ] Diseñar e implementar el componente UI necesario
-- [ ] Establecer lógica de estado (React hooks) y validaciones
-- [ ] Conectar la interfaz con la API Backend correspondiente
+- [ ] Configurar proveedor de correos transaccionales (Resend) y verificar dominio `johan-d3v.site` en Cloudflare (registros SPF, DKIM, DMARC).
+- [ ] Plan de Contingencia (Opción B): Si fallan los filtros universitarios, documentar e implementar envío de correos vía Microsoft Graph API usando un entorno M365 Developer.
+- [ ] Integrar SDK de correo en FastAPI y conectar UI (React) para solicitar y procesar el token de recuperación de contraseña.
 
 **Criterios de Aceptación (BDD):**
 
