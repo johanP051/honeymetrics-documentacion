@@ -48,9 +48,9 @@
 > Como Usuario quiero iniciar sesión con credenciales institucionales para acceder al dashboard que me corresponde.
 
 **Tareas de Desarrollo:**
-- [ ] Diseñar y maquetar formulario de interfaz en React
-- [ ] Configurar validación de entradas (Email/Password)
-- [ ] Integrar consumo del endpoint de autenticación
+- [ ] Diseñar y maquetar formulario de interfaz en React con validación de entradas (Email/Password).
+- [ ] Integrar consumo del endpoint de autenticación (`POST /api/v1/auth/login`) y almacenar JWT en `httpOnly cookie` o `localStorage` con manejo de error 401.
+- [ ] [Fix ZTNA - Punto Ciego 1] Configurar Cloudflare Zero Trust Access para el dominio `api.johan-d3v.site`: crear una Application de tipo "Self-hosted", definir una Policy de acceso restringiendo a correos del equipo. Esto actúa como un firewall de identidad antes de FastAPI.
 
 **Criterios de Aceptación (BDD):**
 
@@ -79,9 +79,9 @@
 > Como Usuario quiero que se bloquee el acceso por credenciales inválidas para mantener la seguridad de mi cuenta.
 
 **Tareas de Desarrollo:**
-- [ ] Diseñar e implementar el componente UI necesario
-- [ ] Establecer lógica de estado (React hooks) y validaciones
-- [ ] Conectar la interfaz con la API Backend correspondiente
+- [ ] Diseñar e implementar el componente UI de error de login (mensaje genérico anti-enumeración, sin revelar si falló email o password).
+- [ ] Establecer lógica de estado (React hooks): contador de intentos fallidos en frontend, deshabilitar botón "Ingresar" por 30 segundos tras 5 fallos consecutivos.
+- [ ] [Fix ZTNA - Punto Ciego 2] Implementar Rate Limiting en FastAPI con la librería `slowapi`: decorar el endpoint `POST /api/v1/auth/login` con `@limiter.limit("5/minute")` por IP. Configurar respuesta HTTP 429 con header `Retry-After`. Documentar la dependencia en `requirements.txt`.
 
 **Criterios de Aceptación (BDD):**
 
@@ -175,6 +175,7 @@
 - [ ] Configurar proveedor de correos transaccionales (Resend) y verificar dominio `johan-d3v.site` en Cloudflare (registros SPF, DKIM, DMARC).
 - [ ] Plan de Contingencia (Opción B): Si fallan los filtros universitarios, documentar e implementar envío de correos vía Microsoft Graph API usando un entorno M365 Developer.
 - [ ] Integrar SDK de correo en FastAPI y conectar UI (React) para solicitar y procesar el token de recuperación de contraseña.
+- [ ] [Fix ZTNA - Punto Ciego 3] Documentar en el `README.md` del repositorio frontend que la variable `VITE_API_URL` queda expuesta en el bundle de producción (característica de Vite). Confirmar que las capas de Cloudflare Access (Fix 1) y Rate Limiting (Fix 2) son la defensa en profundidad para mitigar abuso.
 
 **Criterios de Aceptación (BDD):**
 
