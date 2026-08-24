@@ -56,7 +56,7 @@
 - **Narrativa:** Como Usuario quiero restablecer mi contraseña olvidada vía correo electrónico para recuperar el acceso a mi cuenta.
 - **Criterios de Aceptación:**
   - **Escenario 1:** Dado que olvidé mi contraseña, Cuando solicito restablecerla, Entonces recibo un enlace de uso único en mi correo institucional.
-  - **Escenario 2:** Dado que recibí el enlace, Cuando intento usarlo después de 24 horas, Entonces el sistema me indica que el token expiró y debo solicitar otro.
+  - **Escenario 2:** Dado que recibí el enlace, Cuando intento usarlo después de 1 hora, Entonces el sistema me indica que el token expiró y debo solicitar otro.
 
 ### HU: PB-HM-07.1
 - **Código PB Padre:** PB-HM-07
