@@ -1,7 +1,7 @@
 # 📋 Product Backlog Consolidado — HoneyMetrics v2.0
 
 > **Materia:** Ingeniería de Software II (IS2) — UDEC Facatativá
-> **Equipo:** Johan Sebastián Posada Beltrán · Juan Pablo Fonseca Celis · Manuel Alejandro Aldana Rincón
+> **Equipo:** Johan Sebastián Posada Beltrán · Juan Pablo Fonseca Celis 
 > **Arquitectura:** FastAPI + React 18 (Polyrepo)
 > **Fuente:** SRS v6 + Análisis de datos reales Wazuh (165.247 eventos)
 
@@ -89,27 +89,17 @@
 | PB-HM-68 | Validar manualmente (HITL) las alertas de archivos comprometidos para re-entrenar el modelo de detección. | CU-ANA-04 | Analista | Media | 5 | Sin empezar |
 | PB-HM-69 | Consultar panel de cumplimiento de seguridad (CIS Benchmark) para obtener recomendaciones exactas de remediación de hardening. | CU-ANA-05 | Consultor | Media | 5 | Sin empezar |
 | PB-HM-70 | Visualizar mapa de calor predictivo de horarios de ataque (días vs horas) para anticipar picos de carga. | CU-DASH-02 | Todos | Media | 3 | Sin empezar |
-| PB-HM-71 | Listar tabla completa e historiada de todas las amenazas categorizadas en el Intelligence Center. | CU-ANA-03 | Analista | Media | 5 | Sin empezar |
-| PB-HM-72 | Registrar manualmente una nueva amenaza externa en el Intelligence Center proporcionando evidencia de ataque. | CU-ANA-03 | Analista | Media | 5 | Sin empezar |
-| PB-HM-73 | Actualizar la clasificación, severidad o anotaciones de una amenaza previamente registrada en el Intelligence Center. | CU-ANA-03 | Analista | Baja | 3 | Sin empezar |
-| PB-HM-74 | Retirar definitivamente una amenaza del Intelligence Center previa confirmación de seguridad. | CU-ANA-03 | Analista | Baja | 2 | Sin empezar |
-| PB-HM-75 | Recibir alerta automática inmediata cuando el Threat Score de una IP monitoreada supere el umbral crítico de APT. | CU-ANA-03 | Consultor | Alta | 5 | Sin empezar |
-| PB-HM-76 | Exportar el reporte detallado de amenazas activas del Intelligence Center en un documento PDF estructurado. | CU-ANA-03 | Analista | Media | 3 | Sin empezar |
-| PB-HM-77 | Comparar visualmente la evolución del Threat Score de una IP entre dos o más períodos de tiempo históricos. | CU-ANA-03 | Analista | Baja | 3 | Sin empezar |
-| PB-HM-78 | Visualizar historial detallado de ataques de una IP específica presentados en una línea de tiempo cronológica interactiva. | CU-ANA-03 | Analista | Media | 5 | Sin empezar |
-| PB-HM-79 | Solicitar revisión o bloqueo total de un rango CIDR completo detectado como botnet coordinada persistente. | CU-ANA-03 | Consultor | Media | 3 | Sin empezar |
-| PB-HM-80 | Ver lista de recomendaciones de hardening jerarquizadas por su impacto directo en la mejora del score CIS general. | CU-ANA-05 | Consultor | Media | 5 | Sin empezar |
 
 ---
 
-## 🗓️ PROPUESTA DE SPRINTS ACTUALIZADA (Cronograma IS2)
+## 🗓️ PROPUESTA DE SPRINTS (Cronograma IS2)
 > Fecha de entrega: mediados de octubre 2026 (~8 semanas)
 
 | SPRINT | PERÍODO | FOCO | HISTORIAS INCLUIDAS |
 |--------|---------|------|---------------------|
-| **Sprint 1** | Semanas 2–3 | Autenticación Segura (JWT/2FA) y Gestión CRUD del Threat Intelligence Center. | PB-02, PB-07, PB-08, PB-62, PB-63, PB-71, PB-72, PB-73, PB-74 |
-| **Sprint 2** | Semanas 4–6 | Visualización Analítica (Dashboards Plotly, Heatmap) y Extracción Asíncrona de Logs. | PB-26, PB-27, PB-37, PB-38, PB-39, PB-40, PB-42, PB-44, PB-65, PB-70 |
-| **Sprint 3** | Semanas 7–8 | Inteligencia Forense (Timeline FIM, Patch Intel), Kill Chain (MITRE), validación HITL y CIS Benchmark. | PB-48, PB-56, PB-64, PB-66, PB-67, PB-68, PB-69 |
+| **Sprint 1** | Semanas 2–3 | Autenticación Segura (JWT/2FA) y Gestión CRUD del Threat Intelligence Center. | PB-01 a PB-26 |
+| **Sprint 2** | Semanas 4–6 | Visualización Analítica (Dashboards Plotly, Heatmap) y Extracción Asíncrona de Logs. | PB-27 a PB-51 |
+| **Sprint 3** | Semanas 7–8 | Inteligencia Forense (Timeline FIM, Patch Intel), validación HITL y CIS Benchmark. | PB-52 a PB-70 |
 
 ---
 
