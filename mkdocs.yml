@@ -77,6 +77,6 @@ nav:
     - Design System UI/UX (Dark CTI): architecture/ui_ux_design_system.md
   - 📋 Scrum & Ágil:
     - Product Backlog V2: scrum/product_backlog.md
-    - Sprint 1 — Auth & Threat Intel: scrum/sprint_1_auth_threats.md
+    - Sprint 1 — Auth & Threat Intel: scrum/sprint_1_auth.md
     - Sprint 2 — Dashboards & Logs: scrum/sprint_2_dashboards.md
-    - Sprint 3 — ML & Forense: scrum/sprint_3_ml_forensics.md
+    - Sprint 3 — ML & Forense: scrum/sprint_3_forensics.md
