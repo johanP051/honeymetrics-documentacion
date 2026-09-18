@@ -80,6 +80,9 @@ nav:
     - Sprint 1 — Auth & Threat Intel: scrum/sprint_1_auth.md
     - Sprint 2 — Dashboards & Logs: scrum/sprint_2_dashboards.md
     - Sprint 3 — ML & Forense: scrum/sprint_3_forensics.md
+  - 🧠 Machine Learning v2 (Session-First):
+    - Arquitectura & Inferencia Tri-Modelo: ml/arquitectura_ml_v2.md
   - 🎓 Contexto Académico:
     - Pitch del Proyecto: academico/Pitch_HoneyMetrics.md
     - Anexo 1 (Formato Propuesta IS2): academico/Anexo_1_Formato_Propuesta.md
+
