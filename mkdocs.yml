@@ -1,88 +1,20 @@
-site_name: HoneyMetrics v2.0 — Documentación Enterprise
-site_description: Mapa arquitectónico, ágil y técnico de la plataforma CTI de monitoreo de Honeypots.
-site_author: Johan Sebastián Posada Beltrán — IS2 · UDEC Facatativá
-repo_url: https://github.com/johanP051/honeymetrics-documentacion
-repo_name: johanP051/honeymetrics-documentacion
-
+site_name: HoneyMetrics v2.0
 theme:
   name: material
-  language: es
   palette:
-    - scheme: slate
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-4
-        name: Cambiar a modo claro
-    - scheme: default
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-7
-        name: Cambiar a modo oscuro
+    scheme: slate
+    primary: amber
+    accent: amber
   features:
     - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.sections
-    - navigation.expand
-    - navigation.top
-    - navigation.footer
-    - search.highlight
-    - search.suggest
-    - content.code.copy
-    - content.code.annotate
-    - toc.follow
-  icon:
-    repo: fontawesome/brands/github
-    logo: material/shield-bug
-
-plugins:
-  - search:
-      lang: es
-
-markdown_extensions:
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed:
-      alternate_style: true
-  - pymdownx.highlight:
-      anchor_linenums: true
-      use_pygments: true
-  - pymdownx.inlinehilite
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - tables
-  - attr_list
-  - md_in_html
-  - toc:
-      permalink: true
-
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/johanP051
-
-extra_javascript:
-  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+    - toc.integrate
 
 nav:
-  - 🏠 Inicio: index.md
-  - 🏗️ Arquitectura:
-    - Diseño del Sistema (Polyrepo): architecture/system_design.md
-    - Design System UI/UX (Dark CTI): architecture/ui_ux_design_system.md
-  - 📋 Scrum & Ágil:
-    - Product Backlog V2: scrum/product_backlog.md
-    - Sprint 1 — Auth & Threat Intel: scrum/sprint_1_auth.md
-    - Sprint 2 — Dashboards & Logs: scrum/sprint_2_dashboards.md
-    - Sprint 3 — ML & Forense: scrum/sprint_3_forensics.md
-  - 🧠 Machine Learning v2 (Session-First):
-    - Arquitectura & Inferencia Tri-Modelo: ml/arquitectura_ml_v2.md
-  - 🎓 Contexto Académico:
-    - Pitch del Proyecto: academico/Pitch_HoneyMetrics.md
-    - Anexo 1 (Formato Propuesta IS2): academico/Anexo_1_Formato_Propuesta.md
-
+  - 🚀 Pitch Comercial: index.md
+  - 📚 Manual de Usuario: manual-usuario.md
+  - ⚙️ Manual Técnico: manual-tecnico.md
+  - 🗺️ Matriz de Cambios: matriz-cambios.md
+  - 🗄️ Diccionario de Datos: diccionario-datos.md
+  - 🚀 Guía de Despliegue: guia-despliegue.md
+  - 📋 Product Backlog: scrum/product_backlog.md
