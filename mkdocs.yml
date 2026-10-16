@@ -1,20 +1,77 @@
-site_name: HoneyMetrics v2.0
+site_name: HoneyMetrics v2.0 — Documentación Oficial CTI
+site_description: Documentación canónica de arquitectura, ingeniería UML, guías de operación y despliegue del ecosistema HoneyMetrics.
+site_author: Johan Sebastián Posada Beltrán — IS2 · UDEC Facatativá
+
 theme:
   name: material
+  language: es
   palette:
-    scheme: slate
-    primary: amber
-    accent: amber
+    # Modo Claro
+    - scheme: default
+      primary: amber
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Cambiar a modo oscuro
+    # Modo Oscuro
+    - scheme: slate
+      primary: amber
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Cambiar a modo claro
   features:
+    - navigation.instant
+    - navigation.tracking
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
-    - toc.integrate
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+
+plugins:
+  - search:
+      lang: es
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - tables
+  - md_in_html
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - https://unpkg.com/mermaid@10/dist/mermaid.min.js
 
 nav:
-  - 🚀 Pitch Comercial: index.md
+  - 🏠 Inicio & Pitch: index.md
+  - 📐 Ingeniería UML v2.0:
+      - Catálogo General UML (SD, CU, AD, Clases, MER): uml/index.md
+      - Especificación IEEE 830 de Casos de Uso: uml/MD_Definiciones/Diagramas_Casos_de_Uso.md
   - 📚 Manual de Usuario: manual-usuario.md
-  - ⚙️ Manual Técnico: manual-tecnico.md
-  - 🗺️ Matriz de Cambios: matriz-cambios.md
+  - 🛠️ Manual Técnico & Arquitectura: manual-tecnico.md
   - 🗄️ Diccionario de Datos: diccionario-datos.md
-  - 🚀 Guía de Despliegue: guia-despliegue.md
-  - 📋 Product Backlog: scrum/product_backlog.md
+  - 🚀 Despliegue & Operaciones: guia-despliegue.md
+  - 📋 Gestión Ágil (Scrum):
+      - Product Backlog: scrum/product_backlog.md
+      - Matriz de Cambios: matriz-cambios.md
