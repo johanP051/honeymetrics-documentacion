@@ -190,7 +190,7 @@ A continuación se detalla cada una de las variables presentes en `.env.example`
 | `WAZUH_INDEXER_PASSWORD` | `"CredencialSeguraWazuh"` | Sí | Contraseña de autenticación básica (Basic Auth) para el indexador OpenSearch. | Peticiones hacia Wazuh fallan por autenticación, impidiendo alimentar el CTI Center. |
 | `WAZUH_CA_CERT_PATH` | `"/etc/ssl/root-ca.pem"` | No | Ruta absoluta al certificado CA raíz para validar la cadena TLS del clúster Wazuh. | Si no se provee y `WAZUH_TLS_VERIFY=True`, las solicitudes arrojan error de validación SSL. |
 | `WAZUH_TLS_VERIFY` | `True` | Sí | Bandera que exige validación criptográfica de certificados en las peticiones HTTPS a Wazuh. | Si es `False`, expone la comunicación interna a ataques de intermediario (MitM). |
-| `TELEGRAM_BOT_TOKEN` | `"8844021545:AA..."` | Sí | Token HTTP API provisto por `@BotFather` para controlar el bot institucional. | Impide el despacho de alertas críticas y la recepción de aprobaciones en el canal Telegram. |
+| `TELEGRAM_BOT_TOKEN` | `"<TU_TELEGRAM_BOT_TOKEN>"` | Sí | Token HTTP API provisto por `@BotFather` para controlar el bot institucional. | Impide el despacho de alertas críticas y la recepción de aprobaciones en el canal Telegram. |
 | `ADMIN_TELEGRAM_CHAT_ID` | `"1307616056"` | Sí | Identificador numérico del chat del administrador global que recibe solicitudes HITL. | Las aprobaciones interactivas de descargas masivas no llegan a ningún destinatario. |
 | `TELEGRAM_WEBHOOK_SECRET` | `"SecretoAntiSSRF2026#"` | Sí | Secreto compartido validado contra el encabezado `X-Telegram-Bot-Api-Secret-Token`. | Permite a adversarios falsificar peticiones POST y aprobar descargas o bloqueos espurios. |
 
