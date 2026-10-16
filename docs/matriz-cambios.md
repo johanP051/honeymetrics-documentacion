@@ -31,3 +31,7 @@ Esta matriz relaciona cada requerimiento o funcionalidad del sistema con su ubic
 | 📝 **Esquemas de Entrada & DTOs** | Esquemas Pydantic para Login, MFA y Roles | DTOs de Auth y Usuarios | `app/schemas/auth.py`, `app/schemas/user_admin.py` |
 | 🐳 **DevOps & Despliegue** | Imagen Docker (Python 3.12, usuario no root) | Configuración Docker | `Dockerfile` |
 | 🐳 **DevOps & Despliegue** | Mapeo de puertos, Cloudflare Tunnel y Base de Datos | Orquestador Compose | `docker-compose.yml`, `docker-compose.prod.yml` |
+| 🗄️ **Modelos ORM (SQLAlchemy)** | Modificar Bóveda Forense (Auditoría inmutable de IOCs eliminados) | Modelo de Bóveda | `app/models/threat.py` (`ThreatIPVault`) |
+| 🔒 **Seguridad & Autenticación** | Activar/Desactivar validación global de MFA (Switch Global) | Configuraciones Centrales | `app/core/config.py` (`MFA_ENABLED`) |
+| 📨 **Telegram & Webhooks** | Interceptar respuestas (Callbacks) de Aprobación/Rechazo de Telegram | Router de Webhooks | `app/api/v1/endpoints/webhook_router.py` (o `logs.py`) |
+| 🐳 **DevOps & Despliegue** | Modificar red backend, red proxy y políticas de reinicio | Orquestador Compose | `docker-compose.yml` |
