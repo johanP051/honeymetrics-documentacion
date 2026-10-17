@@ -7,7 +7,7 @@
 
 > [!IMPORTANT]
 > **Reglas del Profesor — Convención Obligatoria**
-> - Código: `PB-HM-01` a `PB-HM-80`.
+> - Código: `PB-HM-01` a `PB-HM-70` (Fase 1 Oficial) / `PB-HM-71` a `PB-HM-80` (Enterprise Fase 2).
 > - Perspectiva: **QUÉ** necesita el usuario, **nunca** el CÓMO técnico.
 > - CRUD: cada operación = ítem separado.
 > - Trazabilidad HU: `PB-HM-01.1`, `PB-HM-01.2` ... (Hoja 2 - HU).
@@ -15,7 +15,7 @@
 > - Prioridad: Alta / Media / Baja.
 > - Fibonacci: 1, 2, 3, 5, 8, 13.
 
-## 🗂️ HOJA 1 — PRODUCT BACKLOG (PB-HM-01 a PB-HM-80)
+## 🗂️ HOJA 1 — PRODUCT BACKLOG (PB-HM-01 a PB-HM-70)
 
 | Código | Descripción (Lenguaje de Negocio) | CU Origen | Actor | Prioridad | Puntos | Estado |
 |---|---|---|---|---|---|---|
@@ -95,11 +95,12 @@
 ## 🗓️ PROPUESTA DE SPRINTS (Cronograma IS2)
 > Fecha de entrega: mediados de octubre 2026 (~8 semanas)
 
-| SPRINT | PERÍODO | FOCO | HISTORIAS INCLUIDAS |
-|--------|---------|------|---------------------|
-| **Sprint 1** | Semanas 2–3 | Autenticación Segura (JWT/2FA) y Gestión CRUD del Threat Intelligence Center. | PB-01 a PB-26 |
-| **Sprint 2** | Semanas 4–6 | Visualización Analítica (Dashboards Plotly, Heatmap) y Extracción Asíncrona de Logs. | PB-27 a PB-51 |
-| **Sprint 3** | Semanas 7–8 | Inteligencia Forense (Timeline FIM, Patch Intel), validación HITL y CIS Benchmark. | PB-52 a PB-70 |
+| SPRINT | PERÍODO | FOCO | HISTORIAS INCLUIDAS | PUNTOS (SP) |
+|--------|---------|------|---------------------|:-----------:|
+| **Sprint 1** | Semanas 2–3 | Autenticación Segura (JWT/2FA) y Gestión CRUD del Threat Intelligence Center. | `PB-HM-01` a `PB-HM-25` + `PB-HM-61` (26 HUs) | **87 SP** |
+| **Sprint 2** | Semanas 4–6 | Visualización Analítica (Dashboards Plotly, Heatmap) y Extracción Asíncrona de Logs. | `PB-HM-26` a `PB-HM-47` + `PB-HM-62`, `PB-HM-63`, `PB-HM-70` (25 HUs) | **127 SP** |
+| **Sprint 3** | Semanas 7–8 | Inteligencia Forense (Timeline FIM, Patch Intel), Rendimiento ML, validación HITL y CIS Benchmark. | `PB-HM-48` a `PB-HM-60` + `PB-HM-64` a `PB-HM-69` (19 HUs) | **92 SP** |
+| **TOTAL** | | **Product Backlog Consolidado Fase 1 (70 Historias de Usuario)** | | **306 SP** |
 
 ---
 

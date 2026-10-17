@@ -1,40 +1,38 @@
-site_name: HoneyMetrics v2.0 — Documentación Enterprise
-site_description: Mapa arquitectónico, ágil y técnico de la plataforma CTI de monitoreo de Honeypots.
+site_name: HoneyMetrics v2.0 — Documentación Oficial CTI
+site_description: Documentación canónica de arquitectura, ingeniería UML, guías de operación y despliegue del ecosistema HoneyMetrics.
 site_author: Johan Sebastián Posada Beltrán — IS2 · UDEC Facatativá
-repo_url: https://github.com/johanP051/honeymetrics-documentacion
-repo_name: johanP051/honeymetrics-documentacion
 
 theme:
   name: material
   language: es
   palette:
-    - scheme: slate
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-4
-        name: Cambiar a modo claro
+    # Modo Claro
     - scheme: default
-      primary: custom
-      accent: custom
+      primary: amber
+      accent: amber
       toggle:
         icon: material/brightness-7
         name: Cambiar a modo oscuro
+    # Modo Oscuro
+    - scheme: slate
+      primary: amber
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Cambiar a modo claro
   features:
+    - navigation.instant
+    - navigation.tracking
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
     - navigation.top
-    - navigation.footer
-    - search.highlight
     - search.suggest
+    - search.highlight
     - content.code.copy
     - content.code.annotate
     - toc.follow
-  icon:
-    repo: fontawesome/brands/github
-    logo: material/shield-bug
 
 plugins:
   - search:
@@ -56,27 +54,24 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.tasklist:
       custom_checkbox: true
-  - tables
   - attr_list
+  - tables
   - md_in_html
   - toc:
       permalink: true
-
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/johanP051
 
 extra_javascript:
   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
 
 nav:
-  - 🏠 Inicio: index.md
-  - 🏗️ Arquitectura:
-    - Diseño del Sistema (Polyrepo): architecture/system_design.md
-    - Design System UI/UX (Dark CTI): architecture/ui_ux_design_system.md
-  - 📋 Scrum & Ágil:
-    - Product Backlog V2: scrum/product_backlog.md
-    - Sprint 1 — Auth & Threat Intel: scrum/sprint_1_auth_threats.md
-    - Sprint 2 — Dashboards & Logs: scrum/sprint_2_dashboards.md
-    - Sprint 3 — ML & Forense: scrum/sprint_3_ml_forensics.md
+  - 🏠 Inicio & Pitch: index.md
+  - 📐 Ingeniería UML v2.0:
+      - Catálogo General UML (SD, CU, AD, Clases, MER): uml/index.md
+      - Especificación IEEE 830 de Casos de Uso: uml/MD_Definiciones/Diagramas_Casos_de_Uso.md
+  - 📚 Manual de Usuario: manual-usuario.md
+  - 🛠️ Manual Técnico & Arquitectura: manual-tecnico.md
+  - 🗄️ Diccionario de Datos: diccionario-datos.md
+  - 🚀 Despliegue & Operaciones: guia-despliegue.md
+  - 📋 Gestión Ágil (Scrum):
+      - Product Backlog: scrum/product_backlog.md
+      - Matriz de Cambios: matriz-cambios.md
