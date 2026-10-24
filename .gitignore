@@ -1,2 +1,7 @@
 .venv/
 site/
+docs/entregables_profesor/
+node_modules/
+fix_points.py
+migrate.py
+trello_honeymetrics_export_2026-10-07.json
