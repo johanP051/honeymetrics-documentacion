@@ -583,8 +583,30 @@ function buildGoldNoteBox(noteText) {
 }
 
 const SCREENSHOTS_DIR = path.resolve(__dirname, "../docs/assets/screenshots");
+const DIAGRAMS_DIR = path.resolve(__dirname, "../docs/assets/diagrams");
 
 function getImageDimensions(imgPath) {
+  try {
+    const buf = fs.readFileSync(imgPath);
+    if (buf.length >= 24 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47) {
+      const origW = buf.readUInt32BE(16);
+      const origH = buf.readUInt32BE(20);
+      if (origW > 0 && origH > 0) {
+        if (imgPath.includes("mobile") || imgPath.includes("390") || origH / origW > 1.8) {
+          const maxW = 230;
+          const maxH = 480;
+          const scale = Math.min(maxW / origW, maxH / origH, 1.0);
+          return { width: Math.round(origW * scale), height: Math.round(origH * scale) };
+        }
+        const maxW = 540;
+        const maxH = 380;
+        const scale = Math.min(maxW / origW, maxH / origH, 1.0);
+        return { width: Math.round(origW * scale), height: Math.round(origH * scale) };
+      }
+    }
+  } catch (err) {
+    // fallback a lógica estática
+  }
   if (imgPath.includes("mobile") || imgPath.includes("390")) {
     return { width: 220, height: 476 };
   }
@@ -607,45 +629,114 @@ function buildRealImageParagraph(imgPath) {
   });
 }
 
-function resolvePlaceholderToImage(placeholderText, nextLine) {
+function resolvePlaceholderToImage(placeholderText, nextLine, docFile = "") {
   const combined = (placeholderText + " " + (nextLine || "")).toLowerCase();
 
-  if (combined.includes("figura 1b") || combined.includes("móvil") || combined.includes("mobile")) {
-    return path.join(SCREENSHOTS_DIR, "fig01b_mobile_landing.png");
+  // 1. DICCIONARIO DE DATOS (02_Diccionario_Datos_HoneyMetrics_v2.md)
+  // Regla estricta: ÚNICAMENTE MER. Cero pantallazos de interfaz de usuario.
+  if (docFile.includes("02_Diccionario_Datos")) {
+    if (combined.includes("mer") || combined.includes("entidad-relación") || combined.includes("modelo entidad")) {
+      return path.join(DIAGRAMS_DIR, "mer_honeymetrics_v2.png");
+    }
+    return null;
   }
-  if (combined.includes("figura 1") || combined.includes("inicio de sesión") || combined.includes("formulario de acceso")) {
-    return path.join(SCREENSHOTS_DIR, "fig01_login.png");
+
+  // 2. MANUAL TÉCNICO BACKEND (01_Manual_Tecnico_HoneyMetrics_v2.md)
+  // Regla estricta: ÚNICAMENTE diagramas UML (casos de uso, secuencia, clases) y MER. Cero capturas de frontend.
+  if (docFile.includes("01_Manual_Tecnico_HoneyMetrics_v2")) {
+    if (combined.includes("mer") || combined.includes("entidad-relación") || combined.includes("modelo entidad")) {
+      return path.join(DIAGRAMS_DIR, "mer_honeymetrics_v2.png");
+    }
+    if (combined.includes("administrador") && (combined.includes("caso") || combined.includes("cu"))) {
+      return path.join(DIAGRAMS_DIR, "cu05_administracion.png");
+    }
+    if (combined.includes("consultor") && (combined.includes("caso") || combined.includes("cu"))) {
+      return path.join(DIAGRAMS_DIR, "cu03_lista_negra.png");
+    }
+    if (combined.includes("analista") && (combined.includes("caso") || combined.includes("cu"))) {
+      return path.join(DIAGRAMS_DIR, "cu04_exportacion_logs.png");
+    }
+    if (combined.includes("directivo") && (combined.includes("caso") || combined.includes("cu"))) {
+      return path.join(DIAGRAMS_DIR, "cu02_dashboard_botnets.png");
+    }
+    if (combined.includes("rf01") || (combined.includes("login") && combined.includes("mfa"))) {
+      return path.join(DIAGRAMS_DIR, "rf01_auth_mfa.png");
+    }
+    if (combined.includes("rf02") || combined.includes("recuperación")) {
+      return path.join(DIAGRAMS_DIR, "rf01_auth_mfa.png");
+    }
+    if (combined.includes("rf03") || combined.includes("crud de ioc") || combined.includes("vault forense")) {
+      return path.join(DIAGRAMS_DIR, "rf03_registrar_ip.png");
+    }
+    if (combined.includes("rf04") || combined.includes("wazuh") || combined.includes("reporte pdf")) {
+      return path.join(DIAGRAMS_DIR, "rf02_dashboard_soc.png");
+    }
+    if (combined.includes("rf05") || combined.includes("exportación jsonl") || combined.includes("telegram")) {
+      return path.join(DIAGRAMS_DIR, "rf08_exportacion_telegram.png");
+    }
+    return null;
   }
-  if (combined.includes("figura 2") || combined.includes("mfa") || combined.includes("código qr") || combined.includes("enrolamiento")) {
-    return path.join(SCREENSHOTS_DIR, "fig02_mfa_enrolamiento.png");
+
+  // 3. MANUAL TÉCNICO FRONTEND (04_Manual_Tecnico_Frontend_HoneyMetrics_v2.md)
+  // Regla estricta: Solo diagramas de contexto, clases y secuencia frontend. Cero capturas de UI.
+  if (docFile.includes("04_Manual_Tecnico_Frontend")) {
+    if (combined.includes("login y mfa") || combined.includes("setup mfa")) {
+      return path.join(DIAGRAMS_DIR, "rf01_auth_mfa.png");
+    }
+    if (combined.includes("dashboard y fallback")) {
+      return path.join(DIAGRAMS_DIR, "rf02_dashboard_soc.png");
+    }
+    if (combined.includes("pdf client-side")) {
+      return path.join(DIAGRAMS_DIR, "rf10_descarga_logs.png");
+    }
+    if (combined.includes("diagrama de contexto") || combined.includes("contexto frontend")) {
+      return path.join(DIAGRAMS_DIR, "cu00_jerarquia_actores.png");
+    }
+    return null;
   }
-  if (combined.includes("figura 3") || combined.includes("recuperación") || combined.includes("redefinición") || combined.includes("olvidó")) {
-    return path.join(SCREENSHOTS_DIR, "fig03_recuperacion_clave.png");
+
+  // 4. MANUAL DE USUARIO (03_Manual_Usuario_HoneyMetrics_v2.md)
+  // Regla estricta: ÚNICAMENTE capturas reales de la interfaz de usuario (Screenshots).
+  if (docFile.includes("03_Manual_Usuario")) {
+    if (combined.includes("figura 1b") || combined.includes("móvil") || combined.includes("mobile")) {
+      return path.join(SCREENSHOTS_DIR, "fig01b_mobile_landing.png");
+    }
+    if (combined.includes("figura 1") || combined.includes("inicio de sesión") || combined.includes("formulario de acceso")) {
+      return path.join(SCREENSHOTS_DIR, "fig01_login.png");
+    }
+    if (combined.includes("figura 2") || combined.includes("mfa") || combined.includes("código qr") || combined.includes("enrolamiento")) {
+      return path.join(SCREENSHOTS_DIR, "fig02_mfa_enrolamiento.png");
+    }
+    if (combined.includes("figura 3") || combined.includes("recuperación") || combined.includes("redefinición") || combined.includes("olvidó")) {
+      return path.join(SCREENSHOTS_DIR, "fig03_recuperacion_clave.png");
+    }
+    if (combined.includes("figura 4") || combined.includes("preferencias") || combined.includes("fortaleza") || combined.includes("cambio de contraseña") || combined.includes("perfil de usuario")) {
+      return path.join(SCREENSHOTS_DIR, "fig07_admin_usuarios_roles.png");
+    }
+    if (combined.includes("figura 5") || combined.includes("telegram") || combined.includes("userinfobot")) {
+      return path.join(SCREENSHOTS_DIR, "fig01b_mobile_landing.png");
+    }
+    if (combined.includes("figura 6") || combined.includes("dashboard") || combined.includes("kpis") || combined.includes("panorámica")) {
+      return path.join(SCREENSHOTS_DIR, "fig04_dashboard_cti.png");
+    }
+    if (combined.includes("figura 7") || combined.includes("threat center") || combined.includes("ioc") || combined.includes("indicadores") || combined.includes("tabla del threat center")) {
+      return path.join(SCREENSHOTS_DIR, "fig05_threat_center_ioc.png");
+    }
+    if (combined.includes("figura 8") || combined.includes("solicitud") || combined.includes("extracciones") || combined.includes("historial de solicitudes")) {
+      return path.join(SCREENSHOTS_DIR, "fig06_exportacion_logs_modal.png");
+    }
+    if (combined.includes("figura 9") || combined.includes("aprobación") || combined.includes("gobernanza móvil") || combined.includes("notificación")) {
+      return path.join(SCREENSHOTS_DIR, "fig09_analista_logs_pdf.png");
+    }
+    if (combined.includes("figura 10") || combined.includes("consultor") || combined.includes("bóveda")) {
+      return path.join(SCREENSHOTS_DIR, "fig08_consultor_cti_boveda.png");
+    }
+    if (combined.includes("figura 11") || combined.includes("directivo") || combined.includes("resumen")) {
+      return path.join(SCREENSHOTS_DIR, "fig10_directivo_resumen.png");
+    }
+    return null;
   }
-  if (combined.includes("figura 4") || combined.includes("preferencias") || combined.includes("fortaleza") || combined.includes("cambio de contraseña")) {
-    return path.join(SCREENSHOTS_DIR, "fig07_admin_usuarios_roles.png");
-  }
-  if (combined.includes("figura 5") || combined.includes("telegram") || combined.includes("userinfobot")) {
-    return path.join(SCREENSHOTS_DIR, "fig01b_mobile_landing.png");
-  }
-  if (combined.includes("figura 6") || combined.includes("dashboard") || combined.includes("kpis") || combined.includes("panorámica")) {
-    return path.join(SCREENSHOTS_DIR, "fig04_dashboard_cti.png");
-  }
-  if (combined.includes("figura 7") || combined.includes("threat center") || combined.includes("ioc") || combined.includes("indicadores")) {
-    return path.join(SCREENSHOTS_DIR, "fig05_threat_center_ioc.png");
-  }
-  if (combined.includes("figura 8") || combined.includes("solicitud") || combined.includes("extracciones") || combined.includes("historial de solicitudes")) {
-    return path.join(SCREENSHOTS_DIR, "fig06_exportacion_logs_modal.png");
-  }
-  if (combined.includes("figura 9") || combined.includes("aprobación") || combined.includes("gobernanza móvil") || combined.includes("notificación")) {
-    return path.join(SCREENSHOTS_DIR, "fig09_analista_logs_pdf.png");
-  }
-  if (combined.includes("figura 10") || combined.includes("consultor") || combined.includes("bóveda")) {
-    return path.join(SCREENSHOTS_DIR, "fig08_consultor_cti_boveda.png");
-  }
-  if (combined.includes("figura 11") || combined.includes("directivo") || combined.includes("resumen")) {
-    return path.join(SCREENSHOTS_DIR, "fig10_directivo_resumen.png");
-  }
+
   return null;
 }
 
@@ -691,7 +782,7 @@ function buildFigurePlaceholderBox(placeholderText) {
 // ---------------------------------------------------------------------------
 // MOTOR PARSER DE MARKDOWN A ELEMENTOS DOCX
 // ---------------------------------------------------------------------------
-function convertMarkdownToDocxElements(mdContent, mode = "technical") {
+function convertMarkdownToDocxElements(mdContent, mode = "technical", docFile = "") {
   const isGold = mode === "user";
   const lines = mdContent.replace(/\r\n/g, "\n").split("\n");
   const elements = [];
@@ -791,9 +882,11 @@ function convertMarkdownToDocxElements(mdContent, mode = "technical") {
       let imgPath = imgMatch[2];
       if (!path.isAbsolute(imgPath)) {
         const candidates = [
-          path.resolve("/media/sebas/Exdrive/Workspace/honeymetrics-backend/docs", imgPath),
+          path.resolve(__dirname, "../docs", imgPath),
+          path.resolve(DIAGRAMS_DIR, path.basename(imgPath)),
           path.resolve(SCREENSHOTS_DIR, path.basename(imgPath)),
-          path.resolve(ENTREGABLES_DIR, imgPath)
+          path.resolve(ENTREGABLES_DIR, imgPath),
+          path.resolve("/media/sebas/Exdrive/Workspace/honeymetrics-backend/docs", imgPath)
         ];
         for (const c of candidates) {
           if (fs.existsSync(c)) {
@@ -815,7 +908,7 @@ function convertMarkdownToDocxElements(mdContent, mode = "technical") {
     if (line.startsWith("[FIGURA PENDIENTE:") || line.startsWith("[CAPTURA PENDIENTE:") || line.startsWith("[Captura ")) {
       const placeholderText = line.slice(1, -1);
       const nextLine = lines[i + 1] || "";
-      const resolvedImg = resolvePlaceholderToImage(placeholderText, nextLine);
+      const resolvedImg = resolvePlaceholderToImage(placeholderText, nextLine, docFile);
       if (resolvedImg && fs.existsSync(resolvedImg)) {
         elements.push(buildRealImageParagraph(resolvedImg));
       } else {
@@ -1016,7 +1109,7 @@ async function compileAllDeliverables() {
     }
 
     const mdContent = fs.readFileSync(mdPath, "utf-8");
-    const bodyElements = convertMarkdownToDocxElements(mdContent, item.mode);
+    const bodyElements = convertMarkdownToDocxElements(mdContent, item.mode, item.mdFile);
 
     let coverElements = [];
     if (item.mode === "technical") {

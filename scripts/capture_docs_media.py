@@ -17,9 +17,10 @@ from datetime import datetime, timezone, timedelta
 import jwt
 from playwright.sync_api import sync_playwright
 
-BASE_URL = os.environ.get("HM_FRONTEND_URL", "http://localhost:5173")
-SCREENSHOTS_DIR = "/media/sebas/Exdrive/Workspace/honeymetrics-backend/docs/assets/screenshots"
-VIDEOS_DIR = "/media/sebas/Exdrive/Workspace/honeymetrics-backend/docs/assets/videos"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DOCS_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "../docs"))
+SCREENSHOTS_DIR = os.path.join(DOCS_DIR, "assets", "screenshots")
+VIDEOS_DIR = os.path.join(DOCS_DIR, "assets", "videos")
 TEMP_VIDEOS_DIR = "/tmp/hm_playwright_videos"
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev_supersecretkey_honeymetrics_local_2026_udec")
 ALGORITHM = "HS256"
@@ -421,14 +422,22 @@ def flow_04_logs_export_y_pdf(page):
     human_click(page, exp_btn)
     page.wait_for_timeout(1200)
 
-    # 2. Rango de fechas reales (4 días)
+    # 2. Selección paso a paso de Rango de Fechas con cursor visible y tipeo progresivo
     start_in = page.locator("#export-start-date")
-    start_in.fill("2026-10-18")
-    page.wait_for_timeout(300)
+    smooth_hover(page, start_in, steps=28)
+    human_click(page, start_in)
+    page.wait_for_timeout(400)
+    start_in.fill("")
+    start_in.press_sequentially("2026-10-18", delay=55)
+    page.wait_for_timeout(800)
 
     end_in = page.locator("#export-end-date")
-    end_in.fill("2026-10-22")
-    page.wait_for_timeout(500)
+    smooth_hover(page, end_in, steps=28)
+    human_click(page, end_in)
+    page.wait_for_timeout(400)
+    end_in.fill("")
+    end_in.press_sequentially("2026-10-22", delay=55)
+    page.wait_for_timeout(800)
 
     # 3. Enviar solicitud de exportación
     submit_exp = page.locator("div[role='dialog'] button[type='submit']")
@@ -615,9 +624,10 @@ def main():
             ("04_logs_export_y_pdf.mp4", "20s", flow_04_logs_export_y_pdf),
             ("05_admin_usuarios_y_roles.mp4", "22s", flow_05_admin_usuarios_y_roles),
         ]
+        target_filter = sys.argv[1] if len(sys.argv) > 1 else "04_logs_export_y_pdf.mp4"
         for fname, dur, func in flows:
             target = os.path.join(VIDEOS_DIR, fname)
-            if not os.path.exists(target) or fname == "05_admin_usuarios_y_roles.mp4":
+            if target_filter == "all" or target_filter in fname or not os.path.exists(target):
                 record_video_flow(p, fname, dur, func)
 
     # Limpieza final de la base de datos

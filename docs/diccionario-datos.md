@@ -36,143 +36,98 @@ Este documento establece el mapa relacional y el diccionario de datos de la infr
 
 ## 1. Modelo Entidad-Relación (MER)
 
-El sistema HoneyMetrics v2.0 está organizado en **11 tablas operativas** distribuidas en 4 módulos funcionales.
+El esquema de base de datos de HoneyMetrics v2.0 está compuesto por **8 tablas físicas implementadas** en PostgreSQL 16 Alpine mediante el ORM SQLAlchemy y versionadas con migraciones automáticas de Alembic.
 
-> [!NOTE]
-> El Módulo 4 define también la tabla `ml_model_registry`, correspondiente al roadmap de Fase 2 (analítica avanzada) que está fuera del alcance de la entrega académica actual. Se excluye de este diccionario.
+![Figura 1. Modelo Entidad-Relación Físico HoneyMetrics v2.0](assets/diagrams/mer_honeymetrics_v2.png)
+*Figura 1. Modelo Entidad-Relación Físico HoneyMetrics v2.0 (8 tablas físicas en PostgreSQL 16).*
 
 ```mermaid
 erDiagram
     ROLES {
         int id PK
-        varchar_50 name "UNIQUE NOT NULL"
-        varchar_255 description
-        timestamp created_at "DEFAULT now()"
+        varchar name "UNIQUE NOT NULL"
+        varchar description
     }
 
     PERMISSIONS {
         int id PK
-        varchar_100 code "UNIQUE NOT NULL"
-        varchar_150 name "NOT NULL"
-        varchar_50 module "NOT NULL"
+        varchar code "UNIQUE NOT NULL"
+        varchar name "NOT NULL"
+        varchar description
+        varchar module "NOT NULL"
+        timestamp created_at "NOT NULL"
     }
 
     ROLE_PERMISSIONS {
-        int id PK
-        int role_id FK
-        int permission_id FK
+        int role_id PK,FK
+        int permission_id PK,FK
     }
 
     USERS {
         int id PK
-        varchar_255 email "UNIQUE NOT NULL"
-        varchar_255 full_name "NOT NULL"
-        varchar_255 hashed_password "NOT NULL"
-        int role_id FK
-        boolean is_active "DEFAULT true"
-        boolean must_change_password "DEFAULT true"
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    USER_PROFILES {
-        int id PK
-        int user_id FK "UNIQUE"
-        varchar_255 avatar_url
-        varchar_20 theme_preference "DEFAULT dark"
-        varchar_50 timezone "DEFAULT America/Bogota"
-        boolean is_mfa_enabled "DEFAULT false"
-        varchar_255 totp_secret
-        varchar_50 telegram_chat_id
-        varchar_255 reset_token
+        varchar email "UNIQUE NOT NULL"
+        varchar hashed_password "NOT NULL"
+        int role_id FK "NOT NULL"
+        boolean is_active
+        boolean must_change_password
+        varchar totp_secret
+        boolean is_mfa_enabled
+        varchar reset_token
         timestamp reset_token_expires
+        timestamp created_at
+        int auth_version "NOT NULL DEFAULT 0"
     }
 
     THREAT_IPS {
         int id PK
         varchar_45 ip "UNIQUE NOT NULL"
-        varchar_20 type "DEFAULT IPv4"
-        varchar_100 country "DEFAULT Unknown"
+        varchar_20 type "NOT NULL"
+        varchar_100 country "NOT NULL"
         int threat_score "NOT NULL"
         varchar_50 category "NOT NULL"
-        threat_status status "DEFAULT Active"
+        varchar_30 status "NOT NULL"
         text notes
-        timestamp created_at
-        timestamp updated_at
+        timestamp created_at "NOT NULL"
+        timestamp updated_at "NOT NULL"
     }
 
-    BLACKLIST_RECORDS {
+    THREAT_IPS_VAULT {
         int id PK
-        int threat_ip_id FK
-        int blocked_by_user_id FK
-        varchar_255 reason "NOT NULL"
-        varchar_100 attack_type "NOT NULL"
-        varchar_100 source_sensor "DEFAULT Honeypot Cowrie"
-        boolean is_active "DEFAULT true"
-        timestamp expires_at
-        timestamp created_at
-    }
-
-    BLACKLIST_AUDIT_VAULT {
-        int id PK
-        int deleted_by_user_id FK
-        varchar_45 original_ip "NOT NULL"
-        jsonb full_record_json "NOT NULL"
-        timestamp deleted_at "DEFAULT now()"
-    }
-
-    USER_SAVED_FILTERS {
-        int id PK
-        int user_id FK
-        varchar_100 name "NOT NULL"
-        jsonb filter_payload "NOT NULL"
-        timestamp created_at
+        int original_id "NOT NULL"
+        varchar_45 ip "NOT NULL"
+        varchar_20 type
+        varchar_100 country
+        int threat_score "NOT NULL"
+        varchar_50 category
+        varchar_30 status
+        text notes
+        timestamp created_at "NOT NULL"
+        timestamp deleted_at "NOT NULL"
+        int deleted_by_user_id
     }
 
     LOG_EXPORTS {
-        varchar_36 id PK "UUID v4"
-        int user_id FK
+        varchar_30 id PK
         date start_date "NOT NULL"
         date end_date "NOT NULL"
         varchar_60 date_range "NOT NULL"
-        int count "DEFAULT 0"
-        export_format file_format "DEFAULT JSONL"
-        export_status status "DEFAULT Pending"
-        varchar_255 file_path
-        bigint file_size_bytes
-        boolean is_massive "DEFAULT false"
-        int approved_by_user_id FK
-        varchar_30 approval_channel
-        varchar_50 telegram_message_id
-        timestamp created_at
-        timestamp updated_at
-        timestamp expires_at
+        int count "NOT NULL"
+        varchar_40 status "NOT NULL"
+        varchar_20 file_format "NOT NULL"
+        timestamp created_at "NOT NULL"
+        timestamp updated_at "NOT NULL"
     }
 
-    SECURITY_ALERTS {
-        bigint id PK
-        int threat_ip_id FK
-        alert_severity severity "NOT NULL"
-        varchar_100 alert_type "NOT NULL"
-        text description "NOT NULL"
-        boolean is_false_positive "DEFAULT false"
-        int reviewed_by_user_id FK
-        timestamp reviewed_at
-        timestamp created_at
+    REVOKED_TOKENS {
+        int id PK
+        varchar token_jti "UNIQUE NOT NULL"
+        timestamp expires_at "NOT NULL"
     }
 
-    ROLES ||--o{ USERS : "asigna"
-    ROLES ||--o{ ROLE_PERMISSIONS : "agrupa"
-    PERMISSIONS ||--o{ ROLE_PERMISSIONS : "incluye"
-    USERS ||--|| USER_PROFILES : "extiende (1:1)"
-    USERS ||--o{ BLACKLIST_RECORDS : "autoriza"
-    USERS ||--o{ USER_SAVED_FILTERS : "guarda"
-    USERS ||--o{ LOG_EXPORTS : "solicita"
-    USERS ||--o{ LOG_EXPORTS : "aprueba"
-    THREAT_IPS ||--o{ BLACKLIST_RECORDS : "origina"
-    THREAT_IPS ||--o{ SECURITY_ALERTS : "genera"
-    USERS ||--o{ SECURITY_ALERTS : "revisa"
-    USERS ||--o{ BLACKLIST_AUDIT_VAULT : "elimina"
+    ROLES ||--o{ USERS : "1:N (asigna rol)"
+    ROLES ||--o{ ROLE_PERMISSIONS : "1:N (asocia permisos)"
+    PERMISSIONS ||--o{ ROLE_PERMISSIONS : "1:N (detalla alcance)"
+    THREAT_IPS ..> THREAT_IPS_VAULT : "Archivado / No Repudio"
 ```
 
 ---

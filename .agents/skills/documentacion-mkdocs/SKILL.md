@@ -232,3 +232,23 @@ Para tareas que incluyan los criterios cuantitativos de esta sección, ejecutar 
 5. `mkdocs build --strict` exitoso sin errores ni advertencias.
 
 Resolver errores de configuración, advertencias editoriales o enlaces rotos antes de certificar el build. No crear DOCX salvo que se alcance Etapa 3 y el usuario la autorice expresamente.
+
+### 6.7 Protocolo de Aislamiento Gráfico Estricto en Compiladores DOCX
+
+Para evitar la contaminación cruzada de capturas y diagramas entre manuales académicos dispares, el compilador programático de entregables DOCX (`build_entregables_docx.js`) debe acatar estrictamente las siguientes reglas de aislamiento:
+
+1. **Desacoplamiento Estricto por Nombre de Documento (`docFile`):**
+   - El motor de resolución de marcadores `resolvePlaceholderToImage(placeholderText, nextLine, docFile)` debe recibir obligatoriamente el identificador del archivo que está compilando (`docFile`). Prohibido deducir la imagen basándose únicamente en el número de figura general (`Figura 1`, `Figura 2`), ya que cada documento tiene su propia numeración independiente.
+
+2. **Matriz de Asignación Exclusiva de Artefactos Visuales:**
+   - **`01_Manual_Tecnico_HoneyMetrics_v2.md`:** Acepta **únicamente** diagramas arquitectónicos UML (Casos de Uso por Rol `cu01`..`cu05`, Diagramas de Secuencia `rf01`..`rf08`, Diagrama de Clases de Arquitectura Limpia `main_class_diagram.png`) y el Modelo Entidad-Relación (`mer_honeymetrics_v2.png`). Queda **estrictamente prohibido** incrustar capturas de pantallas de interfaz de usuario final (login, dashboard, export modal).
+   - **`02_Diccionario_Datos_HoneyMetrics_v2.md`:** Acepta **únicamente** el Modelo Entidad-Relación oficial (`mer_honeymetrics_v2.png`). Queda **terminantemente prohibido** inyectar pantallazos de la aplicación web. Los marcadores de verificación de SPs o Triggers en DBeaver deben renderizarse como cajas placeholder estilizadas a menos que exista una captura de base de datos dedicada.
+   - **`03_Manual_Usuario_HoneyMetrics_v2.md`:** Acepta **únicamente** capturas reales de la interfaz de usuario en producción (`fig01_login.png`, `fig01b_mobile_landing.png`, `fig02_mfa_enrolamiento.png` hasta `fig10_directivo_resumen.png`). Cero diagramas StarUML de secuencia o modelos de base de datos.
+   - **`04_Manual_Tecnico_Frontend_HoneyMetrics_v2.md`:** Acepta **únicamente** diagramas de contexto, jerarquía de actores (`cu00_jerarquia_actores.png`) y diagramas de secuencia frontend. Cero capturas de interfaz final de usuario.
+
+3. **Escalado Proporcional Sin Distorsión de Aspecto:**
+   - Toda función de incrustación de imagen (`getImageDimensions`) debe inspeccionar los metadatos reales del archivo PNG (bytes `readUInt32BE(16)` y `readUInt32BE(20)`) y calcular un factor de escala uniforme `scale = Math.min(maxW / origW, maxH / origH, 1.0)`.
+   - Límites máximos estandarizados en página Carta:
+     - Diagramas horizontales y capturas Desktop: ancho máximo de `540 pt` y alto máximo de `380 pt`.
+     - Capturas móviles verticales (Mobile Viewport `390×844`): ancho máximo de `230 pt` y alto máximo de `480 pt`.
+   - Se prohíbe fijar dimensiones estáticas que deformen las relaciones de aspecto de diagramas o textos.
