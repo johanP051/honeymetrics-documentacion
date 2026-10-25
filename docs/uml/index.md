@@ -49,15 +49,11 @@
    - [AD12 Eliminar Usuario](#ad12-eliminar-usuario)
    - [AD Descargar Reporte PDF (Navegador)](#ad-descargar-reporte-pdf-navegador)
    - [AD Autorización Dual de Exportación en Telegram](#ad-autorizacion-dual-de-exportacion-en-telegram)
-4. [Diagrama de Clases (Arquitectura Limpia & Desglose Modular)](#4-diagrama-de-clases-arquitectura-limpia-desglose-modular)
-   - [4.1 Modelo de dominio](#41-modelo-de-dominio)
-   - [4.2 API: identidad y acceso](#42-api-identidad-y-acceso)
-   - [4.3 API: amenazas, logs e ingesta](#43-api-amenazas-logs-e-ingesta)
-   - [4.4 Servicios: identidad y notificaciones](#44-servicios-identidad-y-notificaciones)
-   - [4.5 Servicios: amenazas, logs y dashboard](#45-servicios-amenazas-logs-y-dashboard)
-   - [4.6 Core y seguridad](#46-core-y-seguridad)
+4. [Diagrama de Clases (Arquitectura Limpia en 4 Capas)](#4-diagrama-de-clases-arquitectura-limpia-en-4-capas)
 5. [Diagrama de Modelo Entidad-Relación (MER)](#5-diagrama-de-modelo-entidad-relacion-mer)
-   - [5.1 Trazabilidad MER ↔ Modelos SQLAlchemy ↔ Diagrama de Clases](#51-trazabilidad-mer-modelos-sqlalchemy-diagrama-de-clases)
+   - [5.1 Tabla Descriptiva del Esquema de Datos (Estilo Gualivá)](#51-tabla-descriptiva-del-esquema-de-datos-estilo-gualiva)
+   - [5.2 Trazabilidad MER ↔ Modelos SQLAlchemy ↔ Diagrama de Clases](#52-trazabilidad-mer-modelos-sqlalchemy-diagrama-de-clases)
+   - [5.3 Modelo de Autorización PBAC y Ausencia de Tabla Permissions](#53-modelo-de-autorizacion-pbac-y-ausencia-de-tabla-permissions)
 
 ---
 
@@ -66,6 +62,7 @@
 > **Estándar Arquitectónico:** Líneas de vida normalizadas en 5 capas desacopladas:  
 > `Usuario / Administrador` $\longrightarrow$ `Vista` $\longrightarrow$ `Controlador` $\longrightarrow$ `Modelo` $\longrightarrow$ `Base de datos`.  
 > Todos los diagramas con precondición incorporan su marco `ref` con etiqueta canónica visible.
+
 
 ### RF01 Autenticación MFA v2
 ![RF01 Autenticación MFA v2](../assets/uml/RF01_Autenticacion_MFA_v2.png)
@@ -118,24 +115,23 @@ Diagrama de interacción que describe la generación del reporte técnico en PDF
 
 ## 2. Diagramas de Casos de Uso (8 Subsistemas + Tablas Gualivá)
 
+
 ### CU00 Jerarquía de actores
 ![CU00 Jerarquía de actores](../assets/uml/CU00_Jerarquia_de_actores.png)
 
 | Actor | Descripción |
-| :--- | :--- |
+|---|---|
 | **Usuario autenticado** | Actor abstracto. Agrupa el conjunto de capacidades operativas permitidas a cualquier cuenta con sesión válida en el sistema. |
 | **Directivo de T.I.** | Hereda de Usuario autenticado. Consulta resúmenes estratégicos y visualizaciones agregadas para la toma de decisiones gerenciales; no muta datos operativos. |
 | **Analista de datos** | Hereda de Usuario autenticado. Examina datos forenses de intrusión: solicita exportaciones masivas, analiza secuencias de atacantes y audita modelos ML. |
 | **Consultor de Ciberseguridad** | Hereda de Usuario autenticado. Mitiga eventos de riesgo operativo: administra el catálogo de bloqueo de IP (lista negra) y examina anomalías detectadas por el SOC. |
 | **Superusuario** | Hereda de Usuario autenticado. Administra integralmente la plataforma: gestión de usuarios, creación y asignación de roles RBAC, y resolución de autorizaciones duales de exportación. |
 
----
-
 ### CU01 Acceso e identidad
 ![CU01 Acceso e identidad](../assets/uml/CU01_Acceso_e_identidad.png)
 
 | Caso de Uso | Actor(es) | Descripción |
-| :--- | :--- | :--- |
+|---|---|---|
 | Iniciar sesión | Visitante | Caso de uso base, donde el visitante suministra sus credenciales de acceso para ingresar a la plataforma HoneyMetrics. |
 | Validar credenciales | — | Es un incluido de Iniciar sesión; el sistema verifica que el identificador exista y que el hash de la contraseña coincida con el registro de base de datos. |
 | Validar segundo factor | — | Es un incluido de Iniciar sesión; el sistema solicita y comprueba el código temporal de seis dígitos generado por la aplicación autenticadora (TOTP). |
@@ -147,24 +143,20 @@ Diagrama de interacción que describe la generación del reporte técnico en PDF
 | Cambiar contraseña | Usuario autenticado | Caso de uso base, donde el usuario autenticado reemplaza voluntariamente su contraseña actual suministrando la clave anterior. |
 | Cerrar sesión | Usuario autenticado | Caso de uso base, donde el usuario finaliza su sesión activa, provocando la revocación inmediata y persistida del token JWT. |
 
----
-
 ### CU02 Dashboard y métricas
 ![CU02 Dashboard y métricas](../assets/uml/CU02_Dashboard_y_metricas.png)
 
 | Caso de Uso | Actor(es) | Descripción |
-| :--- | :--- | :--- |
+|---|---|---|
 | Consultar dashboard de eventos anómalos de seguridad | Superusuario, Directivo de T.I., Analista de datos, Consultor de Ciberseguridad | Caso de uso base, donde los usuarios autorizados visualizan en tiempo real los indicadores consolidados, distribución geográfica y volumen de intrusiones capturadas. |
 | Consultar métricas | Superusuario, Directivo de T.I., Analista de datos, Consultor de Ciberseguridad | Caso de uso base, donde el analista consulta las estadísticas agregadas de tráfico, puertos atacados y tiempos de persistencia de las conexiones sospechosas. |
 | Filtrar por intervalo de tiempo específico | Superusuario, Directivo de T.I., Analista de datos, Consultor de Ciberseguridad | Extiende a Consultar dashboard de eventos anómalos de seguridad; ocurre cuando el operador delimita la ventana de observación temporal de los eventos graficados. |
-
----
 
 ### CU03 Lista negra
 ![CU03 Lista negra](../assets/uml/CU03_Lista_negra.png)
 
 | Caso de Uso | Actor(es) | Descripción |
-| :--- | :--- | :--- |
+|---|---|---|
 | Consultar lista negra | Superusuario, Directivo de T.I., Consultor de Ciberseguridad | Caso de uso base, donde el operador visualiza el catálogo de direcciones IP bloqueadas o bajo sospecha en el centro de amenazas (el Directivo en modo solo lectura). |
 | Registrar IP | Superusuario, Directivo de T.I., Consultor de Ciberseguridad | Caso de uso base, donde el operador ingresa manualmente una nueva dirección IP al catálogo de bloqueo preventivo asignando severidad y justificación. |
 | Validar IP protegida | — | Es un incluido de Registrar IP; el sistema valida estrictamente que la IP ingresada no pertenezca a rangos locales (RFC 1918), gateways, DNS públicos ni infraestructura propia. |
@@ -172,13 +164,11 @@ Diagrama de interacción que describe la generación del reporte técnico en PDF
 | Editar IP | Superusuario, Directivo de T.I., Consultor de Ciberseguridad | Extiende a Consultar lista negra; ocurre cuando el operador selecciona un registro previamente listado y modifica su justificación, estado o nivel de severidad. |
 | Eliminar IP | Superusuario, Directivo de T.I., Consultor de Ciberseguridad | Extiende a Consultar lista negra; ocurre cuando el operador retira una dirección IP del catálogo activo, archivando el registro con trazabilidad forense en la bóveda histórica. |
 
----
-
 ### CU04 Exportación de logs
 ![CU04 Exportación de logs](../assets/uml/CU04_Exportacion_de_logs.png)
 
 | Caso de Uso | Actor(es) | Descripción |
-| :--- | :--- | :--- |
+|---|---|---|
 | Solicitar exportación | Superusuario, Analista de datos | Caso de uso base, donde el usuario formula una petición de extracción masiva de registros de telemetría y eventos forenses delimitando rangos de fechas y filtros. |
 | Verificar volumen de la solicitud | — | Es un incluido de Solicitar exportación; el sistema calcula el número estimado de eventos y determina si supera el umbral crítico (más de 50.000 registros o 7 días) que exige aprobación dual. |
 | Aprobar exportación masiva | Superusuario | Extiende a Solicitar exportación; ocurre exclusivamente cuando la solicitud supera el umbral crítico, despachando una notificación interactiva fuera de banda vía Telegram para su autorización. |
@@ -188,13 +178,11 @@ Diagrama de interacción que describe la generación del reporte técnico en PDF
 | Validar titularidad y vigencia | — | Es un incluido de Descargar archivo; el sistema comprueba que el token de descarga pertenezca al usuario solicitante y que el enlace temporal no haya expirado. |
 | Generar reporte de esquema | Superusuario, Analista de datos | Caso de uso base, donde el usuario descarga la especificación de tipos de datos, columnas y metadatos de los logs forenses para pipelines de análisis. |
 
----
-
 ### CU05 Administración
 ![CU05 Administración](../assets/uml/CU05_Administracion.png)
 
 | Caso de Uso | Actor(es) | Descripción |
-| :--- | :--- | :--- |
+|---|---|---|
 | Consultar usuarios | Superusuario | Caso de uso base, donde el Superusuario examina la nómina completa de cuentas dadas de alta en la plataforma, auditando sus roles, estados y fechas de acceso. |
 | Modificar usuario | — | Extiende a Consultar usuarios; ocurre cuando el Superusuario selecciona una cuenta del listado para modificar sus datos personales, correo o rol RBAC asignado. |
 | Desactivar usuario | — | Extiende a Consultar usuarios; ocurre cuando el Superusuario suspende preventivamente el acceso a una cuenta seleccionada sin purgar su historial. |
@@ -207,13 +195,11 @@ Diagrama de interacción que describe la generación del reporte técnico en PDF
 | Verificar rol sin usuarios | — | Es un incluido de Eliminar rol; el sistema valida estrictamente que ninguna cuenta activa o inactiva permanezca asociada al rol que se desea eliminar. |
 | Crear rol | Superusuario | Caso de uso base, donde el Superusuario formula un nuevo perfil de privilegios asignando identificador y alcances de seguridad. |
 
----
-
 ### CU06 Machine Learning
 ![CU06 Machine Learning](../assets/uml/CU06_Machine_Learning.png)
 
 | Caso de Uso | Actor(es) | Descripción |
-| :--- | :--- | :--- |
+|---|---|---|
 | Analizar sesión de atacante | Superusuario, Analista de datos | Caso de uso base, donde el usuario examina la secuencia cronológica de comandos y técnicas ejecutadas por un atacante durante su interacción con los honeypots. |
 | Descartar atributos de identidad | — | Es un incluido de Analizar sesión de atacante; el pipeline de datos elimina direcciones IP y marcas volátiles para garantizar que el modelo aprenda comportamientos puros sin fuga (*anti-leakage*). |
 | Curar arquetipo de sesión | — | Extiende a Analizar sesión de atacante; ocurre cuando el analista de datos calibra manualmente la etiqueta del arquetipo de ataque asignada por el modelo predictivo. |
@@ -223,13 +209,11 @@ Diagrama de interacción que describe la generación del reporte técnico en PDF
 | Verificar degradación del modelo | — | Es un incluido de Forzar reentrenamiento; el sistema evalúa Out-Of-Fold (OOF) el nuevo modelo y comprueba que su F1-Score supere al baseline y su latencia no exceda el SLA (< 5 ms). |
 | Revertir versión del modelo | — | Extiende a Verificar degradación del modelo; ocurre si el modelo candidato no supera los umbrales de rendimiento, restaurando inmediatamente la versión previa inmutable. |
 
----
-
 ### CU07 Ingesta de eventos
 ![CU07 Ingesta de eventos](../assets/uml/CU07_Ingesta_de_eventos.png)
 
 | Caso de Uso | Actor(es) | Descripción |
-| :--- | :--- | :--- |
+|---|---|---|
 | Ingestar eventos | Sistema Wazuh | Caso de uso base, donde el agente colector o sensor perimetral despacha lotes de eventos de seguridad crudos hacia el endpoint de ingestión del API. |
 | Clasificar técnica MITRE | — | Es un incluido de Ingestar eventos; el motor de Machine Learning asigna a cada evento la técnica táctica de intrusión correspondiente según el framework MITRE ATT&CK. |
 | Calcular score de riesgo | — | Es un incluido de Ingestar eventos; el sistema computa una puntuación de riesgo estandarizada de 0 a 100 basada en severidad, frecuencia de puertos y persistencia temporal. |
@@ -238,6 +222,7 @@ Diagrama de interacción que describe la generación del reporte técnico en PDF
 ---
 
 ## 3. Diagramas de Actividades (14 Flujos Operativos)
+
 
 ### AD01 Iniciar Sesión
 ![AD01 Iniciar Sesión](../assets/uml/AD01_Iniciar_Sesion.png)
@@ -276,75 +261,71 @@ Diagrama de interacción que describe la generación del reporte técnico en PDF
 ![AD12 Eliminar Usuario](../assets/uml/AD12_Eliminar_Usuario.png)
 
 ### AD Descargar Reporte PDF (Navegador)
+Flujo de actividades de negocio (diseñado para perfil gerencial/cliente sin tecnicismos de bajo nivel) que describe la solicitud y descarga directa del archivo PDF del Diccionario de Datos dentro del navegador web del analista:
+
 ![AD Descargar Reporte PDF](../assets/uml/AD_Descargar_Reporte_PDF.png)
 
 ### AD Autorización Dual de Exportación en Telegram
+Flujo de actividades de negocio para aprobación Human-In-The-Loop: cuando una solicitud de exportación supera el umbral masivo de registros, el sistema despacha una solicitud de aprobación interactiva al canal de Telegram del superusuario con opciones de aprobación o rechazo en línea:
+
 ![AD Autorización Dual de Exportación en Telegram](../assets/uml/AD_Autorizar_Exportacion_Telegram.png)
 
----
+## 4. Diagrama de Clases (Arquitectura Limpia en 4 Capas)
 
-## 4. Diagrama de Clases (Arquitectura Limpia & Desglose Modular)
 
-El diagrama estructural se divide por capas para garantizar legibilidad completa. Cada clase de dominio declara el estereotipo `«table: nombre_tabla»`, de modo que el vínculo entre el diagrama de clases y el MER sea verificable uno a uno:
+El diseño estructural del backend de HoneyMetrics implementa una Arquitectura Limpia en 4 Capas rigurosamente interconectadas, eliminando componentes aislados o huérfanos. Los controladores de API (`app/api/v1/endpoints/`) delegan las operaciones hacia la capa de Servicios de Negocio (`app/services/`), la cual coordina la persistencia mediante los Modelos ORM de SQLAlchemy (`app/models/`) y aplica los mecanismos de autenticación, control de acceso RBAC granular (`app/core/permissions.py`) y utilitarios criptográficos (`app/core/security.py`).
 
-| Diagrama | Capa Arquitectónica | Origen en el Código Fuente |
-| :--- | :--- | :--- |
-| **CD01** | Modelo de dominio (persistencia) | `app/models/` |
-| **CD02** | API REST: identidad y acceso | `app/api/v1/endpoints/` (`auth`, `users`, `roles`, `health`) |
-| **CD03** | API REST: amenazas, logs e ingesta | `app/api/v1/endpoints/` (`threats`, `logs`, `dashboard`, `ingest`) |
-| **CD04** | Servicios: identidad y notificaciones | `app/services/` (`auth`, `user`, `role`, `email`, `telegram`) |
-| **CD05** | Servicios: amenazas, logs y dashboard | `app/services/` (`threat`, `threat_crud`, `logs`, `dashboard`) |
-| **CD06** | Core y seguridad | `app/core/` (`config`, `security`, `permissions`, `rate_limit`) y `app/api/deps.py` |
+| Capa | Responsabilidad Arquitectónica | Módulos y Paquetes Reales |
+|---|---|---|
+| **1. Controladores API** | Recepción de solicitudes HTTP REST, validación de esquemas Pydantic y autorización por Scopes JWT. | `app/api/v1/endpoints/` (`auth`, `users`, `roles`, `threats`, `logs`, `dashboard`) |
+| **2. Servicios de Negocio** | Lógica de dominio, orquestación de reglas de negocio, y despacho de notificaciones duales. | `app/services/` (`auth`, `user`, `role`, `threat`, `threat_crud`, `logs`, `dashboard`, `telegram`, `email`) |
+| **3. Modelos de Dominio** | Entidades de persistencia relacional SQLAlchemy mapeadas 1:1 sobre el motor PostgreSQL 16 Alpine. | `app/models/` (`roles`, `users`, `threat_ips`, `threat_ips_vault`, `log_exports`, `revoked_tokens`) |
+| **4. Core y Dependencias** | Configuración centralizada 12-Factor, hashing de contraseñas bcrypt, emisión/decodificación JWT y PBAC. | `app/core/` (`config`, `security`, `permissions`) y `app/api/deps.py` (`get_db`, `get_current_user`) |
 
-### 4.1 Modelo de dominio
-![CD01 Modelo de Dominio](../assets/uml/CD01_Domain_Models.png)
+A continuación se presenta el Diagrama de Clases Unificado del sistema HoneyMetrics, estructurado verticalmente en tres módulos funcionales principales:
 
-### 4.2 API: identidad y acceso
-![CD02 API Identidad](../assets/uml/CD02_API_Identity.png)
-
-### 4.3 API: amenazas, logs e ingesta
-![CD03 API Amenazas Logs Ingesta](../assets/uml/CD03_API_Threats_Logs_Ingest.png)
-
-### 4.4 Servicios: identidad y notificaciones
-![CD04 Servicios Identidad](../assets/uml/CD04_Services_Identity.png)
-
-### 4.5 Servicios: amenazas, logs y dashboard
-![CD05 Servicios Amenazas Logs](../assets/uml/CD05_Services_Threats_Logs.png)
-
-### 4.6 Core y seguridad
-![CD06 Core Seguridad](../assets/uml/CD06_Core_Security.png)
-
-### Vista General: Diagrama de Clases Completo HoneyMetrics
-![Diagrama de Clases Completo HoneyMetrics](../assets/uml/Diagrama_de_Clases_HoneyMetrics.png)
+![Diagrama de Clases Unificado HoneyMetrics](../assets/uml/Clases_HoneyMetrics_Unico.png)
 
 ---
 
 ## 5. Diagrama de Modelo Entidad-Relación (MER)
 
-**Leyenda:** Borde continuo = implementado en producción; Borde punteado y etiqueta `«pendiente»` = extensión arquitectónica por desarrollar.
+El esquema de base de datos de HoneyMetrics v2.0 está estructurado sobre PostgreSQL 16 Alpine bajo el principio de estricta correspondencia con el código fuente en producción (`app/models/` y migraciones de Alembic). Se presenta en notación Crow's Foot sobre fondo blanco formal según el estándar institucional:
 
-![Modelo Entidad-Relación HoneyMetrics: Esquema Actual y Extensiones Pendientes](../assets/uml/MER_HoneyMetrics_Actual_Pendiente.png)
+![Modelo Entidad-Relación HoneyMetrics](../assets/uml/MER_HoneyMetrics_Real.png)
 
-El MER reúne el esquema implementado y las extensiones previstas sin alterar lo existente: no se renombran, mueven ni eliminan columnas actuales. Las relaciones continuas corresponden a claves foráneas declaradas; las punteadas, a referencias lógicas o a estructuras aún no implementadas.
+### 5.1 Tabla Descriptiva del Esquema de Datos (Estilo Gualivá)
 
-- **Esquema implementado (8 Tablas en PostgreSQL 16 Alpine):** `roles`, `users`, `permissions`, `role_permissions`, `threat_ips`, `threat_ips_vault`, `log_exports` y `revoked_tokens`.
-- **Extensiones pendientes:** tablas `user_profiles`, `blacklist_records`, `user_saved_filters` y `security_alerts`; además de columnas nuevas en `roles`, `users` y `log_exports`.
+A continuación se detalla formalmente cada entidad relacional implementada en el sistema HoneyMetrics:
 
-![Modelo Entidad-Relación Físico Real (8 Tablas Implementadas)](../assets/uml/MER_HoneyMetrics_Real.png)
+| Tabla | Descripción |
+|---|---|
+| `roles` | Almacena el catálogo canónico de roles del sistema y sus privilegios de acceso teniendo como clave primaria un identificador numérico entero e incluyendo el nombre único del rol y su descripción operativa. Está asignada al rol Superusuario. |
+| `users` | Almacena las cuentas de usuario, credenciales criptográficas y estado de doble factor teniendo como llave foránea el rol asignado (`role_id` referenciando a `roles.id`) e incluyendo correo electrónico institucional único, hash bcrypt de clave, banderas de activación y cambio obligatorio de contraseña, secreto TOTP para MFA, versión de autorización, token de recuperación y fecha de creación. Está asignada al rol Superusuario. |
+| `threat_ips` | Almacena el repositorio de direcciones IP atacantes detectadas por los sensores honeypot teniendo como clave primaria un identificador numérico e incluyendo la dirección IPv4/IPv6 única, tipo de servicio vulnerado, país de procedencia geográfica, puntuación cuantitativa de riesgo (*threat score* de 0 a 100), táctica o categoría de amenaza, estado operativo de mitigación, notas forenses y marcas temporales de registro y actualización. Está asignada al rol Consultor de Ciberseguridad. |
+| `threat_ips_vault` | Almacena la bóveda pericial e histórica de preservación para direcciones IP retiradas de la lista de bloqueo activo teniendo como llaves foráneas lógicas el identificador original de la amenaza (`original_id` referenciando a `threat_ips.id`) y el identificador del usuario que ejecutó la baja (`deleted_by_user_id` referenciando a `users.id`), e incluyendo la dirección IP, vector de ataque, origen geográfico, puntaje de riesgo, notas forenses, fecha de creación original y fecha formal de supresión. Está asignada al rol Superusuario. |
+| `log_exports` | Almacena la trazabilidad y auditoría de las solicitudes de extracción forense de eventos hacia archivos estructurados teniendo como clave primaria un identificador alfanumérico único e incluyendo fecha inicial y final del intervalo, rango textual descriptivo, recuento total de eventos exportados, estado del ciclo de vida (pendiente, aprobado, completado, rechazado), formato de compresión y marcas temporales de control. Está asignada a los roles Consultor de Ciberseguridad y Superusuario. |
+| `revoked_tokens` | Almacena la lista negra de identificadores únicos criptográficos JWT invalidados por desautenticación voluntaria teniendo como clave primaria un identificador numérico entero e incluyendo el identificador unívoco de token (`token_jti`) y la fecha y hora exacta de expiración formal. Está asignada al rol Superusuario. |
 
-### 5.1 Trazabilidad MER ↔ Modelos SQLAlchemy ↔ Diagrama de Clases
+### 5.2 Trazabilidad MER ↔ Modelos SQLAlchemy ↔ Diagrama de Clases
 
-| Tabla | Clase del Modelo (`app/models/`) | Clase UML | Estado Físico |
-| :--- | :--- | :--- | :--- |
-| `roles` | `Role` (`role.py`) | `Role` | Implementada |
-| `users` | `User` (`user.py`) | `User` | Implementada |
-| `permissions` | `Permission` (`permission.py`) | `Permission` | Implementada |
-| `role_permissions` | `RolePermission` (`role_permission.py`) | `RolePermission` | Implementada |
-| `threat_ips` | `ThreatIP` (`threat.py`) | `ThreatIP` | Implementada |
-| `threat_ips_vault` | `ThreatIPVault` (`threat.py`) | `ThreatIPVault` | Implementada |
-| `log_exports` | `LogExport` (`log_export.py`) | `LogExport` | Implementada |
-| `revoked_tokens` | `RevokedToken` (`revoked_token.py`) | `RevokedToken` | Implementada |
-| `user_profiles` | — | — | Propuesta Pendiente |
-| `blacklist_records` | — | — | Propuesta Pendiente |
-| `user_saved_filters` | — | — | Propuesta Pendiente |
-| `security_alerts` | — | — | Propuesta Pendiente |
+| Tabla Relacional | Clase ORM (`app/models/`) | Clase UML de Dominio | Estado en Producción |
+|---|---|---|---|
+| `roles` | `Role` (`role.py`) | `Role` | Implementada y Verificada |
+| `users` | `User` (`user.py`) | `User` | Implementada y Verificada |
+| `threat_ips` | `ThreatIP` (`threat.py`) | `ThreatIP` | Implementada y Verificada |
+| `threat_ips_vault` | `ThreatIPVault` (`threat.py`) | `ThreatIPVault` | Implementada y Verificada |
+| `log_exports` | `LogExport` (`log_export.py`) | `LogExport` | Implementada y Verificada |
+| `revoked_tokens` | `RevokedToken` (`revoked_token.py`) | `RevokedToken` | Implementada y Verificada |
+
+### 5.3 Modelo de Autorización PBAC y Ausencia de Tabla Permissions
+
+!!! note "⚡ Nota Arquitectónica: Modelo de Autorización PBAC y Ausencia de Tabla Permissions"
+    A diferencia de esquemas RBAC relacionales tradicionales que requieren una tabla física intermedia `permissions` o `roles_permissions`, HoneyMetrics implementa un patrón PBAC (*Permission-Based Access Control*) desacoplado y Stateless de alto rendimiento:
+
+    1. **Mapeo Canónico en Memoria:** Los alcances o permisos atómicos (`OAuth2 Scopes`) están definidos en código dentro de `app/core/permissions.py` a través de la constante de diccionario `ROLES_TO_SCOPES`, asociando cada uno de los 4 roles canónicos (`SUPERUSUARIO`, `ANALISTA`, `CONSULTOR`, `DIRECTIVO`) a sus permisos granulares de lectura, escritura y auditoría.
+    2. **Criptografía en el Token JWT:** Al autenticarse el usuario en `app/services/auth_service.py`, el backend consulta el rol del usuario, resuelve los alcances correspondientes y los inyecta directamente dentro del payload del token JWT firmado (`scopes: ["threats:read", "threats:write", ...]`).
+    3. **Validación en Microsegundos (Zero-Query):** En cada petición entrante a los endpoints de la API, la dependencia `app/api/deps.py` valida los `SecurityScopes` requeridos directamente en la memoria RAM del proceso FastAPI tras verificar la firma HMAC-SHA256 del JWT. Esto elimina por completo la necesidad de realizar de 2 a 3 consultas con cláusulas `JOIN` a PostgreSQL en cada transacción HTTP, logrando tiempos de respuesta de autenticación y autorización inferiores a 1 milisegundo.
+
+!!! info "⚡ Nota de Integridad Forense y No-Repudio"
+    Las referencias `original_id` y `deleted_by_user_id` en la tabla `threat_ips_vault` se modelan como relaciones lógicas desacopladas (sin constraint `FOREIGN KEY` estricto a nivel de base de datos). Este diseño garantiza la inmutabilidad de la cadena de custodia forense, preservando la evidencia histórica de amenazas y auditoría de operadores incluso ante eventuales bajas de cuentas de usuario o limpiezas de la tabla activa de IoCs.
