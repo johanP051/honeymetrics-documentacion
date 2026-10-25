@@ -8,6 +8,7 @@ status: Especificación Funcional Canónica (FastAPI + React SPA)
 version: 2.0 (Clean Architecture & API-First)
 updated: 2026-09-27
 tags:
+
   - uml
   - casos-de-uso
   - requerimientos
@@ -23,6 +24,7 @@ El presente documento consolida la especificación formal de los **Casos de Uso 
 1. **Jerarquización y Generalización de Actores**: Modelado de roles especializados que heredan del rol abstracto `Usuario Autenticado`.
 2. **Modularización por Subsistemas**: Organización del límite del sistema (*System Boundary*) en 5 subsistemas funcionales desacoplados.
 3. **Uso Riguroso de Relaciones Estereotipadas**:
+
    - `<<include>>`: Operaciones mandatorias que deben ejecutarse obligatoriamente para completar el caso de uso base (ej. autenticación MFA, extracción de características ML, validación de cuota).
    - `<<extend>>`: Comportamientos opcionales o condicionales que extienden un flujo base en un punto de extensión específico (*Extension Point*). En particular, las operaciones de **Actualización / Edición** y **Eliminación / Revocación** extienden formalmente al caso de uso **Consultar**, dado que la selección previa del registro en la interfaz es un requisito previo indispensable para su modificación o borrado.
 
