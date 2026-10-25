@@ -265,9 +265,9 @@ Para evitar la contaminación cruzada de capturas y diagramas entre manuales aca
      - Capturas móviles verticales (Mobile Viewport `390×844`): ancho máximo de `230 pt` y alto máximo de `480 pt`.
    - Se prohíbe fijar dimensiones estáticas que deformen las relaciones de aspecto de diagramas o textos.
 
-### 6.8 Reglas de Renderizado Limpio en MkDocs Material
+### 6.8 Reglas de Renderizado Limpio y Quality Gate en MkDocs Material
 
-Para erradicar defectos visuales en el portal generado por MkDocs Material, se aplican obligatoriamente las siguientes 4 reglas:
+Para erradicar defectos visuales en el portal generado por MkDocs Material, se aplican obligatoriamente las siguientes 6 reglas:
 
 1. **No mezclar sintaxis GitHub Alerts:** Prohibido usar `> [!NOTE]`, `> [!IMPORTANT]`, `> [!WARNING]` o `> [!TIP]` en MkDocs. Debe usarse siempre la sintaxis formal de Admonitions de Python-Markdown:
    ```markdown
@@ -280,9 +280,35 @@ Para erradicar defectos visuales en el portal generado por MkDocs Material, se a
    - Todo párrafo o texto introductorio que termine en dos puntos (`:`) o preceda a una lista ordenada (`1. `, `2. `) o desordenada (`- `) **DEBE** tener obligatoriamente una línea en blanco (`\n\n`) antes del primer ítem para evitar el colapso de la lista en un solo párrafo continuo.
    - **Verificación Automática de Listas Numeradas:** Antes de dar por bueno cualquier documento Markdown, se debe correr un script verificador en Python que detecte cualquier línea `1. ` precedida por un párrafo sin línea en blanco (`\n\n`) y lo corrija automáticamente en todos los archivos `.md` (tanto en `docs/` como en `docs/entregables_profesor/`).
 
-3. **Atributo `poster` obligatorio en etiquetas `<video>`:** Toda etiqueta `<video>` en MkDocs debe incluir obligatoriamente el atributo `poster="assets/screenshots/<captura_representativa>.png"` para evitar que el reproductor HTML5 se renderice como un cuadro negro vacío con `0:00` antes de la reproducción.
+3. **Anidación estricta de Admonitions dentro de Listas:**
+   - Cuando una admonición (`!!! warning`, `!!! note`) se ubica dentro de un elemento de lista, **DEBE** estar precedida por una línea en blanco y sangrada con la indentación correspondiente al contenido del ítem (típicamente **8 espacios** para sublistas o 4 espacios para primer nivel).
+   - *Riesgo:* Si se escribe pegada o con indentación insuficiente, MkDocs la interpreta como párrafo de texto plano y renderiza la sintaxis literal `!!! warning` sin convertirla en tarjeta visual.
 
-4. **Mapa Oficial de Dominios y Túneles Cloudflare:**
+4. **Prefijo `../assets/` obligatorio en etiquetas HTML crudas (`<video>`, `<source>`, `<img>`):**
+   - **Causa raíz:** MkDocs reescribe automáticamente los enlaces nativos de Markdown (`![alt](assets/...)` $\to$ `../assets/...`), pero **IGNORA y deja intactos los atributos dentro de etiquetas HTML crudas** (`<video poster="...">`, `<source src="...">`, `<img src="...">`).
+   - Dado que cada documento que no sea `index.md` compila a una subcarpeta (ej. `site/manual-usuario/index.html`), cualquier ruta que diga `assets/...` se resuelve como `/manual-usuario/assets/...` provocando **Error 404**.
+   - **Regla:** En cualquier archivo ubicado en subdirectorios o compilado a subpáginas, todas las rutas de assets en HTML crudo **DEBEN** llevar obligatoriamente el prefijo relativo `../assets/`:
+     ```html
+     <video poster="../assets/screenshots/fig05_threat_center_ioc.png" controls width="100%" playsinline class="docs-video">
+       <source src="../assets/videos/03_threat_center_y_boveda.mp4" type="video/mp4">
+       Su navegador no soporta la reproducción de video HTML5.
+     </video>
+     ```
+
+5. **Pre-flight Build Estricto Obligatorio (`mkdocs build --strict`):**
+   - Antes de realizar cualquier commit o push a la rama de documentación, es mandatorio ejecutar localmente `mkdocs build --strict`.
+   - Si existen advertencias de enlaces rotos, anclas inexistentes o archivos huérfanos, el comando falla con código de salida 1. Está prohibido subir cambios con advertencias pendientes, ya que el workflow de GitHub Actions aborta el despliegue a GitHub Pages.
+
+6. **Quality Gate de Inspección Visual y de Red con `/browser` (Obligatorio en Cambios de Documentación):**
+   - Tras desplegar o previsualizar cambios en la documentación (`mkdocs serve` o URL de GitHub Pages), es **obligatorio invocar el subagente `/browser`** para auditar la página rendered:
+     1. **Red:** Cero errores 404 en solicitudes de red (auditar `.mp4`, `.png`, `.css`, fuentes).
+     2. **Multimedia:** Los 5 videos deben mostrar su miniatura (`poster`) nítida y sus reproductores deben responder a la reproducción con `readyState: HAVE_ENOUGH_DATA`.
+     3. **DOM:** Las listas ordenadas deben computar estilos de lista con viñetas decimales (`<ol><li>`), sin texto colapsado.
+     4. **Alertas:** Las advertencias deben renderizarse como cajas estilizadas (`.admonition.warning`, etc.).
+     5. **Consola:** Cero excepciones JavaScript.
+   - El subagente `/browser` debe emitir un recibo cuantitativo con capturas de pantalla de alta resolución antes de declarar la documentación como finalizada.
+
+7. **Mapa Oficial de Dominios y Túneles Cloudflare:**
    - Frontend Producción (Cloudflare Workers): `https://honeymetrics-frontend.johan-sebastianposada.workers.dev`
    - Backend API Producción (Homeserver 192.168.33.2 vía Túnel `api-honey-master-homeserver`): `https://api-honey-master-homeserver.johan-d3v.site`
    - Frontend Académico UDEC: `https://honeymetrics-v2-frontend.johan-sebastianposada.workers.dev`
