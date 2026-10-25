@@ -1,4 +1,4 @@
-> **Ver también:** [Inicio](index.md) · [Arquitectura](architecture.md) · [Despliegue](deployment.md) · [Operaciones](operations.md)
+> **Ver también:** [Inicio](index.md) · [Manual Técnico](manual-tecnico.md) · [Despliegue & Operaciones](guia-despliegue.md) · [Manual de usuario](manual-usuario.md)
 
 ## Índice
 

@@ -1,4 +1,4 @@
-> **Ver también:** [Inicio](index.md) · [Diccionario de datos](diccionario-datos.md) · [Despliegue](deployment.md) · [Operaciones](operations.md) · [Manual de usuario](manual-usuario.md)
+> **Ver también:** [Inicio](index.md) · [Diccionario de datos](diccionario-datos.md) · [Despliegue & Operaciones](guia-despliegue.md) · [Manual de usuario](manual-usuario.md)
 
 ## Índice
 
