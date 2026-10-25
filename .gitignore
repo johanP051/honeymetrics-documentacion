@@ -3,6 +3,10 @@ site/
 docs/entregables_profesor/
 node_modules/
 node_modules
+.env
+.env.*
+!.env.example
+.cloudflared_token
 fix_points.py
 migrate.py
 trello_honeymetrics_export_2026-10-07.json
