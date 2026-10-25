@@ -159,8 +159,8 @@ Para ingresar a HoneyMetrics:
 4. En el campo **Contraseña**, escriba su clave personal. Puede hacer clic sobre el **ícono del ojo** ubicado a la derecha del campo para alternar la visualización y verificar que los caracteres ingresados sean correctos.
 5. Haga clic sobre el botón **Iniciar Sesión**.
 
-<video poster="assets/screenshots/fig01_login.png" controls width="100%" playsinline class="docs-video">
-  <source src="assets/videos/01_login_y_navegacion.mp4" type="video/mp4">
+<video poster="../assets/screenshots/fig01_login.png" controls width="100%" playsinline class="docs-video">
+  <source src="../assets/videos/01_login_y_navegacion.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>
 *Video 1. Inicio de sesión institucional y recorrido inicial de navegación.*
@@ -279,8 +279,8 @@ El núcleo operativo de HoneyMetrics comprende las tres herramientas principales
 ### 7.1 Dashboard de Inteligencia de Amenazas (CTI)
 El Dashboard es la pantalla central de mando y monitoreo situacional de la plataforma. Para acceder, pulse sobre **Dashboard** en el menú de navegación lateral.
 
-<video poster="assets/screenshots/fig04_dashboard_cti.png" controls width="100%" playsinline class="docs-video">
-  <source src="assets/videos/02_dashboard_cti_filtros.mp4" type="video/mp4">
+<video poster="../assets/screenshots/fig04_dashboard_cti.png" controls width="100%" playsinline class="docs-video">
+  <source src="../assets/videos/02_dashboard_cti_filtros.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>
 *Video 2. Filtrado dinámico de eventos, exploración de gráficos Plotly y recomendaciones defensivas.*
@@ -326,8 +326,8 @@ El Threat Center es el módulo táctico donde los operadores consultan, registra
 
 Para acceder, haga clic en **Threat Center** (o **Lista Negra**) en el menú de navegación.
 
-<video poster="assets/screenshots/fig05_threat_center_ioc.png" controls width="100%" playsinline class="docs-video">
-  <source src="assets/videos/03_threat_center_y_boveda.mp4" type="video/mp4">
+<video poster="../assets/screenshots/fig05_threat_center_ioc.png" controls width="100%" playsinline class="docs-video">
+  <source src="../assets/videos/03_threat_center_y_boveda.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>
 *Video 3. Búsqueda y catalogación de direcciones IP en la Lista Negra.*
@@ -371,8 +371,8 @@ Este módulo permite extraer paquetes estructurados de registros de seguridad pa
 
 Para acceder, pulse sobre **Logs & Reportes** en el menú de navegación.
 
-<video poster="assets/screenshots/fig06_exportacion_logs_modal.png" controls width="100%" playsinline class="docs-video">
-  <source src="assets/videos/04_logs_export_y_pdf.mp4" type="video/mp4">
+<video poster="../assets/screenshots/fig06_exportacion_logs_modal.png" controls width="100%" playsinline class="docs-video">
+  <source src="../assets/videos/04_logs_export_y_pdf.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>
 *Video 4. Solicitud de exportación en rango temporal real, descarga y visualización del Esquema Canónico en PDF.*
@@ -434,8 +434,8 @@ El Administrador es la máxima autoridad técnica y de gobernanza dentro de Hone
   - **Aprobación de descargas masivas en Telegram:** Cuando un analista genera una petición superior a 50.000 eventos, el bot oficial de HoneyMetrics envía una notificación interactiva al chat personal del Administrador con los datos del solicitante, período y volumen estimado. El Administrador puede pulsar los botones interactivos **[ Aprobar ]** o **[ Rechazar ]** directamente desde su teléfono móvil.
   - Capacidad de consultar y depurar registros archivados en la Bóveda Forense.
 
-<video poster="assets/screenshots/fig07_admin_usuarios_roles.png" controls width="100%" playsinline class="docs-video">
-  <source src="assets/videos/05_admin_usuarios_y_roles.mp4" type="video/mp4">
+<video poster="../assets/screenshots/fig07_admin_usuarios_roles.png" controls width="100%" playsinline class="docs-video">
+  <source src="../assets/videos/05_admin_usuarios_y_roles.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>
 *Video 5. Creación de usuarios con contraseñas seguras CSPRNG, control de acceso basado en roles (RBAC) y medidor dinámico de contraseñas.*
