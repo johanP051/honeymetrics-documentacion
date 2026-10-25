@@ -178,7 +178,14 @@ Estas reglas tienen precedencia sobre opciones de diagramación incompatibles de
 Antes de redactar o modificar documentación, preguntar al usuario y esperar respuesta sobre:
 
 1. **Alcance:** ¿Solo Etapa 1 (documentación modular de ingeniería en `docs/` para GitHub/MkDocs) o también Etapa 2 (pre-entregables autocontenidos con formato UDEC/Oscar Gómez)?
-2. **Diagramas:** ¿Generar código Mermaid o dejar marcadores estandarizados `[FIGURA PENDIENTE: ...]` para diagramas externos elaborados en StarUML?
+2. **Estrategia de Diagramación UML:** El agente SIEMPRE debe preguntar: *"¿Prefieres usar diagramas de **StarUML** o diagramas en **Mermaid**?"*
+   - **Rama A — Si el usuario elige StarUML:**
+     1. El agente debe preguntar inmediatamente: *"¿En qué ruta o carpeta están los diagramas exportados (SVG/PNG) o el archivo `.mdj`?"*
+     2. Si el usuario da una carpeta de imágenes ya exportadas (ej. `/home/sebas/Documents/hm-UML/UML-HM-v2.3-Final/`), el agente lee su `export_manifest.json`, copia los PNG/SVG a `docs/assets/uml/` y los incrusta directamente tanto en el Markdown de MkDocs como en los `.docx` mediante `ImageRun` (**queda terminantemente prohibido dejar cajas de `[FIGURA PENDIENTE]` cuando los archivos de imagen ya existen en disco**).
+     3. Si el usuario da un archivo `.mdj`, el agente invoca `staruml_export_all.py` de la skill `global-staruml-diagram-builder` para extraerlos e incrustarlos.
+   - **Rama B — Si el usuario elige Mermaid:**
+     1. **Regla Estricta de 5 Líneas de Vida Canónicas:** Todo diagrama de secuencia en Mermaid debe usar obligatoriamente las mismas 5 líneas de vida del estándar académico consolidado: `actor Usuario` -> `participant Vista` -> `participant Controlador` -> `participant Modelo` -> `participant BaseDeDatos` (sin exponer endpoints HTTP crudos ni sentencias SQL en las flechas, y usando bloques `ref`, `alt` y `opt`).
+     2. **Controles Interactivos de Flechas y Zoom (Pan & Zoom):** Siempre que se use Mermaid en MkDocs, la skill debe inyectar y verificar en `mkdocs.yml` (`extra_javascript` y `extra_css`) el widget interactivo de navegación con **botones de Zoom In (`+`), Zoom Out (`-`), Reset y flechas direccionales ($\uparrow, \downarrow, \leftarrow, \rightarrow$)** tomando como referencia canónica `/media/sebas/Exdrive/Workspace/HoneyMetrics/docs/`.
 3. **SQL:** ¿Documentar ahora Stored Procedures y Triggers ya implementados, o dejarlos formalmente pendientes?
 
 No comenzar la redacción documental dependiente de estas decisiones hasta recibir respuesta. Se puede inspeccionar repositorios, consultar fuentes y preparar inventarios mientras se espera. Nunca afirmar que SPs, Triggers, evidencia o diagramas existen si no se verificaron.
@@ -189,18 +196,23 @@ No comenzar la redacción documental dependiente de estas decisiones hasta recib
 
 **Etapa 2 — `docs/entregables_profesor/`:** documentos académicos monolíticos, autocontenidos y con formato UDEC autorizado por el usuario. Incluir portada institucional, integrantes, `REGISTRO DE CAMBIOS` y `CONTROL DEL DOCUMENTO` con el aprobador indicado por el usuario. Incrustar en cada documento todas las tablas, explicaciones, flujos y guías necesarios. No sustituir contenido por referencias relativas como `../architecture.md`; se permiten referencias bibliográficas que no deleguen secciones. Respetar las plantillas y numeración que entregue el usuario.
 
-### 6.3 Convención Condicional de Diagramas Externos StarUML
+### 6.3 Convención de Diagramas StarUML vs Mermaid
 
-Si el usuario elige Mermaid, producir Mermaid válido y apropiado al repositorio; no insertar diagramas Mermaid en el documento docente cuando se haya elegido StarUML externo.
+- **Si el usuario elige StarUML y los archivos de imagen ya existen en disco:**
+  - Se deben incrustar directamente las imágenes (`![Diagrama](assets/uml/<archivo>.png)`) en MkDocs y mediante `ImageRun` en los compiladores DOCX.
+  - **Queda terminantemente prohibido dejar marcadores `[FIGURA PENDIENTE]` si las imágenes están disponibles.**
+  - Cada diagrama debe acompañarse con su respectiva tabla descriptiva estilo Gualivá (`Caso de Uso | Actor(es) | Descripción`) o explicación de flujos alternos.
 
-Si el usuario elige diagramas externos de StarUML, **no generar bloques Mermaid** para los diagramas solicitados. Explicar completamente el flujo, actores, reglas de negocio y controles de seguridad en el texto, y ubicar el marcador con su pie de figura:
+- **Si el usuario elige StarUML pero los diagramas aún no han sido modelados ni exportados:**
+  - Explicar completamente el flujo, actores, reglas de negocio y controles de seguridad en el texto, y ubicar el marcador con su pie de figura:
+    ```markdown
+    [FIGURA PENDIENTE: Insertar aquí imagen de Diagrama de Secuencia StarUML — RFXX Nombre del Flujo]
+    *Figura X. Diagrama de secuencia e interacción para [descripción del flujo].*
+    ```
+    Para el MER usar `[FIGURA PENDIENTE: Insertar aquí imagen del Modelo Entidad-Relación (MER) StarUML]`. No presentar marcadores como diagramas terminados ni declarar certificación visual inexistente.
 
-```markdown
-[FIGURA PENDIENTE: Insertar aquí imagen de Diagrama de Secuencia StarUML — RFXX Nombre del Flujo]
-*Figura X. Diagrama de secuencia e interacción para [descripción del flujo].*
-```
-
-Para el MER usar `[FIGURA PENDIENTE: Insertar aquí imagen del Modelo Entidad-Relación (MER) StarUML]`. No presentar marcadores como diagramas terminados ni declarar certificación visual inexistente.
+- **Si el usuario elige Mermaid:**
+  - Producir Mermaid válido con las 5 líneas de vida canónicas (`Usuario -> Vista -> Controlador -> Modelo -> BaseDeDatos`) y habilitar los controles interactivos de Pan & Zoom con flechas y zoom. No insertar bloques Mermaid en entregables formales DOCX donde el docente exija StarUML externo.
 
 ### 6.4 Densidad, Trazabilidad y Exactitud
 
@@ -252,3 +264,26 @@ Para evitar la contaminación cruzada de capturas y diagramas entre manuales aca
      - Diagramas horizontales y capturas Desktop: ancho máximo de `540 pt` y alto máximo de `380 pt`.
      - Capturas móviles verticales (Mobile Viewport `390×844`): ancho máximo de `230 pt` y alto máximo de `480 pt`.
    - Se prohíbe fijar dimensiones estáticas que deformen las relaciones de aspecto de diagramas o textos.
+
+### 6.8 Reglas de Renderizado Limpio en MkDocs Material
+
+Para erradicar defectos visuales en el portal generado por MkDocs Material, se aplican obligatoriamente las siguientes 4 reglas:
+
+1. **No mezclar sintaxis GitHub Alerts:** Prohibido usar `> [!NOTE]`, `> [!IMPORTANT]`, `> [!WARNING]` o `> [!TIP]` en MkDocs. Debe usarse siempre la sintaxis formal de Admonitions de Python-Markdown:
+   ```markdown
+   !!! note "⚡ Título de la Nota"
+       Contenido indentado estrictamente a 4 espacios...
+   ```
+   (o `!!! warning "..."`, `!!! tip "..."`, etc.). En caso de callouts colapsables, usar `??? note "..."`.
+
+2. **Salto de línea obligatorio antes de listas:** Todo párrafo o texto introductorio que termine en dos puntos (`:`) o preceda a una lista ordenada (`1. `, `2. `) o desordenada (`- `) **DEBE** tener obligatoriamente una línea en blanco (`\n\n`) antes del primer ítem para evitar el colapso de la lista en un solo párrafo continuo.
+
+3. **Atributo `poster` obligatorio en etiquetas `<video>`:** Toda etiqueta `<video>` en MkDocs debe incluir obligatoriamente el atributo `poster="assets/screenshots/<captura_representativa>.png"` para evitar que el reproductor HTML5 se renderice como un cuadro negro vacío con `0:00` antes de la reproducción.
+
+4. **Mapa Oficial de Dominios y Túneles Cloudflare:**
+   - Frontend Producción (Cloudflare Workers): `https://honeymetrics-frontend.johan-sebastianposada.workers.dev`
+   - Backend API Producción (Homeserver 192.168.33.2 vía Túnel `api-honey-master-homeserver`): `https://api-honey-master-homeserver.johan-d3v.site`
+   - Frontend Académico UDEC: `https://honeymetrics-v2-frontend.johan-sebastianposada.workers.dev`
+   - Backend Académico UDEC: `https://api-honey-v2-homeserver.johan-d3v.site`
+   - Túnel de Desarrollo Local: `https://honeymetrics-local.johan-d3v.site` (`http://127.0.0.1:8000` / `http://localhost:5173`)
+   - Queda obsoleto y prohibido el dominio antiguo `https://honey.johan-d3v.site`.

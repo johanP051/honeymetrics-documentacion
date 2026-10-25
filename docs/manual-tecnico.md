@@ -77,8 +77,8 @@ Las comunicaciones entre los repositorios se gobiernan bajo el principio de meno
 - **Capa Backend a Persistencia:** FastAPI se conecta a PostgreSQL mediante un pool de conexiones administrado por SQLAlchemy (`app/db/session.py`), sin exponer los puertos de base de datos a redes públicas.
 - **Capa Backend a Infraestructura SIEM:** Las consultas al cluster de indexación de Wazuh transitan a través de una red interna dedicada, protegida por credenciales de servicio restringidas y certificados de autoridad local (TLS).
 
-> [!NOTE]
-> **El Por Qué Técnico — Aislamiento Polyrepo vs Monorepo:** En plataformas de ciberseguridad corporativa, un monorepo incrementa el riesgo de fuga accidental de credenciales o de inclusión de dependencias de desarrollo frontend en imágenes de producción backend. El enfoque Polyrepo enforcea contratos de API REST puros y auditorías de seguridad independientes por cada frente tecnológico.
+!!! note "⚡ El Por Qué Técnico — Aislamiento Polyrepo vs Monorepo"
+    En plataformas de ciberseguridad corporativa, un monorepo incrementa el riesgo de fuga accidental de credenciales o de inclusión de dependencias de desarrollo frontend en imágenes de producción backend. El enfoque Polyrepo enforcea contratos de API REST puros y auditorías de seguridad independientes por cada frente tecnológico.
 
 ---
 
@@ -178,8 +178,8 @@ El archivo `app/api/deps.py` orquesta la seguridad y el ciclo de vida transaccio
 - **`get_current_user()`:** Extrae el token JWT desde el encabezado `Authorization: Bearer <token>` o, en su defecto, desde la cookie segura `access_token`. Decodifica la firma utilizando la clave criptográfica del servidor, valida la vigencia temporal del claim `exp`, localiza al usuario en la base de datos y verifica que su estado sea estrictamente activo (`user.is_active == True`).
 - **`RoleChecker`:** Clase invocable (*callable dependency*) que intercepta la ejecución de los endpoints para validar que el rol asignado al usuario pertenezca a la lista de roles autorizados.
 
-> [!TIP]
-> **El Por Qué Técnico — Sesión por Request (`get_db`):** Evita la fuga de conexiones en el pool de PostgreSQL y previene condiciones de carrera (*Race Conditions*) entre hilos asíncronos concurrentes. Cada corutina opera sobre su propio contexto transaccional.
+!!! tip "⚡ El Por Qué Técnico — Sesión por Request (`get_db`)"
+    Evita la fuga de conexiones en el pool de PostgreSQL y previene condiciones de carrera (*Race Conditions*) entre hilos asíncronos concurrentes. Cada corutina opera sobre su propio contexto transaccional.
 
 ---
 
@@ -554,6 +554,7 @@ if current_user.role.name == "admin":
 ```
 
 Este esquema introducía tres vectores de falla críticos:
+
 1. **Sensibilidad a mayúsculas y acentos:** Inconsistencias entre `"Administrador"`, `"administrador"` o `"admin"` provocaban denegaciones de servicio accidentales a operadores legítimos.
 2. **Falta de validación estática:** Errores tipográficos en el código fuente (ej. `"Analista de Datos"` en lugar de `"Analista de datos"`) no eran detectados por linters ni herramientas de tipado estático, fallando silenciosamente en producción.
 3. **Imposibilidad de refactorización segura:** Renombrar un rol en la base de datos requería buscar y reemplazar manualmente ocurrencias en decenas de endpoints dispersos.
@@ -666,8 +667,8 @@ La gestión de sesiones implementa **JWT (RFC 7519)** firmado mediante el algori
   )
   ```
 
-> [!NOTE]
-> **El Por Qué Técnico — Tokens MFA de 5 Minutos:** Emitir un JWT transitorio de corta duración con un claim de ámbito restringido (`mfa_pending`) asegura que un atacante que intercepte credenciales válidas en la fase inicial no pueda mantener abierta una sesión indeterminada ni realizar peticiones autenticadas sin superar el segundo factor.
+!!! note "⚡ El Por Qué Técnico — Tokens MFA de 5 Minutos"
+    Emitir un JWT transitorio de corta duración con un claim de ámbito restringido (`mfa_pending`) asegura que un atacante que intercepte credenciales válidas en la fase inicial no pueda mantener abierta una sesión indeterminada ni realizar peticiones autenticadas sin superar el segundo factor.
 
 ### 5.2 Hashing Adaptativo de Contraseñas con Bcrypt
 
@@ -698,8 +699,8 @@ if settings.TELEGRAM_WEBHOOK_SECRET and x_telegram_bot_api_secret_token:
         )
 ```
 
-> [!CAUTION]
-> **El Por Qué Técnico — `compare_digest` vs Operador `==`:** El operador de igualdad estándar de Python (`==`) compara cadenas caracter por caracter y retorna `False` inmediatamente en la primera discrepancia (*early exit*). Un atacante remoto puede medir las diferencias en nanosegundos en el tiempo de respuesta del servidor (ataque de canal lateral o *Timing Attack*) para inferir carácter por carácter el secreto del webhook. `hmac.compare_digest` ejecuta la comparación en tiempo constante $O(n)$, eliminando la fuga de información temporal.
+!!! danger "⚡ El Por Qué Técnico — `compare_digest` vs Operador `==`"
+    El operador de igualdad estándar de Python (`==`) compara cadenas caracter por caracter y retorna `False` inmediatamente en la primera discrepancia (*early exit*). Un atacante remoto puede medir las diferencias en nanosegundos en el tiempo de respuesta del servidor (ataque de canal lateral o *Timing Attack*) para inferir carácter por carácter el secreto del webhook. `hmac.compare_digest` ejecuta la comparación en tiempo constante $O(n)$, eliminando la fuga de información temporal.
 
 ### 5.5 Política Anti-Enumeración de Cuentas (CWE-200)
 
@@ -776,12 +777,13 @@ except Exception as err:
 ```
 
 El servicio opera en tres modalidades:
+
 1. **`live_indexer`:** Conexión operativa en tiempo real contra el clúster OpenSearch.
 2. **`simulated`:** Activado automáticamente cuando el Indexer sufre un fallo de red o un timeout superior a 5 segundos, retornando una réplica sintética coherente para evitar el bloqueo del frontend.
 3. **`mock`:** Modo de desarrollo desconectado cuando la bandera `WAZUH_INTEGRATION_ENABLED=False` está fijada en el archivo `.env`.
 
-> [!TIP]
-> **El Por Qué Técnico — Fallback de Doble Índice:** En un centro de operaciones de seguridad (SOC), la indisponibilidad temporal de un nodo indexador no puede congelar la interfaz del analista ni bloquear la respuesta a incidentes. El fallback simulado permite mantener la interactividad de la UI mientras los mecanismos de monitoreo restablecen la conectividad con el SIEM.
+!!! tip "⚡ El Por Qué Técnico — Fallback de Doble Índice"
+    En un centro de operaciones de seguridad (SOC), la indisponibilidad temporal de un nodo indexador no puede congelar la interfaz del analista ni bloquear la respuesta a incidentes. El fallback simulado permite mantener la interactividad de la UI mientras los mecanismos de monitoreo restablecen la conectividad con el SIEM.
 
 ---
 

@@ -60,8 +60,12 @@ markdown_extensions:
   - toc:
       permalink: true
 
+extra_css:
+  - stylesheets/mermaid_panzoom.css
+
 extra_javascript:
   - https://unpkg.com/mermaid@10/dist/mermaid.min.js
+  - javascripts/mermaid_panzoom.js
 
 nav:
   - 🏠 Inicio & Pitch: index.md

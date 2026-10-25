@@ -40,8 +40,8 @@ HoneyMetrics v2.0 unifica la recolección de ciberinteligencia, la contención p
 | **Analista de Datos / CTI Tier 1-2** | Filtrado forense de indicadores de compromiso (IOCs), enriquecimiento geográfico de direcciones IP hostiles y generación de reportes ejecutivos. | Consultas sobre clúster Wazuh OpenSearch, filtrado dinámico por criticidad, renderizado cliente de reportes PDF vectoriales y streaming en JSONL. | 📄 [manual-usuario.md → Sección 5.2: Analista de datos](./manual-usuario.md#52-rol-analista-de-datos) |
 | **Ingeniero DevOps / Auditor Forense** | Despliegue contenerizado en alta disponibilidad, resiliencia ante cortes del SIEM, integridad de registros de auditoría y hardening criptográfico. | Orquestación mediante Docker Compose, aislamiento de red por subredes Docker, degradación elegante con fallback a SQLite y hashing SHA-256 inmutable. | 📄 [guia-despliegue.md → Sección 1: Topología de Red](./guia-despliegue.md#1-topología-de-red-distribuida) |
 
-> [!NOTE]
-> **El Por Qué Técnico — Especialización por Rol (RBAC):** La dispersión de herramientas genera fricción y errores de configuración en incidentes de alta severidad. Al delimitar la interfaz mediante `RoleEnum` y vistas especializadas en React, HoneyMetrics garantiza que cada operador acceda exclusivamente a la información y a los controles que su nivel de autorización exige, mitigando el riesgo de mutaciones accidentales en producción.
+!!! note "⚡ El Por Qué Técnico — Especialización por Rol (RBAC)"
+    La dispersión de herramientas genera fricción y errores de configuración en incidentes de alta severidad. Al delimitar la interfaz mediante `RoleEnum` y vistas especializadas en React, HoneyMetrics garantiza que cada operador acceda exclusivamente a la información y a los controles que su nivel de autorización exige, mitigando el riesgo de mutaciones accidentales en producción.
 
 ---
 
@@ -53,8 +53,8 @@ Los Centros de Operaciones de Seguridad (SOC) convencionales sufren una saturaci
 
 El efecto operativo de esta avalancha es devastador: los operadores de seguridad se desensibilizan ante las notificaciones continuas, configurando reglas de exclusión permisivas o ignorando tableros de control saturados de alertas rojas. Esta condición degrada la capacidad de respuesta, provocando que el tiempo promedio de detección de una intrusión legítima (**MTTD**, *Mean Time to Detect*) ascienda a **181 días** según reportes globales de la industria. Un sistema de monitoreo que notifica constantemente sobre eventos inocuos equivale, en la práctica, a no contar con ningún mecanismo de supervisión.
 
-> [!IMPORTANT]
-> **El Por Qué Técnico — La Trampa de la Telemetría Masiva:** El licenciamiento tradicional de los SIEM comerciales incentiva la ingesta indiscriminada de eventos, penalizando el presupuesto institucional por cada gigabyte transferido. Sin embargo, mayor volumen de datos no equivale a mayor visibilidad defensiva: la correlación sobre fuentes ruidosas consume tiempo de cómputo y horas de analistas sin elevar la fidelidad de la señal de amenaza.
+!!! warning "⚡ El Por Qué Técnico — La Trampa de la Telemetría Masiva"
+    El licenciamiento tradicional de los SIEM comerciales incentiva la ingesta indiscriminada de eventos, penalizando el presupuesto institucional por cada gigabyte transferido. Sin embargo, mayor volumen de datos no equivale a mayor visibilidad defensiva: la correlación sobre fuentes ruidosas consume tiempo de cómputo y horas de analistas sin elevar la fidelidad de la señal de amenaza.
 
 ### 2.2 Comparativa Estructural: Detección Tradicional vs Engaño Activo
 
@@ -85,8 +85,8 @@ La arquitectura de HoneyMetrics v2.0 articula un ecosistema coordinado de cinco 
 4. **Aprobación Human-in-the-Loop (Telegram Bot):** Al superar el umbral de riesgo, el backend despacha una notificación push a Telegram firmada con HMAC-SHA256. El Administrador valida la acción con botones interactivos, evitando falsos bloqueos sobre infraestructura compartida.
 5. **Bloqueo y Bóveda Forense:** Si el Administrador autoriza la mitigación, el servicio ejecuta la regla perimetral en el firewall (iptables / RouterOS API) y archiva la evidencia con marca temporal en `threat_ips_vault` para garantizar no-repudio.
 
-> [!NOTE]
-> **El Por Qué Técnico — Mitigación Human-in-the-Loop (HITL):** Los mecanismos de bloqueo 100% automatizados representan un vector severo de auto-denegación de servicio (*Self-Inflicted DoS*). Si un adversario falsifica paquetes IP (*IP Spoofing*) utilizando como origen la dirección de un DNS institucional o de una pasarela de pago, un cortafuegos automatizado bloquearía la infraestructura legítima. El flujo HITL de HoneyMetrics combina la velocidad de la telemetría automatizada con el discernimiento del criterio humano.
+!!! note "⚡ El Por Qué Técnico — Mitigación Human-in-the-Loop (HITL)"
+    Los mecanismos de bloqueo 100% automatizados representan un vector severo de auto-denegación de servicio (*Self-Inflicted DoS*). Si un adversario falsifica paquetes IP (*IP Spoofing*) utilizando como origen la dirección de un DNS institucional o de una pasarela de pago, un cortafuegos automatizado bloquearía la infraestructura legítima. El flujo HITL de HoneyMetrics combina la velocidad de la telemetría automatizada con el discernimiento del criterio humano.
 
 ### 3.2 Diagrama Mermaid Flowchart del Flujo Integral
 
@@ -169,8 +169,8 @@ Para evidenciar la inmediatez y eficacia de HoneyMetrics v2.0 durante sustentaci
 | **Decisión HITL (TA0040)** | Atacante intenta ejecutar el payload: `chmod +x x.sh && ./x.sh`. | La consola demora la respuesta simulando consumo de recursos en background. | Push en Telegram del Administrador: `⚠️ AMENAZA CRÍTICA DETECTADA: IP 192.168.1.150` con botones de acción. | `TelegramService` despacha webhook seguro con token criptográfico HMAC. |
 | **Contención (Mitigación)** | Intento de reconexión o envío de un nuevo comando de consola. | Bloqueo súbito: `ssh: connect to host port 22: Connection timed out / Host is down`. | Notificación de bloqueo exitoso en Telegram; actualización del badge a `Blacklisted` en Dashboard. | Regla perimetral insertada en el firewall perimetral y respaldo inmutable en `threat_ips_vault`. |
 
-> [!TIP]
-> **El Por Qué Técnico — Emulación de Media Interacción con Cowrie:** Un honeypot de alta interacción requeriría una máquina virtual completa con riesgo de escape de hipervisor; un honeypot de baja interacción solo respondería paquetes SYN sin permitir interacción. Cowrie implementa un punto medio ideal: una shell Python que retiene al adversario, captura su metodología completa y aísla completamente el sistema operativo base del host.
+!!! tip "⚡ El Por Qué Técnico — Emulación de Media Interacción con Cowrie"
+    Un honeypot de alta interacción requeriría una máquina virtual completa con riesgo de escape de hipervisor; un honeypot de baja interacción solo respondería paquetes SYN sin permitir interacción. Cowrie implementa un punto medio ideal: una shell Python que retiene al adversario, captura su metodología completa y aísla completamente el sistema operativo base del host.
 
 ---
 

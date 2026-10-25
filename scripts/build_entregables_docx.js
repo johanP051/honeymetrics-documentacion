@@ -584,6 +584,7 @@ function buildGoldNoteBox(noteText) {
 
 const SCREENSHOTS_DIR = path.resolve(__dirname, "../docs/assets/screenshots");
 const DIAGRAMS_DIR = path.resolve(__dirname, "../docs/assets/diagrams");
+const UML_DIR = path.resolve(__dirname, "../docs/assets/uml");
 
 function getImageDimensions(imgPath) {
   try {
@@ -636,6 +637,8 @@ function resolvePlaceholderToImage(placeholderText, nextLine, docFile = "") {
   // Regla estricta: ÚNICAMENTE MER. Cero pantallazos de interfaz de usuario.
   if (docFile.includes("02_Diccionario_Datos")) {
     if (combined.includes("mer") || combined.includes("entidad-relación") || combined.includes("modelo entidad")) {
+      const realMer = path.join(UML_DIR, "MER_HoneyMetrics_Real.png");
+      if (fs.existsSync(realMer)) return realMer;
       return path.join(DIAGRAMS_DIR, "mer_honeymetrics_v2.png");
     }
     return null;
@@ -645,34 +648,45 @@ function resolvePlaceholderToImage(placeholderText, nextLine, docFile = "") {
   // Regla estricta: ÚNICAMENTE diagramas UML (casos de uso, secuencia, clases) y MER. Cero capturas de frontend.
   if (docFile.includes("01_Manual_Tecnico_HoneyMetrics_v2")) {
     if (combined.includes("mer") || combined.includes("entidad-relación") || combined.includes("modelo entidad")) {
+      const realMer = path.join(UML_DIR, "MER_HoneyMetrics_Real.png");
+      if (fs.existsSync(realMer)) return realMer;
       return path.join(DIAGRAMS_DIR, "mer_honeymetrics_v2.png");
     }
     if (combined.includes("administrador") && (combined.includes("caso") || combined.includes("cu"))) {
-      return path.join(DIAGRAMS_DIR, "cu05_administracion.png");
+      const umlFile = path.join(UML_DIR, "CU05_Administracion.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "cu05_administracion.png");
     }
     if (combined.includes("consultor") && (combined.includes("caso") || combined.includes("cu"))) {
-      return path.join(DIAGRAMS_DIR, "cu03_lista_negra.png");
+      const umlFile = path.join(UML_DIR, "CU03_Lista_negra.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "cu03_lista_negra.png");
     }
     if (combined.includes("analista") && (combined.includes("caso") || combined.includes("cu"))) {
-      return path.join(DIAGRAMS_DIR, "cu04_exportacion_logs.png");
+      const umlFile = path.join(UML_DIR, "CU04_Exportacion_de_logs.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "cu04_exportacion_logs.png");
     }
     if (combined.includes("directivo") && (combined.includes("caso") || combined.includes("cu"))) {
-      return path.join(DIAGRAMS_DIR, "cu02_dashboard_botnets.png");
+      const umlFile = path.join(UML_DIR, "CU02_Dashboard_y_metricas.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "cu02_dashboard_botnets.png");
     }
     if (combined.includes("rf01") || (combined.includes("login") && combined.includes("mfa"))) {
-      return path.join(DIAGRAMS_DIR, "rf01_auth_mfa.png");
+      const umlFile = path.join(UML_DIR, "RF01_Autenticacion_MFA_v2.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "rf01_auth_mfa.png");
     }
     if (combined.includes("rf02") || combined.includes("recuperación")) {
-      return path.join(DIAGRAMS_DIR, "rf01_auth_mfa.png");
+      const umlFile = path.join(UML_DIR, "RF06_Actualizar_Usuario.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "rf01_auth_mfa.png");
     }
     if (combined.includes("rf03") || combined.includes("crud de ioc") || combined.includes("vault forense")) {
-      return path.join(DIAGRAMS_DIR, "rf03_registrar_ip.png");
+      const umlFile = path.join(UML_DIR, "RF03_Registrar_IP_en_Lista_Negra.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "rf03_registrar_ip.png");
     }
     if (combined.includes("rf04") || combined.includes("wazuh") || combined.includes("reporte pdf")) {
-      return path.join(DIAGRAMS_DIR, "rf02_dashboard_soc.png");
+      const umlFile = path.join(UML_DIR, "RF_Generar_Reporte_PDF.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "rf02_dashboard_soc.png");
     }
     if (combined.includes("rf05") || combined.includes("exportación jsonl") || combined.includes("telegram")) {
-      return path.join(DIAGRAMS_DIR, "rf08_exportacion_telegram.png");
+      const umlFile = path.join(UML_DIR, "RF08_Exportacion_Telegram.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "rf08_exportacion_telegram.png");
     }
     return null;
   }
@@ -681,16 +695,20 @@ function resolvePlaceholderToImage(placeholderText, nextLine, docFile = "") {
   // Regla estricta: Solo diagramas de contexto, clases y secuencia frontend. Cero capturas de UI.
   if (docFile.includes("04_Manual_Tecnico_Frontend")) {
     if (combined.includes("login y mfa") || combined.includes("setup mfa")) {
-      return path.join(DIAGRAMS_DIR, "rf01_auth_mfa.png");
+      const umlFile = path.join(UML_DIR, "RF01_Autenticacion_MFA_v2.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "rf01_auth_mfa.png");
     }
     if (combined.includes("dashboard y fallback")) {
-      return path.join(DIAGRAMS_DIR, "rf02_dashboard_soc.png");
+      const umlFile = path.join(UML_DIR, "RF02_Consultar_Telemetria_y_Metricas_SOC_Dashboard.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "rf02_dashboard_soc.png");
     }
-    if (combined.includes("pdf client-side")) {
-      return path.join(DIAGRAMS_DIR, "rf10_descarga_logs.png");
+    if (combined.includes("pdf client-side") || combined.includes("canvas") || combined.includes("reporte pdf")) {
+      const umlFile = path.join(UML_DIR, "RF_Generar_Reporte_PDF.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "rf10_descarga_logs.png");
     }
-    if (combined.includes("diagrama de contexto") || combined.includes("contexto frontend")) {
-      return path.join(DIAGRAMS_DIR, "cu00_jerarquia_actores.png");
+    if (combined.includes("diagrama de contexto") || combined.includes("contexto frontend") || combined.includes("actores")) {
+      const umlFile = path.join(UML_DIR, "CU00_Jerarquia_de_actores.png");
+      return fs.existsSync(umlFile) ? umlFile : path.join(DIAGRAMS_DIR, "cu00_jerarquia_actores.png");
     }
     return null;
   }
@@ -883,6 +901,7 @@ function convertMarkdownToDocxElements(mdContent, mode = "technical", docFile = 
       if (!path.isAbsolute(imgPath)) {
         const candidates = [
           path.resolve(__dirname, "../docs", imgPath),
+          path.resolve(UML_DIR, path.basename(imgPath)),
           path.resolve(DIAGRAMS_DIR, path.basename(imgPath)),
           path.resolve(SCREENSHOTS_DIR, path.basename(imgPath)),
           path.resolve(ENTREGABLES_DIR, imgPath),

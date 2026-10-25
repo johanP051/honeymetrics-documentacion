@@ -192,8 +192,8 @@ Este módulo gestiona el directorio de usuarios, los roles y los permisos granul
 | `description` | `VARCHAR(255)` | `NULLABLE` | ❌ | Descripción funcional del rol orientada al administrador. Explica en lenguaje natural las responsabilidades del perfil. |
 | `created_at` | `TIMESTAMP` | `NOT NULL`, `DEFAULT now()` | ✅ | Marca de tiempo de creación del rol. Todos los roles canónicos son insertados por `seed_admin.py` en el momento del despliegue inicial. |
 
-> [!CAUTION]
-> **Modificar el campo `name` de un rol en producción es una operación crítica.** Si el valor deja de coincidir con el `RoleEnum` correspondiente en el código, **todos los usuarios de ese rol recibirán error 403** en todos los endpoints protegidos. Cualquier renombramiento debe ejecutarse como migración atómica que actualice simultáneamente la base de datos y el enum.
+!!! danger "⚡ Modificar el campo `name` de un rol en producción es una operación crítica."
+    Si el valor deja de coincidir con el `RoleEnum` correspondiente en el código, **todos los usuarios de ese rol recibirán error 403** en todos los endpoints protegidos. Cualquier renombramiento debe ejecutarse como migración atómica que actualice simultáneamente la base de datos y el enum.
 
 ---
 
@@ -224,8 +224,8 @@ Este módulo gestiona el directorio de usuarios, los roles y los permisos granul
 | `role_id` | `INTEGER` | `FK (roles.id)`, `NOT NULL` | ✅ | Referencia al rol que recibe el permiso. `ON DELETE CASCADE`: si se elimina el rol, se eliminan automáticamente todas sus asignaciones de permisos. |
 | `permission_id` | `INTEGER` | `FK (permissions.id)`, `NOT NULL` | ✅ | Referencia al permiso granular que se asigna al rol. `ON DELETE CASCADE`: si se elimina un permiso del catálogo, se elimina de todos los roles que lo tenían asignado. |
 
-> [!NOTE]
-> **Índice compuesto único en `(role_id, permission_id)`:** La restricción de unicidad compuesta garantiza que no puede existir la misma combinación rol-permiso dos veces en la tabla. Esto evita que un rol acumule el mismo permiso redundantemente y simplifica las consultas de verificación de acceso.
+!!! note "⚡ Índice compuesto único en `(role_id, permission_id)`"
+    La restricción de unicidad compuesta garantiza que no puede existir la misma combinación rol-permiso dos veces en la tabla. Esto evita que un rol acumule el mismo permiso redundantemente y simplifica las consultas de verificación de acceso.
 
 ---
 
@@ -247,8 +247,8 @@ Este módulo gestiona el directorio de usuarios, los roles y los permisos granul
 | `created_at` | `TIMESTAMP` | `DEFAULT now()` | ❌ | Marca de tiempo de creación de la cuenta. |
 | `updated_at` | `TIMESTAMP` | `DEFAULT now()` | ❌ | Timestamp de la última modificación del registro (cambio de rol, desactivación, etc.). |
 
-> [!IMPORTANT]
-> **Separación `users` / `user_profiles`:** Esta decisión de diseño sigue el patrón de extensión de perfil, donde `users` contiene solo lo imprescindible para la autenticación (credenciales y estado), mientras que `user_profiles` almacena las preferencias de experiencia de usuario (tema, zona horaria, MFA, Telegram). Esto facilita cachear los datos de identidad de forma segura sin exponer accidentalmente los secretos TOTP o los tokens de recuperación.
+!!! warning "⚡ Separación `users` / `user_profiles`"
+    Esta decisión de diseño sigue el patrón de extensión de perfil, donde `users` contiene solo lo imprescindible para la autenticación (credenciales y estado), mientras que `user_profiles` almacena las preferencias de experiencia de usuario (tema, zona horaria, MFA, Telegram). Esto facilita cachear los datos de identidad de forma segura sin exponer accidentalmente los secretos TOTP o los tokens de recuperación.
 
 ---
 
@@ -271,8 +271,8 @@ Este módulo gestiona el directorio de usuarios, los roles y los permisos granul
 | `reset_token` | `VARCHAR(255)` | `NULLABLE` | ❌ | Token criptográfico de un solo uso generado durante el flujo de recuperación de contraseña. Se invalida automáticamente (se pone a `NULL`) una vez consumido o cuando expira el `reset_token_expires`. |
 | `reset_token_expires` | `TIMESTAMP` | `NULLABLE` | ❌ | Marca de tiempo de expiración del token de recuperación. El backend valida que `now() < reset_token_expires` antes de permitir el restablecimiento de contraseña. |
 
-> [!WARNING]
-> **`totp_secret` no está cifrado en reposo en la implementación inicial.** El campo almacena la semilla TOTP en texto plano en la base de datos. La Fase 2 Enterprise contempla cifrar este valor con Fernet AES-256, idéntico al patrón de HoneyMetrics v1 (`mfa_secret` cifrada en `users_profile`), para cumplir requerimientos de seguridad corporativa.
+!!! warning "⚡ `totp_secret` no está cifrado en reposo en la implementación inicial."
+    El campo almacena la semilla TOTP en texto plano en la base de datos. La Fase 2 Enterprise contempla cifrar este valor con Fernet AES-256, idéntico al patrón de HoneyMetrics v1 (`mfa_secret` cifrada en `users_profile`), para cumplir requerimientos de seguridad corporativa.
 
 ---
 
@@ -337,8 +337,8 @@ Este módulo gestiona el ciclo de vida completo de los Indicadores de Compromiso
 | `full_record_json` | `JSONB` | `NOT NULL` | ✅ | Copia serializada e inmutable de la fila completa de `blacklist_records` en el momento de su eliminación. `JSONB` (JSON binario) de PostgreSQL permite hacer consultas dentro del JSON (ej. `full_record_json ->> 'attack_type'`) sin extraer el dato en capa de aplicación. |
 | `deleted_at` | `TIMESTAMP` | `DEFAULT now()`, `NOT NULL` | ✅ | Marca de tiempo legal del desbloqueo. Campo principal de auditoría que certifica el momento exacto de la acción destructiva. |
 
-> [!IMPORTANT]
-> **Diseño Append-Only:** El servicio solo ejecuta `INSERT` en esta tabla. No existe ningún endpoint de la API que permita hacer `UPDATE` o `DELETE` en `blacklist_audit_vault`. Cualquier intento de modificar registros forenses debe ser detectado como un indicador de compromiso del propio sistema de seguridad.
+!!! warning "⚡ Diseño Append-Only"
+    El servicio solo ejecuta `INSERT` en esta tabla. No existe ningún endpoint de la API que permita hacer `UPDATE` o `DELETE` en `blacklist_audit_vault`. Cualquier intento de modificar registros forenses debe ser detectado como un indicador de compromiso del propio sistema de seguridad.
 
 ---
 
@@ -390,8 +390,8 @@ Este módulo gestiona el ciclo de vida completo de las solicitudes de extracció
 | `updated_at` | `TIMESTAMP` | `DEFAULT now()`, `ON UPDATE now()`, `NOT NULL` | ✅ | Timestamp de la última transición de estado. Junto con `created_at`, mide el tiempo total del proceso de extracción. |
 | `expires_at` | `TIMESTAMP` | `NOT NULL`, `INDEX` | ✅ | Fecha límite para la descarga del archivo generado. Un job programado puede marcar solicitudes como `Expired` y purgar los archivos del disco cuando `now() > expires_at`. El índice acelera esta consulta periódica. |
 
-> [!TIP]
-> **Por qué JSONL sobre CSV o JSON completo:** JSONL (JSON Lines) asigna un objeto JSON por línea del archivo. Permite procesar archivos de millones de eventos con un iterador de líneas sin cargar el dataset completo en RAM, lo que es crítico cuando el servidor central comparte memoria con el indexador de Wazuh y PostgreSQL. Un archivo JSON completo con millones de registros requeriría cargarlo íntegro antes de poder procesarlo.
+!!! tip "⚡ Por qué JSONL sobre CSV o JSON completo"
+    JSONL (JSON Lines) asigna un objeto JSON por línea del archivo. Permite procesar archivos de millones de eventos con un iterador de líneas sin cargar el dataset completo en RAM, lo que es crítico cuando el servidor central comparte memoria con el indexador de Wazuh y PostgreSQL. Un archivo JSON completo con millones de registros requeriría cargarlo íntegro antes de poder procesarlo.
 
 ---
 
