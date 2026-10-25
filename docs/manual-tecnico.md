@@ -35,6 +35,8 @@
   - [5.3 Doble Factor de Autenticación con TOTP (PyOTP)](#53-doble-factor-de-autenticación-con-totp-pyotp)
   - [5.4 Mitigación de Timing Attacks con HMAC (`compare_digest`)](#54-mitigación-de-timing-attacks-con-hmac-compare_digest)
   - [5.5 Política Anti-Enumeración de Cuentas (CWE-200)](#55-política-anti-enumeración-de-cuentas-cwe-200)
+  - [5.6 Arquitectura de Despliegue con SSH Deploy Keys (`id_ed25519_hm_v2`)](#56-arquitectura-de-despliegue-en-servidores-con-ssh-deploy-keys-id_ed25519_hm_v2)
+  - [5.7 Política de Feature Toggles y Enfoque Fail-Closed en MFA (`MFA_ENABLED`)](#57-política-de-feature-toggles-y-enfoque-fail-closed-en-mfa-mfa_enabled)
 - [6. Integración con el SIEM Wazuh y Resiliencia Operativa](#6-integración-con-el-siem-wazuh-y-resiliencia-operativa)
   - [6.1 Arquitectura de Índices Duales (`wazuh-alerts-*` vs `wazuh-archives-*`)](#61-arquitectura-de-índices-duales-wazuh-alerts--vs-wazuh-archives-)
   - [6.2 Pipeline de Consulta y Normalización hacia OpenSearch API](#62-pipeline-de-consulta-y-normalización-hacia-opensearch-api)
@@ -44,6 +46,7 @@
   - [ADR-02: Formato de Almacenamiento y Streaming de Logs: JSONL vs CSV](#adr-02-formato-de-almacenamiento-y-streaming-de-logs-jsonl-vs-csv)
   - [ADR-03: Esquema de Identificadores: Prefijos Semánticos Legibles (EXP-XXXX) vs UUIDv4](#adr-03-esquema-de-identificadores-prefijos-semánticos-legibles-exp-xxxx-vs-uuidv4)
   - [ADR-04: Bóveda Forense de Auditoría (`threat_ips_vault`) para No-Repudio](#adr-04-bóveda-forense-de-auditoría-threat_ips_vault-para-no-repudio)
+- [8. Matriz Exhaustiva de Localización de Cambios (Dónde Tocar Qué)](#8-matriz-exhaustiva-de-localización-de-cambios-dónde-tocar-qué)
 
 ---
 
@@ -716,6 +719,38 @@ if not user:
 
 Esta técnica previene que un adversario automatizado deduzca la lista de cuentas de correo institucionales registradas en el SOC midiendo las variaciones en las respuestas del servidor.
 
+### 5.6 Arquitectura de Despliegue en Servidores con SSH Deploy Keys (`id_ed25519_hm_v2`)
+
+Para garantizar la automatización segura de despliegues en servidores Linux y máquinas virtuales sin comprometer credenciales personales en texto plano:
+
+1. **Aislamiento Criptográfico con Ed25519:** Se genera un par de claves sin passphrase exclusivo para el proyecto:
+   ```bash
+   ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_hm_v2 -C "servidor-produccion-honeymetrics"
+   chmod 600 ~/.ssh/id_ed25519_hm_v2
+   ```
+2. **Enrutamiento por Host Virtual (`~/.ssh/config`):**
+   ```text
+   Host github.com-hm-v2
+       HostName github.com
+       User git
+       IdentityFile ~/.ssh/id_ed25519_hm_v2
+       IdentitiesOnly yes
+   ```
+3. **Principio de Menor Privilegio (PoLP):** La clave pública se matricula en GitHub bajo la modalidad **Deploy Key de solo lectura**, impidiendo que un atacante que comprometa el servidor pueda realizar commits no autorizados hacia el repositorio central.
+4. **Sincronización Transparente:** La URL de clone y fetch utiliza el alias:
+   ```bash
+   git clone -b main --single-branch git@github.com-hm-v2:johanP051/honeymetrics-backend.git
+   ```
+
+### 5.7 Política de Feature Toggles y Enfoque Fail-Closed en MFA (`MFA_ENABLED`)
+
+La plataforma implementa un control de acceso defensivo y coherente ante la desactivación temporal de dependencias o protocolos de segundo factor:
+
+1. **Blindaje Fail-Closed en Backend:** Si `settings.MFA_ENABLED=False` en las variables de entorno, los métodos `UserService.setup_mfa` y `UserService.verify_and_enable_mfa` abortan de forma estricta arrojando excepciones `ValidationError` (`HTTP 400 Bad Request`). Esto previene el enrolamiento fantasma de códigos QR que luego no serían verificados en el login.
+2. **Señalización al Cliente Web:** El endpoint `GET /api/v1/users/me` transmite la propiedad `global_mfa_enabled: bool`.
+3. **UX Defensiva en React:** El componente `ProfileSecurityTab.jsx` detecta la bandera y despliega un banner de advertencia institucional (`AlertCircle`), deshabilitando la configuración de 2FA con el estado *"2FA Deshabilitado por Políticas del Servidor"*.
+4. **Ciclo de Vida en Docker Compose:** Debido a que `docker compose restart api` preserva las variables congeladas en el proceso existente, cualquier ajuste en `.env` (como alternar `MFA_ENABLED` o ampliar `ALLOWED_EMAIL_DOMAINS`) exige recrear atómicamente el contenedor con `docker compose up -d --no-deps api`.
+
 ---
 
 ## 6. Integración con el SIEM Wazuh y Resiliencia Operativa
@@ -849,3 +884,45 @@ A continuación se registran formalmente las Decisiones de Arquitectura de Softw
 - **Consecuencias Negativas:**
   - Consumo incremental de espacio de almacenamiento en disco en la base de datos PostgreSQL.
 - **El Por Qué Técnico:** En sistemas de ciberinteligencia corporativos, una operación de eliminación destructiva (`DELETE` sin respaldo) representa un riesgo crítico de seguridad operacional. La bóveda forense garantiza que la eliminación en la vista operativa del SOC sea transparente mientras que el registro pericial subyacente permanezca blindado.
+
+---
+
+## 8. Matriz Exhaustiva de Localización de Cambios (Dónde Tocar Qué)
+
+Para facilitar la rápida localización de archivos en tareas de soporte, corrección de bugs o auditorías, la siguiente matriz mapea los requerimientos funcionales más comunes con su ruta física en el código fuente:
+
+| Área / Categoría | Requerimiento Técnico o Funcional | Archivo / Componente Afectado | Ruta del Archivo / Ubicación |
+| :--- | :--- | :--- | :--- |
+| 🎨 **Frontend / UI** | Modal de enrolamiento 2FA (QR y verificación TOTP) | Componente `MfaModal` | `src/components/settings/MfaModal.jsx` |
+| 🎨 **Frontend / UI** | Tarjeta de seguridad, alerta `MFA_ENABLED=False` y clave | Componente `ProfileSecurityTab` | `src/components/settings/ProfileSecurityTab.jsx` |
+| 🎨 **Frontend / UI** | Custom Hook de contraseñas, fortaleza y llamadas MFA | Hook `useProfileSecurity` | `src/hooks/useProfileSecurity.js` |
+| 🎨 **Frontend / UI** | Vista de perfil, ajustes del sistema y pestañas | Vista de Configuración | `src/pages/Settings.jsx` |
+| 🎨 **Frontend / UI** | Cliente HTTP Axios, interceptores JWT y error 401 | Cliente HTTP Central | `src/api/client.js` |
+| 🎨 **Frontend / UI** | Mocks offline para desarrollo local sin backend | Mocks Offline | `src/mocks/usersMock.js`<br/>`src/mocks/threatsMock.js` |
+| ⚙️ **Backend / API** | Endpoints de login, MFA-verify, reset y logout | Router de Autenticación | `app/api/v1/auth_router.py` |
+| ⚙️ **Backend / API** | Endpoints de perfil (`/me`), cambio clave y setup 2FA | Router de Usuarios | `app/api/v1/endpoints/users.py` |
+| ⚙️ **Backend / API** | Lógica de autenticación, timing hardening y JWT | Servicio de Autenticación | `app/services/auth_service.py` |
+| ⚙️ **Backend / API** | Generación de QR TOTP, contraseñas y CRUD usuarios | Servicio de Usuarios | `app/services/user_service.py` |
+| ⚙️ **Backend / API** | DTOs Pydantic v2 para Login, Token JWT y MFA | Esquemas de Autenticación | `app/schemas/auth.py` |
+| ⚙️ **Backend / API** | DTOs de perfil, creación admin y respuesta usuario | Esquemas de Administración | `app/schemas/user_admin.py` |
+| 🗄️ **Base de Datos** | Credenciales, host y pool SQLAlchemy en PostgreSQL | Sesión ORM y Entorno | `app/db/session.py`<br/>`.env` |
+| 🗄️ **Base de Datos** | Modelo de Usuarios (`users`), hashes y flags de MFA | Modelo ORM de Usuario | `app/models/user.py` |
+| 🗄️ **Base de Datos** | Modelo de Roles canónicos (`roles`) | Modelo ORM de Rol | `app/models/role.py` |
+| 🗄️ **Base de Datos** | Modelo de amenazas activas (`threat_ips`) | Modelo de Amenazas | `app/models/threat.py` |
+| 🗄️ **Base de Datos** | Bóveda Forense inmutable de auditoría | Modelo de Bóveda | `app/models/threat.py` (`ThreatIPVault`) |
+| 🗄️ **Base de Datos** | Lista negra de tokens revocados (Blacklist JWT) | Modelo de Revocación | `app/models/revoked_token.py` |
+| 🗄️ **Base de Datos** | Historial de auditoría de descargas forenses | Modelo de Exportaciones | `app/models/log_export.py` |
+| 🗄️ **Base de Datos** | Scripts y versiones de migración de esquema | Versiones Alembic | `alembic/versions/` |
+| 🤖 **Machine Learning** | Algoritmo de cálculo de `threat_score` y MITRE ATT&CK | Pipeline ML v2 | `app/ml_v2/` |
+| 🤖 **Machine Learning** | Endpoints de inferencia de amenazas en memoria | Router de ML | `app/api/v1/endpoints/ml.py`<br/>`ml_v2.py` |
+| 🔒 **Seguridad / IAM** | Matriz de mapeo Roles de Negocio a Scopes PBAC | Mapeo Canónico de Scopes | `app/core/permissions.py` |
+| 🔒 **Seguridad / IAM** | Hashing Bcrypt y validación de firma JWT | Primitivas Criptográficas | `app/core/security.py` |
+| 🔒 **Seguridad / IAM** | Toggle global de 2FA en servidor (`MFA_ENABLED`) | Configuración Central | `app/core/config.py`<br/>`.env` |
+| 🔒 **Seguridad / IAM** | Dominios de correo permitidos (`ALLOWED_EMAIL_DOMAINS`) | Política de Correo | `app/core/email_policy.py`<br/>`app/core/config.py` |
+| 📊 **Reportes** | Generación de reportes PDF en cliente (jsPDF) | Exportador Cliente | `src/components/threats/ExportPdfModal.jsx` |
+| 📊 **Reportes** | Conexión e indexación OpenSearch / Wazuh (`192.168.32.11`) | Servicio de Telemetría | `app/services/logs_service.py` |
+| 🐳 **DevOps / Infra** | Orquestación Docker Base y Producción | Manifiestos Compose | `docker-compose.yml`<br/>`docker-compose.prod.yml` |
+| 🐳 **DevOps / Infra** | Deploy Key dedicada (`id_ed25519_hm_v2`) y alias SSH | Enrutamiento SSH del Host | `~/.ssh/config` (`Host github.com-hm-v2`) |
+| 🐳 **DevOps / Infra** | Túnel saliente Cloudflare Zero Trust y variables `.env` | Configuración Productiva | `docker-compose.prod.yml`<br/>`.env` |
+| 📄 **Documentación** | Portal MkDocs Material y Guía Despliegue Ubuntu | Documentación Técnica | `mkdocs.yml`<br/>`docs/guia_despliegue_ubuntu.md` |
+
