@@ -276,7 +276,9 @@ Para erradicar defectos visuales en el portal generado por MkDocs Material, se a
    ```
    (o `!!! warning "..."`, `!!! tip "..."`, etc.). En caso de callouts colapsables, usar `??? note "..."`.
 
-2. **Salto de línea obligatorio antes de listas:** Todo párrafo o texto introductorio que termine en dos puntos (`:`) o preceda a una lista ordenada (`1. `, `2. `) o desordenada (`- `) **DEBE** tener obligatoriamente una línea en blanco (`\n\n`) antes del primer ítem para evitar el colapso de la lista en un solo párrafo continuo.
+2. **Salto de línea obligatorio antes de listas y verificación automática:**
+   - Todo párrafo o texto introductorio que termine en dos puntos (`:`) o preceda a una lista ordenada (`1. `, `2. `) o desordenada (`- `) **DEBE** tener obligatoriamente una línea en blanco (`\n\n`) antes del primer ítem para evitar el colapso de la lista en un solo párrafo continuo.
+   - **Verificación Automática de Listas Numeradas:** Antes de dar por bueno cualquier documento Markdown, se debe correr un script verificador en Python que detecte cualquier línea `1. ` precedida por un párrafo sin línea en blanco (`\n\n`) y lo corrija automáticamente en todos los archivos `.md` (tanto en `docs/` como en `docs/entregables_profesor/`).
 
 3. **Atributo `poster` obligatorio en etiquetas `<video>`:** Toda etiqueta `<video>` en MkDocs debe incluir obligatoriamente el atributo `poster="assets/screenshots/<captura_representativa>.png"` para evitar que el reproductor HTML5 se renderice como un cuadro negro vacío con `0:00` antes de la reproducción.
 
