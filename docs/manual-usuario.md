@@ -51,6 +51,7 @@ Este manual ha sido redactado con un enfoque 100% centrado en el operador humano
 Proporcionar a los usuarios de HoneyMetrics una guía operativa integral, didáctica y de consulta ágil que les permita dominar las funciones de la plataforma según su rol asignado.
 
 De manera específica, el manual persigue:
+
 1. Orientar al usuario en el cumplimiento de los requerimientos técnicos de conectividad, hardware y aplicaciones complementarias necesarias para acceder al servicio.
 2. Detallar paso a paso los procedimientos de autenticación robusta, matriculación de doble factor (MFA) y vinculación con canales de notificación como Telegram.
 3. Explicar en profundidad la interpretación analítica de cada componente visual del Dashboard, la administración de indicadores en el Threat Center y la solicitud controlada de registros forenses.
@@ -62,14 +63,15 @@ De manera específica, el manual persigue:
 ## 3. Alcance
 
 Este manual cubre el ciclo completo de interacción del usuario con HoneyMetrics v2.0 a través de su interfaz web accesible desde cualquier navegador moderno. Incluye:
+
 - **Gestión de Identidad y Seguridad Personal:** Inicio de sesión, matriculación y validación de doble factor (TOTP), recuperación autónoma de credenciales, cambio de clave con medidor visual de robustez y vinculación con Telegram.
 - **Visualización y Analítica CTI:** Interpretación de indicadores clave de rendimiento (KPIs), líneas de tiempo de eventos, categorización por severidad, mapa térmico predictivo y recomendaciones del asistente inteligente.
 - **Operación de Lista Negra (Threat Center):** Búsqueda predictiva, registro de indicadores con puntuación de riesgo, actualización de contexto y consulta de la bóveda forense de registros archivados.
 - **Extracción de Evidencias Forenses:** Solicitud de logs de seguridad, seguimiento del ciclo de vida de cada solicitud, descarga de archivos en formato JSONL y emisión de reportes ejecutivos consolidados en formato PDF.
 - **Gobernanza y Roles:** Alcance funcional de los cuatro perfiles de usuario, administración de cuentas y flujo interactivo de aprobación de descargas masivas vía Telegram para administradores.
 
-> [!NOTE]
-> **⚡ Nota de Alcance:** El manual no cubre tareas de administración interna del servidor físico, configuración del motor de bases de datos PostgreSQL ni orquestación de contenedores Docker en infraestructura, aspectos documentados en el [Manual Técnico & Arquitectura](manual-tecnico.md) y la [Guía de Despliegue & Operaciones](guia-despliegue.md).
+!!! note "⚡ Nota de Alcance"
+    El manual no cubre tareas de administración interna del servidor físico, configuración del motor de bases de datos PostgreSQL ni orquestación de contenedores Docker en infraestructura, aspectos documentados en el [Manual Técnico & Arquitectura](manual-tecnico.md) y la [Guía de Despliegue & Operaciones](guia-despliegue.md).
 
 ---
 
@@ -105,17 +107,19 @@ El ecosistema de HoneyMetrics interactúa de forma complementaria con herramient
 
 ### 5.1 Navegador web
 La plataforma ha sido construida para operar en navegadores web de última generación con soporte para HTML5, CSS3 y JavaScript moderno:
+
 - Google Chrome (versión 110 o superior).
 - Mozilla Firefox (versión 110 o superior).
 - Microsoft Edge (versión 110 o superior).
 - Brave Browser o navegadores basados en Chromium.
 - Apple Safari (versión 16 o superior en macOS / iOS).
 
-> [!NOTE]
-> **⚡ Nota:** HoneyMetrics está optimizado para estándares web contemporáneos. No se garantiza el funcionamiento en Microsoft Internet Explorer o navegadores desactualizados. Asegúrese de mantener su navegador actualizado para disfrutar de todas las transiciones visuales y medidas de protección criptográfica.
+!!! note "⚡ Nota"
+    HoneyMetrics está optimizado para estándares web contemporáneos. No se garantiza el funcionamiento en Microsoft Internet Explorer o navegadores desactualizados. Asegúrese de mantener su navegador actualizado para disfrutar de todas las transiciones visuales y medidas de protección criptográfica.
 
 ### 5.2 Aplicación autenticadora móvil (MFA / TOTP)
 Es un requisito obligatorio para acceder a la plataforma. Debe instalar en su teléfono inteligente cualquiera de las siguientes aplicaciones gratuitas de generación de códigos de un solo uso (TOTP):
+
 - **Google Authenticator** (disponible en Google Play Store y Apple App Store).
 - **Microsoft Authenticator**.
 - **Twilio Authy**.
@@ -126,6 +130,7 @@ Cualquier cliente de correo (Gmail, Microsoft Outlook, Thunderbird o webmail cor
 
 ### 5.4 Aplicación de mensajería Telegram
 Recomendada para todos los usuarios y **obligatoria para los Administradores**:
+
 - Aplicación de Telegram instalada en su teléfono móvil o en su computadora (Telegram Desktop o versión Web).
 - Permite a los operadores recibir notificaciones automáticas inmediatas cuando sus extracciones de logs están listas para descarga.
 - Permite a los Administradores recibir solicitudes de aprobación para descargas masivas y autorizarlas o denegarlas mediante botones interactivos directamente en el chat.
@@ -142,13 +147,14 @@ Estas funciones se encuentran disponibles para todos los usuarios autenticados, 
 
 ### 6.1 Inicio de sesión seguro
 Para ingresar a HoneyMetrics:
-1. Abra su navegador web y digite la dirección URL oficial provista por el departamento de tecnología (por ejemplo, `https://honey.johan-d3v.site/` o la dirección local designada).
+
+1. Abra su navegador web y digite la dirección URL oficial provista por el departamento de tecnología (por ejemplo, `https://honeymetrics-frontend.johan-sebastianposada.workers.dev/` o la dirección local designada).
 2. La pantalla de bienvenida le presentará el formulario de autenticación con fondo de ciberseguridad.
 3. En el campo **Usuario o Correo Electrónico**, escriba su identificador registrado.
 4. En el campo **Contraseña**, escriba su clave personal. Puede hacer clic sobre el **ícono del ojo** ubicado a la derecha del campo para alternar la visualización y verificar que los caracteres ingresados sean correctos.
 5. Haga clic sobre el botón **Iniciar Sesión**.
 
-<video controls width="100%" playsinline class="docs-video">
+<video poster="assets/screenshots/fig01_login.png" controls width="100%" playsinline class="docs-video">
   <source src="assets/videos/01_login_y_navegacion.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>
@@ -160,8 +166,8 @@ Para ingresar a HoneyMetrics:
 ![Figura 1b. Interfaz responsiva adaptada a dispositivos móviles](assets/screenshots/fig01b_mobile_landing.png)
 *Figura 1b. Interfaz responsiva adaptada a dispositivos móviles (390×844 px).*
 
-> [!NOTE]
-> **⚡ Nota de Seguridad:** Si introduce credenciales incorrectas, el sistema emitirá un aviso visual de error. Por políticas de protección contra ataques de fuerza bruta, el número de intentos consecutivos está limitado. Si no recuerda su clave, utilice la opción de recuperación explicada más adelante.
+!!! note "⚡ Nota de Seguridad"
+    Si introduce credenciales incorrectas, el sistema emitirá un aviso visual de error. Por políticas de protección contra ataques de fuerza bruta, el número de intentos consecutivos está limitado. Si no recuerda su clave, utilice la opción de recuperación explicada más adelante.
 
 ### 6.2 Configuración y verificación de Autenticación de Doble Factor (MFA)
 El sistema exige de forma obligatoria la validación por dos factores para proteger las cuentas contra accesos no autorizados.
@@ -182,21 +188,23 @@ El sistema exige de forma obligatoria la validación por dos factores para prote
 2. Abra su aplicación autenticadora móvil y consulte el código de 6 dígitos vigente para HoneyMetrics.
 3. Ingréselo en el recuadro numérico y haga clic en **Verificar Código**.
 
-> [!NOTE]
-> **⚡ Nota de Tolerancia Horaria:** El sistema admite una ventana de tolerancia temporal de ±30 segundos para compensar pequeñas desincronizaciones horarias en los dispositivos móviles. Si el código está a punto de expirar en su teléfono (círculo temporizador en rojo), espere a que aparezca el siguiente código de 6 dígitos antes de hacer clic en Verificar.
+!!! note "⚡ Nota de Tolerancia Horaria"
+    El sistema admite una ventana de tolerancia temporal de ±30 segundos para compensar pequeñas desincronizaciones horarias en los dispositivos móviles. Si el código está a punto de expirar en su teléfono (círculo temporizador en rojo), espere a que aparezca el siguiente código de 6 dígitos antes de hacer clic en Verificar.
 
 ### 6.3 Cierre de sesión seguro
 Para salvaguardar la confidencialidad de la información, el usuario dispone de dos mecanismos inmediatos para cerrar su sesión:
+
 - **Desde la barra superior de navegación:** Haga clic sobre el ícono de salida rápida ubicado en la esquina superior derecha de la interfaz.
 - **Desde el menú de usuario:** Haga clic sobre su fotografía o nombre de perfil en la esquina superior derecha y seleccione la opción **Cerrar Sesión** en el menú desplegable.
 
 El sistema destruirá inmediatamente la sesión local y redirigirá al navegador a la pantalla pública de bienvenida.
 
-> [!IMPORTANT]
-> **⚡ Recomendación Vital:** Recuerde cerrar sesión siempre que se ausente de su estación de trabajo o cuando opere desde un equipo compartido en salas de monitoreo.
+!!! warning "⚡ Recomendación Vital"
+    Recuerde cerrar sesión siempre que se ausente de su estación de trabajo o cuando opere desde un equipo compartido en salas de monitoreo.
 
 ### 6.4 Recuperación de contraseña olvidada
 Si ha olvidado su contraseña de acceso, puede restablecerla de forma autónoma mediante el siguiente procedimiento:
+
 1. En la pantalla principal de inicio de sesión, haga clic en el enlace **¿Olvidó su contraseña?**.
 2. En la ventana emergente, ingrese la dirección de correo electrónico institucional asociada a su usuario.
 3. Haga clic en el botón **Enviar Enlace de Recuperación**. El sistema procesará la solicitud y emitirá una confirmación en pantalla.
@@ -210,15 +218,19 @@ Si ha olvidado su contraseña de acceso, puede restablecerla de forma autónoma 
 
 ### 6.5 Gestión de perfil, preferencias visuales y cambio de clave
 Para acceder a la administración de su perfil personal:
+
 1. Despliegue el menú de usuario en la esquina superior derecha y seleccione **Mi Perfil** (o ingrese a **Configuración** desde el menú lateral).
 2. En este módulo podrá gestionar:
+
    - **Foto y datos personales:** Visualizar su nombre, correo y rol asignado.
    - **Tema de la interfaz (Personalización visual):** HoneyMetrics permite alternar entre dos temas:
+
      - *Tema Oscuro (Dark CTI - Predeterminado):* Fondo grafito profundo y acentos de color cian/ámbar, especialmente diseñado para salas de operaciones de seguridad (SOC) y jornadas prolongadas.
      - *Tema Claro (Light):* Fondo limpio en tonos claros, óptimo para entornos con alta iluminación natural.
    - **Zona horaria:** Configuración de la zona horaria geográfica para que todas las marcas de tiempo de las alertas en gráficas y tablas se muestren adaptadas a su horario local.
    - **Cambio de clave activa:** En la sección *Cambiar Contraseña*, introduzca su contraseña actual, seguida de la nueva contraseña y su confirmación.
    - **Medidor visual de fortaleza:** Mientras escribe la nueva clave, una barra interactiva de tres colores le indicará el nivel de seguridad alcanzado:
+
      - *Rojo (Débil):* Clave muy corta o predecible (menos de 8 caracteres o puramente alfabética).
      - *Amarillo (Media):* Cumple con la longitud básica pero requiere mayor variedad de caracteres.
      - *Verde (Fuerte):* Contraseña robusta que combina mayúsculas, minúsculas, números y caracteres especiales.
@@ -257,7 +269,7 @@ El núcleo operativo de HoneyMetrics comprende las tres herramientas principales
 ### 7.1 Dashboard de Inteligencia de Amenazas (CTI)
 El Dashboard es la pantalla central de mando y monitoreo situacional de la plataforma. Para acceder, pulse sobre **Dashboard** en el menú de navegación lateral.
 
-<video controls width="100%" playsinline class="docs-video">
+<video poster="assets/screenshots/fig04_dashboard_cti.png" controls width="100%" playsinline class="docs-video">
   <source src="assets/videos/02_dashboard_cti_filtros.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>
@@ -270,6 +282,7 @@ El panel se compone de los siguientes elementos visuales y analíticos:
 
 1. **Selector de Período Temporal (Filtros Rápidos):**
    Ubicado en la parte superior derecha del tablero. Permite conmutar la ventana de observación con un solo clic:
+
    - *Últimas 24 Horas:* Para monitoreo en tiempo real de incidentes del día.
    - *Últimos 7 Días:* Para detectar campañas semanales persistentes.
    - *Últimos 30 Días:* Para análisis mensual y tendencias consolidadas.
@@ -286,6 +299,7 @@ El panel se compone de los siguientes elementos visuales y analíticos:
 
 4. **Distribución por Severidad:**
    Gráfica circular de tipo dona que clasifica las alertas en cuatro niveles cromáticos intuitivos:
+
    - *Baja (Azul/Verde):* Escaneos preliminares y peticiones benignas.
    - *Media (Amarillo):* Sondeos a puertos de servicios conocidos.
    - *Alta (Naranja):* Intentos de autenticación con credenciales predeterminadas o fuerza bruta.
@@ -302,7 +316,7 @@ El Threat Center es el módulo táctico donde los operadores consultan, registra
 
 Para acceder, haga clic en **Threat Center** (o **Lista Negra**) en el menú de navegación.
 
-<video controls width="100%" playsinline class="docs-video">
+<video poster="assets/screenshots/fig05_threat_center_ioc.png" controls width="100%" playsinline class="docs-video">
   <source src="assets/videos/03_threat_center_y_boveda.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>
@@ -317,12 +331,13 @@ En la parte superior de la tabla encontrará una barra de búsqueda predictiva. 
 **B. Registro de una Nueva IP en la Lista Negra:**
 1. Haga clic sobre el botón **+ Agregar Indicador** (o **Agregar IP**) ubicado encima de la tabla.
 2. Se desplegará un formulario modal con los siguientes campos a diligenciar:
+
    - **Dirección IP:** Digite la dirección IPv4 o IPv6 que desea catalogar (ej. `203.0.113.45`).
    - **País de Origen:** Seleccione o verifique el país asociado a la geolocalización de la IP.
    - **Categoría de Amenaza:** Seleccione en el menú desplegable la tipología del ataque observado (*Fuerza Bruta SSH, Escaneo Web, Inyección SQL, Botnet, Malware*).
    - **Threat Score (Nivel de Amenaza de 0 a 100):** Asigne una puntuación numérica entre 0 y 100 representativa de la peligrosidad de la IP.
-     > [!IMPORTANT]
-     > **⚡ Regla de Bloqueo Automático:** Toda dirección IP registrada con un **Threat Score superior a 70 puntos ($>70$)** es clasificada de forma automática por el sistema bajo el estado de **Bloqueada**, lo que activa su sincronización prioritaria con las políticas de defensa perimetral.
+     !!! warning "⚡ Regla de Bloqueo Automático"
+         Toda dirección IP registrada con un **Threat Score superior a 70 puntos ($>70$)** es clasificada de forma automática por el sistema bajo el estado de **Bloqueada**, lo que activa su sincronización prioritaria con las políticas de defensa perimetral.
    - **Notas del Analista:** Campo de texto libre para justificar el registro (ej. *"Detectada realizando más de 500 intentos de inicio de sesión por minuto en el sensor Cowrie"*).
 3. Haga clic en **Guardar Indicador**. La IP aparecerá listada en la tabla principal.
 
@@ -342,7 +357,7 @@ Este módulo permite extraer paquetes estructurados de registros de seguridad pa
 
 Para acceder, pulse sobre **Logs & Reportes** en el menú de navegación.
 
-<video controls width="100%" playsinline class="docs-video">
+<video poster="assets/screenshots/fig06_exportacion_logs_modal.png" controls width="100%" playsinline class="docs-video">
   <source src="assets/videos/04_logs_export_y_pdf.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>
@@ -359,11 +374,13 @@ Para acceder, pulse sobre **Logs & Reportes** en el menú de navegación.
 
 **B. Mecánica de Aprobación según el Volumen de Datos:**
 El sistema evalúa de forma automática el volumen de registros comprendido en el rango solicitado:
+
 - **Extracción Directa (Menor o igual a 50.000 eventos):** Se aprueba automáticamente al instante. El sistema programa la tarea en segundo plano y pasa a generar el archivo sin requerir intervención humana adicional.
 - **Extracción Masiva (Mayor a 50.000 eventos):** Para evitar sobrecargas y fuga involuntaria de grandes volúmenes de datos, la solicitud queda catalogada como masiva y entra en estado de espera hasta que el **Administrador la autorice formalmente a través del bot de Telegram**.
 
 **C. Estados del Ciclo de Vida de una Solicitud:**
 En la tabla de historial de solicitudes, el operador puede verificar el avance de cada petición mediante las siguientes etiquetas de estado:
+
 - 🟡 **Pendiente de Aprobación:** Solicitud masiva que se encuentra a la espera de que el Administrador presione el botón de autorización en su aplicación de Telegram.
 - 🔵 **Procesando:** La solicitud ha sido aprobada y el motor del sistema se encuentra empaquetando y comprimiendo los registros en segundo plano.
 - 🟢 **Listo (o Completado):** El paquete de datos ha sido generado exitosamente y los botones de descarga se encuentran habilitados para el usuario.
@@ -382,8 +399,8 @@ En la tabla de historial de solicitudes, el operador puede verificar el avance d
 2. El sistema compilará en tiempo real un informe técnico-ejecutivo de alta presentación visual.
 3. El archivo descargado contiene un resumen consolidado con tablas comparativas, distribución de ataques por categoría, principales direcciones hostiles detectadas y conclusiones automáticas del período, listo para ser adjuntado en informes de gestión de seguridad.
 
-> [!NOTE]
-> **⚡ Período de Retención:** Los archivos de datos generados permanecen disponibles para descarga en la plataforma durante un período de **7 días calendario**. Transcurrido este plazo, los archivos pesados son depurados automáticamente del almacenamiento temporal para optimizar espacio, conservando en el historial el registro de la solicitud.
+!!! note "⚡ Período de Retención"
+    Los archivos de datos generados permanecen disponibles para descarga en la plataforma durante un período de **7 días calendario**. Transcurrido este plazo, los archivos pesados son depurados automáticamente del almacenamiento temporal para optimizar espacio, conservando en el historial el registro de la solicitud.
 
 ---
 
@@ -400,7 +417,7 @@ El Administrador es la máxima autoridad técnica y de gobernanza dentro de Hone
   - **Aprobación de descargas masivas en Telegram:** Cuando un analista genera una petición superior a 50.000 eventos, el bot oficial de HoneyMetrics envía una notificación interactiva al chat personal del Administrador con los datos del solicitante, período y volumen estimado. El Administrador puede pulsar los botones interactivos **[ Aprobar ]** o **[ Rechazar ]** directamente desde su teléfono móvil.
   - Capacidad de consultar y depurar registros archivados en la Bóveda Forense.
 
-<video controls width="100%" playsinline class="docs-video">
+<video poster="assets/screenshots/fig07_admin_usuarios_roles.png" controls width="100%" playsinline class="docs-video">
   <source src="assets/videos/05_admin_usuarios_y_roles.mp4" type="video/mp4">
   Su navegador no soporta la reproducción de video HTML5.
 </video>

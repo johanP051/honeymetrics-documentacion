@@ -5,15 +5,14 @@
 > **Arquitectura:** FastAPI + React 18 (Polyrepo)
 > **Fuente:** SRS v6 + Análisis de datos reales Wazuh (165.247 eventos)
 
-> [!IMPORTANT]
-> **Reglas del Profesor — Convención Obligatoria**
-> - Código: `PB-HM-01` a `PB-HM-70` (Fase 1 Oficial) / `PB-HM-71` a `PB-HM-80` (Enterprise Fase 2).
-> - Perspectiva: **QUÉ** necesita el usuario, **nunca** el CÓMO técnico.
-> - CRUD: cada operación = ítem separado.
-> - Trazabilidad HU: `PB-HM-01.1`, `PB-HM-01.2` ... (Hoja 2 - HU).
-> - Estado inicial: `Sin empezar`.
-> - Prioridad: Alta / Media / Baja.
-> - Fibonacci: 1, 2, 3, 5, 8, 13.
+!!! warning "⚡ Reglas del Profesor — Convención Obligatoria"
+    - Código: `PB-HM-01` a `PB-HM-70` (Fase 1 Oficial) / `PB-HM-71` a `PB-HM-80` (Enterprise Fase 2).
+    - Perspectiva: **QUÉ** necesita el usuario, **nunca** el CÓMO técnico.
+    - CRUD: cada operación = ítem separado.
+    - Trazabilidad HU: `PB-HM-01.1`, `PB-HM-01.2` ... (Hoja 2 - HU).
+    - Estado inicial: `Sin empezar`.
+    - Prioridad: Alta / Media / Baja.
+    - Fibonacci: 1, 2, 3, 5, 8, 13.
 
 ## 🗂️ HOJA 1 — PRODUCT BACKLOG (PB-HM-01 a PB-HM-70)
 
@@ -107,10 +106,12 @@
 ## 📝 NOTAS PARA LA HOJA 2 (HISTORIAS DE USUARIO)
 
 Los ítems del backlog se **desglosarán en HUs individuales** en la Hoja 2 usando la convención:
+
 - `PB-HM-02.1` → HU: Formulario de Login (frontend React)
 - `PB-HM-02.2` → HU: Endpoint POST /api/v1/auth/login que retorna JWT
 
 Cada HU incluirá:
+
 - Narrativa: "Como [ROL] quiero [ACCIÓN] para [BENEFICIO]"
 - Criterios de aceptación BDD (Dado/Cuando/Entonces)
 - Puntos Fibonacci

@@ -53,10 +53,10 @@ HoneyMetrics v2.0 opera sobre una infraestructura híbrida y distribuida en cuat
 1. **Nodo Sensor / Perimetral (Honeypot):** Dispositivo embebido (Orange Pi 5) expuesto en la zona desmilitarizada (DMZ) o con IP pública directa. Ejecuta servicios trampa de baja y mediana interacción (Cowrie en puertos 22/2222 y Dionaea en protocolos industriales/SMB). Un agente Wazuh transporta la telemetría en tiempo real mediante un canal TLS hacia el clúster central.
 2. **Nodo SIEM e Indexación (OpenSearch Indexer):** Servidor dedicado en la subred de seguridad (`192.168.32.11`). Aloja el motor Wazuh Indexer en el puerto `9200` y Wazuh Manager en el puerto `55000`. Almacena los índices duales de eventos (`wazuh-alerts-4.x-*` y `wazuh-archives-4.x-*`). En este nodo **no se ejecuta código del aplicativo HoneyMetrics**, blindando su estabilidad contra colapsos de memoria (OOM).
 3. **Nodo Central de Aplicación (Backend Activo):** Estación de trabajo o servidor local (`192.168.31.112` en producción LAN / `192.168.33.2` en staging) con 16 GB de memoria RAM. Aloja el motor Docker que orquesta la API en FastAPI (`hm_api`), el motor relacional PostgreSQL 16 Alpine (`hm_db`) y el conector seguro `cloudflared` (`hm_api_cloudflared`).
-4. **Perímetro Cloud y Clientes Externos:** La red perimetral de Cloudflare recibe las peticiones HTTPS públicas en el dominio institucional (ej. `https://honey.johan-d3v.site`) y las canaliza mediante un túnel Zero Trust saliente hacia el contenedor `hm_api:8000`, eliminando la necesidad de abrir puertos entrantes en el enrutador físico (Port Forwarding). La interfaz de usuario (React SPA) y la API de Telegram interactúan exclusivamente contra este punto de entrada seguro.
+4. **Perímetro Cloud y Clientes Externos:** La red perimetral de Cloudflare recibe las peticiones HTTPS públicas en el dominio institucional (ej. `https://api-honey-master-homeserver.johan-d3v.site`) y las canaliza mediante un túnel Zero Trust saliente hacia el contenedor `hm_api:8000`, eliminando la necesidad de abrir puertos entrantes en el enrutador físico (Port Forwarding). La interfaz de usuario (React SPA) y la API de Telegram interactúan exclusivamente contra este punto de entrada seguro.
 
-> [!NOTE]
-> **El Por Qué Técnico — Aislamiento Físico de OpenSearch (`192.168.32.11`):** Las consultas analíticas agregadas sobre millones de eventos no estructurados demandan asignaciones intensivas de heap Java (JVM). Si el indexador compartiera memoria física con PostgreSQL y los workers Uvicorn de FastAPI, una extracción masiva de auditoría provocaría la invocación del Out-Of-Memory Killer del kernel Linux, terminando intempestivamente el motor de base de datos relacional.
+!!! note "⚡ El Por Qué Técnico — Aislamiento Físico de OpenSearch (`192.168.32.11`)"
+    Las consultas analíticas agregadas sobre millones de eventos no estructurados demandan asignaciones intensivas de heap Java (JVM). Si el indexador compartiera memoria física con PostgreSQL y los workers Uvicorn de FastAPI, una extracción masiva de auditoría provocaría la invocación del Out-Of-Memory Killer del kernel Linux, terminando intempestivamente el motor de base de datos relacional.
 
 ### 1.2. Diagrama de Conectividad Perimetral e Interna
 
@@ -66,7 +66,7 @@ flowchart TB
         Honeypot["Sensor Perimetral (Orange Pi 5)\nCowrie / Dionaea\nIP WAN Dedicada"]
         Operator["Navegador Operador\nReact SPA (Vercel)\nHTTPS Client"]
         TelegramCloud["Telegram Bot API\napi.telegram.org\nWebhooks & Callbacks"]
-        CloudflareEdge["Cloudflare Edge Network\nDNS Anycast + TLS Termination\nhoney.johan-d3v.site"]
+        CloudflareEdge["Cloudflare Edge Network\nDNS Anycast + TLS Termination\napi-honey-master-homeserver.johan-d3v.site"]
     end
 
     subgraph HostServer ["Nodo Central de Aplicación (192.168.31.112)"]
@@ -164,7 +164,7 @@ A continuación se detalla cada una de las variables presentes en `.env.example`
 | `ENVIRONMENT` | `"production"` | Sí | Define el modo operativo del aplicativo (`development`, `staging`, `production`). | En `production` activa validaciones estrictas; si se deja `development` relaja la seguridad. |
 | `DEBUG` | `False` | Sí | Controla el nivel de detalle de las trazas de error y la exposición de logs de depuración. | Si se activa (`True`) en producción, filtra trazas internas y estructuras SQL a clientes externos. |
 | `API_V1_STR` | `"/api/v1"` | Sí | Prefijo canónico de ruta para todos los endpoints expuestos por la API REST. | Rompe el contrato de enrutamiento con el frontend cliente si no concuerda. |
-| `BACKEND_CORS_ORIGINS` | `["https://honey.johan-d3v.site"]` | Sí | Lista JSON de orígenes autorizados para intercambiar peticiones Cross-Origin con credenciales. | Si está mal configurado, el navegador bloquea las solicitudes de la SPA con error CORS. |
+| `BACKEND_CORS_ORIGINS` | `["https://api-honey-master-homeserver.johan-d3v.site"]` | Sí | Lista JSON de orígenes autorizados para intercambiar peticiones Cross-Origin con credenciales. | Si está mal configurado, el navegador bloquea las solicitudes de la SPA con error CORS. |
 | `POSTGRES_USER` | `"usr_honeymetrics"` | Sí | Nombre de usuario exclusivo asignado a la base de datos bajo Principio de Menor Privilegio (PoLP). | Usar superusuarios debilita la contención del host si el contenedor se ve vulnerado. |
 | `POSTGRES_PASSWORD` | `"ClaveComplejaProd2026#"` | Sí | Contraseña criptográfica para autenticación contra el motor PostgreSQL. | Claves débiles permiten ataques de fuerza bruta en redes internas comprometidas. |
 | `POSTGRES_DB` | `"honeymetrics_v2"` | Sí | Nombre de la base de datos relacional creada durante la inicialización del contenedor. | PostgreSQL creará un catálogo genérico impidiendo que el aplicativo localice sus tablas. |
@@ -196,11 +196,11 @@ A continuación se detalla cada una de las variables presentes en `.env.example`
 
 ### 3.2. Criterios de Seguridad y Aislamiento en Producción
 
-> [!CAUTION]
-> **Principio de Menor Privilegio (PoLP) en PostgreSQL:** En entornos de producción está estrictamente prohibido utilizar el usuario `postgres` en la variable `DATABASE_URL`. El aplicativo debe operar con un usuario sin atributos de superusuario (`usr_honeymetrics`) cuyos permisos se limiten exclusivamente al esquema `public` de la base de datos `honeymetrics_v2`.
+!!! danger "⚡ Principio de Menor Privilegio (PoLP) en PostgreSQL"
+    En entornos de producción está estrictamente prohibido utilizar el usuario `postgres` en la variable `DATABASE_URL`. El aplicativo debe operar con un usuario sin atributos de superusuario (`usr_honeymetrics`) cuyos permisos se limiten exclusivamente al esquema `public` de la base de datos `honeymetrics_v2`.
 
-> [!NOTE]
-> **El Por Qué Técnico — Generación de `SECRET_KEY` vía OpenSSL:** Emplear frases legibles o valores autogenerados por frameworks debilita la resistencia contra ataques de diccionario fuera de línea (offline dictionary attacks). Ejecutar `openssl rand -hex 32` extrae 256 bits de entropía real desde el generador pseudoaleatorio del kernel Linux (`/dev/urandom`), garantizando un espacio de claves de $2^{256}$ combinaciones imposibles de vulnerar por fuerza bruta.
+    [!NOTE]
+    **El Por Qué Técnico — Generación de `SECRET_KEY` vía OpenSSL:** Emplear frases legibles o valores autogenerados por frameworks debilita la resistencia contra ataques de diccionario fuera de línea (offline dictionary attacks). Ejecutar `openssl rand -hex 32` extrae 256 bits de entropía real desde el generador pseudoaleatorio del kernel Linux (`/dev/urandom`), garantizando un espacio de claves de $2^{256}$ combinaciones imposibles de vulnerar por fuerza bruta.
 
 ---
 
@@ -320,8 +320,8 @@ User 'root' with password 'root' created.
 User 'root@honeymetrics.com' with password 'root' created.
 ```
 
-> [!IMPORTANT]
-> **Saneamiento Obligatorio Post-Despliegue:** Inmediatamente después de inicializar la plataforma, el administrador debe iniciar sesión en la interfaz web, actualizar la contraseña por defecto `Admin123!` por una clave robusta y enrolar su dispositivo en el flujo de autenticación de doble factor (TOTP) mediante Google Authenticator o FreeOTP.
+!!! warning "⚡ Saneamiento Obligatorio Post-Despliegue"
+    Inmediatamente después de inicializar la plataforma, el administrador debe iniciar sesión en la interfaz web, actualizar la contraseña por defecto `Admin123!` por una clave robusta y enrolar su dispositivo en el flujo de autenticación de doble factor (TOTP) mediante Google Authenticator o FreeOTP.
 
 ---
 
@@ -371,8 +371,8 @@ sequenceDiagram
 
 ### 6.2. Registro Automatizado con set_telegram_webhook.py
 
-> [!CAUTION]
-> **Precedencia de Red Obligatoria:** El registro del webhook debe ejecutarse **exclusivamente después** de que el túnel de Cloudflare se encuentre activo y respondiendo satisfactoriamente en Internet bajo HTTPS. Si la URL pública no resuelve o no cuenta con certificado TLS válido, los servidores de Telegram rechazarán el registro.
+!!! danger "⚡ Precedencia de Red Obligatoria"
+    El registro del webhook debe ejecutarse **exclusivamente después** de que el túnel de Cloudflare se encuentre activo y respondiendo satisfactoriamente en Internet bajo HTTPS. Si la URL pública no resuelve o no cuenta con certificado TLS válido, los servidores de Telegram rechazarán el registro.
 
 Ejecute el script de vinculación desde el servidor anfitrión suministrando la URL pública definitiva del túnel:
 
@@ -382,7 +382,7 @@ export TELEGRAM_BOT_TOKEN="TU_TOKEN_GENERADO_EN_BOTFATHER"
 export TELEGRAM_WEBHOOK_SECRET="SecretoAntiSSRF2026#"
 
 # 2. Invocar el script suministrando la URL pública terminada en HTTPS:
-python3 scripts/set_telegram_webhook.py https://honey.johan-d3v.site
+python3 scripts/set_telegram_webhook.py https://api-honey-master-homeserver.johan-d3v.site
 ```
 
 La consola debe mostrar la confirmación directa emitida por los servidores de Telegram:
@@ -515,8 +515,8 @@ sha256sum -c backup_honeymetrics.sha256
 
 ### Fase C: Restauración Atómica en Servidor Destino (Restore)
 
-> [!NOTE]
-> **El Por Qué Técnico — Formato Custom (`-Fc`) vs SQL Plano (`.sql`):** El volcado en texto plano procesa instrucciones secuenciales lentas propensas a bloqueos si una restricción foránea se carga desordenada. El formato binario comprimido (`-Fc`) almacena un catálogo interno que permite a `pg_restore` reordenar la inyección de índices y llaves foráneas después de haber poblado las filas, reduciendo el tiempo de recuperación de desastres en un 70%.
+!!! note "⚡ El Por Qué Técnico — Formato Custom (`-Fc`) vs SQL Plano (`.sql`)"
+    El volcado en texto plano procesa instrucciones secuenciales lentas propensas a bloqueos si una restricción foránea se carga desordenada. El formato binario comprimido (`-Fc`) almacena un catálogo interno que permite a `pg_restore` reordenar la inyección de índices y llaves foráneas después de haber poblado las filas, reduciendo el tiempo de recuperación de desastres en un 70%.
 
 En el nuevo servidor, clone el código, configure el archivo `.env`, levante exclusivamente el contenedor de base de datos y ejecute la restauración:
 
@@ -559,7 +559,7 @@ La siguiente matriz documenta los incidentes operacionales más frecuentes en Ho
 | `Error: Port 8000 already in use / bind: address already in use` | Existe otro proceso local o una instancia previa de Uvicorn/Nginx ocupando el puerto en el host anfitrión. | Identificar el PID conflictivo ejecutando `lsof -i :8000` o `netstat -tlpn \| grep 8000`. Terminar el proceso con `kill -9 <PID>` o remapear el puerto expuesto en Compose. |
 | `docker-compose: healthcheck failed for service db` | El comando `pg_isready` dentro del contenedor no responde exitosamente dentro de los 5 reintentos estipulados. | Comprobar que `POSTGRES_USER` coincida entre la variable y el flag `-U` del healthcheck. Inspeccionar si el volumen `hm_postgres_data` tiene permisos de escritura corruptos. |
 | `JWT SignatureVerificationError / Could not validate credentials tras reinicio` | La variable `SECRET_KEY` fue alterada o regenerada en `.env`, invalidando todos los tokens emitidos con la clave anterior. | Esperar la expiración natural del token o solicitar a los operadores que inicien sesión nuevamente para obtener tokens firmados con la nueva `SECRET_KEY`. |
-| `CORS Policy Error: Response to preflight request doesn't pass access control check` | La URL del cliente frontend (React SPA) no se encuentra registrada en la lista `BACKEND_CORS_ORIGINS`. | Agregar la URL exacta del cliente (ej. `"https://honey.johan-d3v.site"`) a `BACKEND_CORS_ORIGINS` en `.env` y reiniciar la API con `docker compose restart api`. |
+| `CORS Policy Error: Response to preflight request doesn't pass access control check` | La URL del cliente frontend (React SPA) no se encuentra registrada en la lista `BACKEND_CORS_ORIGINS`. | Agregar la URL exacta del cliente (ej. `"https://api-honey-master-homeserver.johan-d3v.site"`) a `BACKEND_CORS_ORIGINS` en `.env` y reiniciar la API con `docker compose restart api`. |
 | `PostgreSQL: could not resize shared memory segment (No space left on device)` | El parámetro `shared_buffers` de PostgreSQL excede el tamaño asignado a `/dev/shm` en el contenedor. | En `docker-compose.prod.yml`, ajustar la directiva de memoria: `postgres -c shared_buffers=64MB -c work_mem=4MB` o agregar la directiva `shm_size: 256mb` al servicio `db`. |
 | `Error 502 Bad Gateway en Cloudflare al acceder al dominio público` | El contenedor `hm_api_cloudflared` está activo pero no puede comunicarse internamente con el contenedor `hm_api:8000`. | Inspeccionar los logs del conector con `docker compose logs cloudflared`. Verificar en Zero Trust que el servicio apunte a `http://api:8000` (nombre del servicio en `hm_network`). |
 | `Permission denied: /tmp/export_*.jsonl al generar descargas de auditoría` | El usuario sin privilegios que ejecuta Uvicorn dentro del contenedor carece de permisos de escritura sobre el directorio de destino. | Asegurar que el Dockerfile configure permisos adecuados en el directorio de trabajo (`chown -R appuser:appuser /app`). No ejecutar procesos como root en producción. |
