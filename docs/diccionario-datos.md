@@ -464,3 +464,13 @@ Los procedimientos de poblamiento de datos iniciales son operaciones de desplieg
 
 - 📄 **[guia-despliegue.md → Sección: Inicialización de Datos Semilla](./guia-despliegue.md)** — Cómo ejecutar `seed_admin.py` para crear los roles canónicos (`Administrador`, `Analista de datos`, `Consultor de Ciberseguridad`, `Directivo de T.I.`) y el primer usuario administrador del sistema.
 - 📄 **[matriz-cambios.md](./matriz-cambios.md)** — Ruta exacta de `scripts/seed_admin.py` y `scripts/seed_demo_data.py` en el repositorio `honeymetrics-backend`.
+
+---
+
+## 10. Guía de Conexión en DBeaver (Producción vía Túnel SSH)
+
+En el servidor de producción (`192.168.33.2`), el servicio `db` (`hm_db`) configura un bind exclusivo de loopback (`127.0.0.1:5433:5432` en `docker-compose.prod.yml`) para impedir exposición perimetral y evitar colisiones con el puerto `5432` del host (`vuelos_db_data`):
+
+- **Pestaña SSH:** Host `192.168.33.2`, Port `22`, Usuario `sebas` (Llave privada `~/.ssh/id_ed25519`).
+- **Pestaña Main:** Host `127.0.0.1`, Port `5433`, Database `honeymetrics`, Username `postgres`.
+
