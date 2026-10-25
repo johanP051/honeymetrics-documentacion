@@ -80,21 +80,25 @@ Este manual cubre el ciclo completo de interacción del usuario con HoneyMetrics
 Para garantizar una experiencia óptima y segura al operar HoneyMetrics, el usuario debe verificar el cumplimiento de los siguientes requisitos previos:
 
 ### 4.1 Conocimientos previos
+
 - Manejo básico de navegadores de internet y aplicaciones web modernas.
 - Comprensión elemental de conceptos de ciberseguridad: dirección IP, puerto de red, intento de intrusión, severidad de alerta e indicador de compromiso (IOC).
 - Familiaridad con el uso de aplicaciones móviles de autenticación en dos pasos (como Google Authenticator o Microsoft Authenticator).
 
 ### 4.2 Requisitos de hardware recomendados
+
 - **Procesador:** Intel Core i3 de séptima generación o superior (o procesador equivalente AMD Ryzen 3).
 - **Memoria RAM:** Mínimo 4 GB disponibles; se recomiendan 8 GB para una navegación fluida al renderizar gráficas con alta densidad de datos.
 - **Almacenamiento en disco:** Al menos 500 MB de espacio libre disponible para el almacenamiento local de reportes en PDF y archivos de telemetría forense (.jsonl).
 - **Resolución de pantalla:** Resolución mínima recomendada de 1366 × 768 píxeles (pantallas Full HD 1920 × 1080 brindan el mejor confort visual en paneles de gráficos y tablas de indicadores).
 
 ### 4.3 Conexión a internet
+
 - Ancho de banda estable de al menos 5 Mbps de bajada y 2 Mbps de subida.
 - Conectividad segura mediante protocolo HTTPS hacia la dirección web o dominio corporativo proporcionado por el departamento de tecnología.
 
 ### 4.4 Credenciales y custodia de acceso
+
 - Contar con un nombre de usuario o correo electrónico corporativo registrado previamente por el Administrador de la plataforma.
 - Disponer de un dispositivo móvil inteligente (Android o iOS) con cámara funcional para el escaneo del código QR durante la activación del doble factor de autenticación.
 - Custodiar estrictamente las contraseñas y códigos temporales generados; queda prohibido compartir credenciales con terceros o anotarlas en lugares visibles.
@@ -136,6 +140,7 @@ Recomendada para todos los usuarios y **obligatoria para los Administradores**:
 - Permite a los Administradores recibir solicitudes de aprobación para descargas masivas y autorizarlas o denegarlas mediante botones interactivos directamente en el chat.
 
 ### 5.5 Visores de archivos (JSONL y PDF)
+
 - **Para archivos JSONL:** Editores avanzados de texto y código como Visual Studio Code, Notepad++, Sublime Text, o utilidades de línea de comandos como `jq`.
 - **Para reportes ejecutivos PDF:** Cualquier visor estándar de documentos PDF como Adobe Acrobat Reader, Foxit Reader o el propio visor integrado de su navegador web.
 
@@ -173,6 +178,7 @@ Para ingresar a HoneyMetrics:
 El sistema exige de forma obligatoria la validación por dos factores para proteger las cuentas contra accesos no autorizados.
 
 **A. Configuración Inicial (Primer Ingreso del Usuario):**
+
 1. Al autenticarse exitosamente por primera vez, el sistema detectará que su cuenta aún no tiene enrolado un dispositivo y desplegará automáticamente la ventana modal **Configuración de Autenticación de Doble Factor (MFA)**.
 2. En la pantalla se mostrará un **código QR bidimensional** junto con una clave secreta alfanumérica de respaldo.
 3. Abra su aplicación autenticadora en el teléfono móvil (ej. Google Authenticator) y pulse sobre el botón **Añadir cuenta (+)**.
@@ -184,6 +190,7 @@ El sistema exige de forma obligatoria la validación por dos factores para prote
 *Figura 2. Proceso de enrolamiento de doble factor con código QR y censura de seguridad.*
 
 **B. Verificación en Inicios de Sesión Posteriores:**
+
 1. Tras ingresar su usuario y contraseña en los accesos cotidianos, el sistema le presentará de inmediato el paso de validación temporal.
 2. Abra su aplicación autenticadora móvil y consulte el código de 6 dígitos vigente para HoneyMetrics.
 3. Ingréselo en el recuadro numérico y haga clic en **Verificar Código**.
@@ -241,6 +248,7 @@ Vincular su cuenta de Telegram le permite recibir alertas automáticas cuando su
 Siga estos pasos sencillos para obtener su identificador numérico y vincularlo en la plataforma:
 
 **Paso 1: Obtener su ID de Chat mediante `@userinfobot`**
+
 1. Abra su aplicación de Telegram (en su teléfono móvil o en su computadora).
 2. En la barra superior de búsqueda de Telegram, escriba: `@userinfobot`.
 3. Seleccione el bot oficial identificado con dicho nombre (suelen acompañarlo títulos como *User Info Bot* o *Get ID*).
@@ -249,11 +257,13 @@ Siga estos pasos sencillos para obtener su identificador numérico y vincularlo 
 6. Copie ese número entero de identificación en su portapapeles.
 
 **Paso 2: Iniciar conversación con el bot de HoneyMetrics**
+
 1. Regrese a la barra de búsqueda de Telegram y escriba: `@HoneyMetrics` (o el nombre exacto del bot institucional configurado).
 2. Seleccione el bot de la lista de resultados.
 3. En la parte inferior de la conversación, pulse el botón **Iniciar** o envíe el comando `/start`. Este paso es indispensable para autorizar al bot a remitirle mensajes directos.
 
 **Paso 3: Guardar su ID en la plataforma web**
+
 1. Vuelva a su navegador web donde tiene abierto HoneyMetrics.
 2. Ingrese a **Mi Perfil** o **Configuración**.
 3. Localice el campo rotulado como **ID de Chat de Telegram**.
@@ -329,6 +339,7 @@ Para acceder, haga clic en **Threat Center** (o **Lista Negra**) en el menú de 
 En la parte superior de la tabla encontrará una barra de búsqueda predictiva. Puede escribir cualquier término: una dirección IP completa o parcial (ej. `192.168`), el nombre de un país (ej. `China`, `Rusia`), una categoría de ataque (ej. `Brute Force`, `SSH Scan`) o las notas del analista. La tabla filtrará los resultados en tiempo real sin recargar la página.
 
 **B. Registro de una Nueva IP en la Lista Negra:**
+
 1. Haga clic sobre el botón **+ Agregar Indicador** (o **Agregar IP**) ubicado encima de la tabla.
 2. Se desplegará un formulario modal con los siguientes campos a diligenciar:
 
@@ -338,15 +349,18 @@ En la parte superior de la tabla encontrará una barra de búsqueda predictiva. 
    - **Threat Score (Nivel de Amenaza de 0 a 100):** Asigne una puntuación numérica entre 0 y 100 representativa de la peligrosidad de la IP.
      !!! warning "⚡ Regla de Bloqueo Automático"
          Toda dirección IP registrada con un **Threat Score superior a 70 puntos ($>70$)** es clasificada de forma automática por el sistema bajo el estado de **Bloqueada**, lo que activa su sincronización prioritaria con las políticas de defensa perimetral.
+
    - **Notas del Analista:** Campo de texto libre para justificar el registro (ej. *"Detectada realizando más de 500 intentos de inicio de sesión por minuto en el sensor Cowrie"*).
 3. Haga clic en **Guardar Indicador**. La IP aparecerá listada en la tabla principal.
 
 **C. Modificación de un Indicador Existente:**
+
 1. En la fila correspondiente a la IP deseada, haga clic en el botón de **Editar** (representado por el **ícono de lápiz**).
 2. Se abrirá el formulario con los valores actuales. Modifique la categoría, la puntuación o agregue notas adicionales de seguimiento.
 3. Haga clic en **Actualizar Cambios**.
 
 **D. Retiro / Eliminación de una IP y la Bóveda Forense:**
+
 1. Si un analista determina que un indicador ya no representa riesgo o requiere ser retirado, debe hacer clic sobre el botón de **Eliminar** (representado por el **ícono de papelera**).
 2. El sistema mostrará un cuadro de diálogo de confirmación advirtiendo sobre la operación.
 3. Al confirmar, la IP se retira inmediatamente de la tabla operativa de bloqueo activo.
@@ -364,6 +378,7 @@ Para acceder, pulse sobre **Logs & Reportes** en el menú de navegación.
 *Video 4. Solicitud de exportación en rango temporal real, descarga y visualización del Esquema Canónico en PDF.*
 
 **A. Solicitar una Nueva Extracción de Telemetría:**
+
 1. Haga clic en el botón **Nuevo Export** para abrir la ventana de parámetros.
 2. Seleccione la **Fecha de Inicio** del rango temporal que desea auditar.
 3. Seleccione la **Fecha de Fin**.
@@ -390,11 +405,13 @@ En la tabla de historial de solicitudes, el operador puede verificar el avance d
 *Figura 7. Historial de solicitudes con botones de descarga directa en JSONL y PDF.*
 
 **D. Descarga del Archivo de Telemetría Cruda (JSONL):**
+
 1. Ubique en la tabla una solicitud que se encuentre en estado **Listo**.
 2. Haga clic sobre el botón de descarga rotulado como **JSONL**.
 3. Su navegador descargará un archivo comprimido con extensión `.jsonl`. Cada línea de este archivo contiene un objeto estructurado en formato JSON con la totalidad de los campos del evento de seguridad (dirección IP de origen, puerto destino, sensor atacado, encabezados y reglas disparadas), idóneo para ser analizado en entornos como Python, Pandas, Splunk o Elasticsearch.
 
 **E. Descarga del Reporte Ejecutivo de Esquema (PDF):**
+
 1. En la misma fila con estado **Listo**, haga clic sobre el botón rotulado como **Esquema (PDF)**.
 2. El sistema compilará en tiempo real un informe técnico-ejecutivo de alta presentación visual.
 3. El archivo descargado contiene un resumen consolidado con tablas comparativas, distribución de ataques por categoría, principales direcciones hostiles detectadas y conclusiones automáticas del período, listo para ser adjuntado en informes de gestión de seguridad.

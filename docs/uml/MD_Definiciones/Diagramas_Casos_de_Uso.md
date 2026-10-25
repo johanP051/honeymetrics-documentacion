@@ -311,6 +311,7 @@ A continuación se formalizan las especificaciones textuales completas para los 
 | **Relaciones** | `<<include>> CU-IAM-02: Validar Reto MFA TOTP` |
 
 #### Flujo Principal (Camino Básico)
+
 1. El usuario accede a la interfaz web de HoneyMetrics y visualiza el formulario de inicio de sesión.
 2. El usuario ingresa su dirección de correo institucional y su contraseña.
 3. El frontend despacha una petición `POST /api/v1/auth/login` hacia la API de FastAPI.
@@ -325,6 +326,7 @@ A continuación se formalizan las especificaciones textuales completas para los 
 12. El frontend almacena de forma segura los tokens y redirige al usuario a la vista principal según su rol.
 
 #### Flujos Alternativos y de Excepción
+
 - **4a. Credenciales Inválidas**: Si el usuario no existe o la contraseña no coincide con el hash almacenado, el sistema responde `HTTP 401 Unauthorized` con el mensaje genérico `"Credenciales inválidas"` (previniendo enumeración de usuarios). El caso de uso finaliza en fallo.
 - **4b. Cuenta Bloqueada / Inactiva**: Si `is_active == False`, el sistema retorna `HTTP 403 Forbidden` indicando `"Cuenta deshabilitada. Contacte al administrador"`.
 - **9a. Código TOTP Expirado o Incorrecto**: Si el código no coincide con la ventana temporal del algoritmo RFC 6238, el sistema retorna `HTTP 400 Bad Request` indicando `"Código TOTP inválido o fuera de sincronía"`. El usuario dispone de 3 intentos antes de invalidar el `pre_auth_token`.
@@ -344,6 +346,7 @@ A continuación se formalizan las especificaciones textuales completas para los 
 | **Puntos de Extensión** | **Punto de Extensión: "Selección de Amenaza"**: Punto en el cual el usuario elige una fila específica de la tabla para desencadenar la actualización (`CU-THR-03`) o la revocación (`CU-THR-04`). |
 
 #### Flujo Principal (Camino Básico)
+
 1. El usuario navega a la sección "Lista de Amenazas / Blacklist" en el menú lateral.
 2. El frontend realiza una petición `GET /api/v1/threats?page=1&limit=20` adjuntando el token Bearer.
 3. El router de FastAPI valida la vigencia del token y extrae el contexto del usuario.
@@ -368,6 +371,7 @@ A continuación se formalizan las especificaciones textuales completas para los 
 | **Relaciones** | `<<extend>> CU-THR-01: Consultar Amenazas` en el punto de extensión *"Selección de Amenaza"*. |
 
 #### Flujo Principal (Camino Básico)
+
 1. El caso de uso inicia cuando el analista, encontrándose en la vista de consulta de amenazas (`CU-THR-01`), presiona el botón "Editar" en la fila correspondiente a una IP específica.
 2. El sistema abre un cuadro de diálogo modal precargando los datos actuales del registro.
 3. El analista modifica el nivel de severidad asignado (ej. eleva de `HIGH` a `CRITICAL`) y añade una justificación técnica en el campo de notas.
@@ -380,6 +384,7 @@ A continuación se formalizan las especificaciones textuales completas para los 
 10. El frontend cierra el modal, muestra una notificación Toast de éxito y actualiza de inmediato el badge de color de la fila sin recargar la página.
 
 #### Flujos Alternativos y de Excepción
+
 - **6a. Registro Inexistente (404)**: Si mientras el analista editaba el registro, otro administrador lo revocó o eliminó, el sistema detecta que no existe en estado activo y retorna `HTTP 404 Not Found`. El frontend notifica que el recurso ya no está disponible.
 - **6b. Datos Inválidos (422)**: Si el analista introduce caracteres no válidos o campos vacíos obligatorios, el sistema retorna `HTTP 422 Unprocessable Entity` y el modal resalta en rojo los campos afectados.
 
@@ -398,6 +403,7 @@ A continuación se formalizan las especificaciones textuales completas para los 
 | **Relaciones** | `<<include>> CU-LOG-04: Empaquetar y Cifrar Bundle Forense (SHA-256)` |
 
 #### Flujo Principal (Camino Básico)
+
 1. El Administrador recibe en su teléfono móvil una notificación Push enviada por el bot oficial de HoneyMetrics en Telegram.
 2. El mensaje detalla: el correo del analista solicitante, el rango de fechas solicitado, el volumen estimado de registros y el motivo declarado.
 3. El mensaje presenta dos botones de acción en línea (*Inline Keyboard*): `[✅ Aprobar Exportación]` y `[❌ Rechazar Solicitud]`.
@@ -410,6 +416,7 @@ A continuación se formalizan las especificaciones textuales completas para los 
 10. La API responde a Telegram con `answerCallbackQuery` notificando en la pantalla del móvil: *"Solicitud #108 autorizada y lista para descarga"*.
 
 #### Flujos Alternativos y de Excepción
+
 - **4a. Rechazo de la Solicitud**: Si el Administrador presiona `[❌ Rechazar Solicitud]`, el webhook notifica el rechazo, el sistema actualiza el ticket a `REJECTED`, registra el evento en auditoría y no genera ningún archivo forense. El analista ve en el frontend el estatus `"Solicitud Denegada por Gobernanza"`.
 - **6a. Firma Criptográfica Inválida**: Si un atacante intenta falsificar la petición webhook hacia el endpoint sin poseer el token secreto de Telegram, la verificación HMAC falla y el sistema responde de inmediato con `HTTP 401 Unauthorized` registrando una alerta de intrusión de severidad crítica.
 
