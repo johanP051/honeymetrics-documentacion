@@ -346,11 +346,12 @@ En la parte superior de la tabla encontrará una barra de búsqueda predictiva. 
    - **Dirección IP:** Digite la dirección IPv4 o IPv6 que desea catalogar (ej. `203.0.113.45`).
    - **País de Origen:** Seleccione o verifique el país asociado a la geolocalización de la IP.
    - **Categoría de Amenaza:** Seleccione en el menú desplegable la tipología del ataque observado (*Fuerza Bruta SSH, Escaneo Web, Inyección SQL, Botnet, Malware*).
-   - **Threat Score (Nivel de Amenaza de 0 a 100):** Asigne una puntuación numérica entre 0 y 100 representativa de la peligrosidad de la IP.
-     !!! warning "⚡ Regla de Bloqueo Automático"
-         Toda dirección IP registrada con un **Threat Score superior a 70 puntos ($>70$)** es clasificada de forma automática por el sistema bajo el estado de **Bloqueada**, lo que activa su sincronización prioritaria con las políticas de defensa perimetral.
+    - **Threat Score (Nivel de Amenaza de 0 a 100):** Asigne una puntuación numérica entre 0 y 100 representativa de la peligrosidad de la IP.
 
-   - **Notas del Analista:** Campo de texto libre para justificar el registro (ej. *"Detectada realizando más de 500 intentos de inicio de sesión por minuto en el sensor Cowrie"*).
+        !!! warning "⚡ Regla de Bloqueo Automático"
+            Toda dirección IP registrada con un **Threat Score superior a 70 puntos ($>70$)** es clasificada de forma automática por el sistema bajo el estado de **Bloqueada**, lo que activa su sincronización prioritaria con las políticas de defensa perimetral.
+
+    - **Notas del Analista:** Campo de texto libre para justificar el registro (ej. *"Detectada realizando más de 500 intentos de inicio de sesión por minuto en el sensor Cowrie"*).
 3. Haga clic en **Guardar Indicador**. La IP aparecerá listada en la tabla principal.
 
 **C. Modificación de un Indicador Existente:**
