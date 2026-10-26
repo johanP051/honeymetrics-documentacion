@@ -1,15 +1,14 @@
 # 📋 Product Backlog Consolidado — HoneyMetrics v2.0
 
-> **Materia:** Ingeniería de Software II (IS2) — UDEC Facatativá
-> **Equipo:** Johan Sebastián Posada Beltrán · Juan Pablo Fonseca Celis 
-> **Arquitectura:** FastAPI + React 18 (Polyrepo)
-> **Fuente:** SRS v6 + Análisis de datos reales Wazuh (165.247 eventos)
+> **Equipo:** Johan Sebastián Posada Beltrán · Juan Pablo Fonseca Celis · Manuel Alejandro Aldana Rincón
+> **Arquitectura:** FastAPI + React 18 + PostgreSQL 16 (Polyrepo)
+> **Fuente:** SRS v6 + Telemetría en vivo Wazuh Indexer / OpenSearch (165.247 eventos)
 
-!!! warning "⚡ Reglas del Profesor — Convención Obligatoria"
+!!! warning "⚡ Convención Estructural del Backlog"
     - Código: `PB-HM-01` a `PB-HM-70` (Fase 1 Oficial) / `PB-HM-71` a `PB-HM-80` (Enterprise Fase 2).
     - Perspectiva: **QUÉ** necesita el usuario, **nunca** el CÓMO técnico.
     - CRUD: cada operación = ítem separado.
-    - Trazabilidad HU: `PB-HM-01.1`, `PB-HM-01.2` ... (Hoja 2 - HU).
+    - Trazabilidad HU: `PB-HM-01.1` a `PB-HM-80.1` (Hoja 2 - Historias de Usuario).
     - Estado inicial: `Sin empezar`.
     - Prioridad: Alta / Media / Baja.
     - Fibonacci: 1, 2, 3, 5, 8, 13.
