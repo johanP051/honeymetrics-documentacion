@@ -533,3 +533,222 @@ El Directivo de T.I. (o CISO / Gerente de Seguridad) es un perfil consultivo de 
 
 **P5: ¿Puedo tener HoneyMetrics abierto en varios navegadores o computadores al mismo tiempo?**
 *Respuesta:* Sí, puede acceder desde diferentes puestos de trabajo autorizados; sin embargo, si por motivos de seguridad usted cambia su contraseña personal desde un equipo, las sesiones activas en los demás dispositivos caducarán automáticamente y le solicitarán volver a identificarse con su nueva clave.
+
+
+---
+
+## 10. Guía Avanzada del Dashboard CTI — Cada Elemento en Detalle
+
+El Dashboard de Inteligencia de Amenazas Cibernéticas (*Cyber Threat Intelligence - CTI*) constituye el centro neurálgico de supervisión operativa de HoneyMetrics. Este panel visual sintetiza en tiempo real los incidentes capturados por los sensores distribuidos en la infraestructura, transformando millones de eventos aislados en un cuadro de mando integral, claro y accionable para los analistas de seguridad y los líderes tecnológicos.
+
+La interfaz del Dashboard se organiza mediante una barra superior de filtrado temporal que le permite a usted alternar la perspectiva de los datos entre ventanas de **Últimas 24 Horas**, **Últimos 7 Días**, **Últimos 30 Días** o un **Rango Personalizado** mediante un selector de calendario interactivo. Al modificar este filtro temporal, todos los elementos gráficos y métricas del panel recalculan sus valores de forma instantánea y sincronizada, brindándole una visión contextualizada del comportamiento hostil hacia la organización.
+
+A continuación, se detalla la función, interpretación y uso estratégico de cada uno de los componentes visuales que integran este panel.
+
+### 10.1 Las 4 Tarjetas de Indicadores Clave (KPIs)
+
+En la sección superior del Dashboard se ubican cuatro tarjetas rectangulares diseñadas para ofrecer un balance cuantitativo inmediato del nivel de exposición de la red. Cada tarjeta sintetiza una dimensión crítica de la actividad maliciosa:
+
+#### 1. Total de Alertas Activas
+- **Qué dato muestra exactamente:** Presenta la cantidad consolidada de alertas de seguridad registradas y vigentes dentro de la ventana de tiempo seleccionada en el filtro global. Cada alerta representa un intento de intrusión, escaneo no autorizado o interacción hostil detectada por la red de sensores.
+- **Cómo se actualiza:** La tarjeta recalcula su cómputo numérico de manera inmediata cada vez que usted selecciona un período de tiempo diferente en la barra superior. Si se encuentra habilitado el flujo en tiempo real, el contador se incrementa automáticamente a medida que los sensores reportan nuevas amenazas.
+- **Cómo interpretarlo para tomar decisiones:** Este indicador funciona como el barómetro general del clima de seguridad institucional. Un aumento gradual y sostenido en este valor refleja un entorno con mayor hostilidad perimetral, mientras que una disminución pronunciada tras aplicar contenciones confirma el éxito de las medidas defensivas. Cuando este número se dispara repentinamente, el equipo de analistas debe priorizar el triaje de incidentes para aislar vectores de compromiso emergentes.
+
+#### 2. Amenazas Críticas
+- **Dato que muestra exactamente:** Cuantifica con precisión el número de incidentes catalogados con el nivel más alto de severidad dentro del período bajo análisis. Corresponde a eventos que involucran ejecución remota de comandos, explotación de vulnerabilidades conocidas o intentos sistemáticos de intrusión contra servicios esenciales de la infraestructura.
+- **Cómo se actualiza:** Al igual que las demás tarjetas, este valor se sincroniza con el filtro de tiempo elegido por usted en el panel. Además, se actualiza en vivo conforme el motor de correlación clasifica un nuevo incidente entrante bajo la categoría de severidad máxima.
+- **Cómo interpretarlo para tomar decisiones:** Esta es la métrica de mayor urgencia operativa de toda la plataforma. Un valor superior a cero exige la intervención inmediata del Consultor de Ciberseguridad para examinar las cargas maliciosas registradas y validar que las defensas hayan repelido la agresión. Si la cifra supera el umbral de tolerancia fijado por la organización, el Directivo de T.I. debe considerar la activación de protocolos de contingencia y aislamiento preventivo de segmentos de red.
+
+#### 3. Alertas en las Últimas 24 Horas
+- **Dato que muestra exactamente:** Indica el volumen acumulado de eventos maliciosos detectados estrictamente en el lapso de las últimas veinticuatro horas transcurridas, con independencia de la ventana temporal más amplia que usted haya fijado en el filtro general.
+- **Cómo se actualiza:** Este indicador mantiene una ventana móvil continua de veinticuatro horas que se actualiza minuto a minuto con cada nueva alerta procesada por la plataforma.
+- **Cómo interpretarlo para tomar decisiones:** Permite evaluar el nivel de presión hostil más reciente y contrastarlo contra el promedio histórico. Si usted observa que las alertas de las últimas 24 horas representan una proporción desmedida respecto al acumulado mensual, significa que la organización está siendo blanco de una campaña agresiva en curso, ameritando turnos de vigilancia reforzada y alertas tempranas para el equipo de guardia.
+
+#### 4. IPs Nuevas Registradas en el Período
+- **Dato que muestra exactamente:** Revela la cantidad de direcciones IP de origen hostil que han sido detectadas por primera vez atacando los sensores de la institución dentro del rango de fechas seleccionado. No incluye direcciones recurrentes previamente censadas en períodos anteriores.
+- **Cómo se actualiza:** Se calcula dinámicamente al contrastar las direcciones IP que interactuaron en la ventana temporal activa contra el historial completo de telemetría registrado en la base de datos de HoneyMetrics.
+- **Cómo interpretarlo para tomar decisiones:** Esta métrica evalúa la diversificación y novedad de los adversarios. Una cifra elevada de nuevas direcciones IP sugiere ataques originados desde redes de bots recientemente reclutadas o campañas masivas de escaneo global. Para los analistas, este número orienta la necesidad de enriquecer la Lista Negra del Threat Center y coordinar con el Administrador la inclusión de nuevos prefijos de red en los sistemas de bloqueo perimetral.
+
+---
+
+### 10.2 Línea de Tiempo de Eventos
+
+La Línea de Tiempo de Eventos se presenta como un gráfico de área y líneas continuas que ilustra la distribución cronológica de las amenazas a lo largo del tiempo seleccionado.
+
+- **Qué representa cada punto:** Cada punto marcado a lo largo de la curva representa la cantidad exacta de eventos maliciosos registrados en un intervalo temporal específico, por ejemplo por horas en la vista de 24 horas, o por días en la vista mensual. Al posicionar el cursor sobre cualquier punto de la línea, la plataforma despliega una ventana emergente que detalla la fecha exacta, la hora y el desglose de alertas por nivel de gravedad.
+- **Cómo se puede ampliar o filtrar:** Usted puede interactuar de forma intuitiva con la gráfica seleccionando una franja específica de la curva mediante un gesto de arrastre con el ratón. Al realizar esta acción, el visor realiza un acercamiento (*zoom*) hacia dicho tramo temporal, recalculando la granularidad de los datos para mostrar detalles minuto a minuto. Asimismo, haciendo clic en el botón de restablecimiento en la esquina superior de la gráfica, usted regresará a la vista temporal completa.
+- **Qué indica un pico anormal:** La presencia de una cúspide abrupta o pico vertical pronunciado en la gráfica señala una ráfaga masiva y concentrada de ataques. Estas anomalías suelen corresponder a escaneos indiscriminados de puertos, campañas automatizadas de fuerza bruta contra protocolos de administración remota o tentativas de saturación coordinada originadas por redes de atacantes.
+- **Correlación con el calendario organizacional:** La línea de tiempo es una herramienta valiosa para cruzar la actividad maliciosa con eventos institucionales. Por ejemplo, usted puede constatar si un incremento de ataques coincide con el lanzamiento público de una nueva aplicación web corporativa, con noticias institucionales de alto impacto, con jornadas de promociones comerciales o con horarios nocturnos y fines de semana, momentos en los que los atacantes intentan aprovechar la menor presencia física de los operadores de seguridad.
+
+!!! tip "Consejo para el Análisis Temporal"
+    Si detecta un pico sospechoso en la línea de tiempo, utilice la función de ampliación interactiva para delimitar el horario exacto del suceso. Luego, trasládese a la sección de Logs y genere una consulta delimitada estrictamente a esa hora para inspeccionar las direcciones IP causantes sin procesar volúmenes innecesarios de información.
+
+---
+
+### 10.3 Gráfica de Dona de Severidad
+
+La Gráfica de Dona de Severidad ofrece un desglose proporcional instantáneo de todos los eventos registrados en el período, clasificándolos en cuatro categorías cromáticas bien definidas:
+
+1. **Crítica (Color Rojo):** Incidentes de máximo peligro que evidencian intentos directos de ejecución de código, explotación confirmada de vulnerabilidades o intrusiones dirigidas contra componentes medulares de la infraestructura tecnológica.
+2. **Alta (Color Naranja):** Actividades de alta peligrosidad, tales como ataques persistentes de diccionario sobre credenciales de acceso, abuso reiterado de protocolos administrativos y explotación de servicios expuestos.
+3. **Media (Color Amarillo):** Intentos de conexión no autorizados, escaneos estructurados de puertos y sondeos que, si bien son intrusivos, no logran vulnerar las capas defensivas ni representan una ejecución maliciosa inmediata.
+4. **Baja (Color Azul o Verde):** Tráfico exploratorio rutinario, sondeos aleatorios de internet y peticiones anómalas de bajo impacto que son absorbidas de forma cotidiana por los sensores trampa sin riesgo real para la red.
+
+- **Distribución esperada en un entorno saludable:** En condiciones ordinarias de operación dentro de una red protegida, el perfil de eventos suele estar dominado ampliamente por los niveles de severidad Baja y Media, los cuales en conjunto deben abarcar entre el 70% y el 85% del volumen global. Los eventos de severidad Alta se mantienen típicamente en un rango controlado de entre el 10% y el 20%, mientras que los eventos Críticos no deberían superar una proporción de entre el 2% y el 5% del total de las alertas capturadas.
+- **Protocolo de acción cuando el segmento Crítico supera el 20%:** Si usted constata que la porción roja de la gráfica sobrepasa el umbral crítico del 20% del total, el entorno se encuentra bajo una amenaza extraordinaria. Ante este escenario, usted debe seguir el siguiente procedimiento operativo:
+  1. Convocar de inmediato al equipo de respuesta a incidentes y notificar al Directivo de T.I. sobre la anomalía estadística.
+  2. Filtrar el Dashboard para aislar las alertas de severidad Crítica e identificar con celeridad las direcciones IP atacantes dominantes.
+  3. Ingresar al Threat Center y registrar dichas direcciones IP en la Lista Negra con un puntaje de riesgo de cien puntos para su catalogación prioritaria.
+  4. Solicitar una extracción de registros forenses de las últimas horas para documentar las firmas de ataque y las cargas útiles utilizadas por los agresores.
+  5. Coordinar con el Administrador de red la aplicación inmediata de reglas de bloqueo en los cortafuegos perimetrales para cortar de raíz el tráfico proveniente de las fuentes identificadas.
+
+!!! warning "Alerta por Elevación de Amenazas Críticas"
+    Cuando la porción de eventos Críticos supere el 20% del total en la Gráfica de Dona, suspenda las tareas ordinarias de rutina y active de inmediato el protocolo de respuesta a incidentes junto al equipo de infraestructura y telecomunicaciones.
+
+---
+
+### 10.4 Mapa de Calor Predictivo
+
+El Mapa de Calor Predictivo es una matriz bidimensional de analítica avanzada que correlaciona la recurrencia histórica de los ataques a través de los ciclos naturales de la semana laboral y las horas del día.
+
+- **Estructura de los ejes:**
+  - **Eje Horizontal (Eje X):** Representa las veinticuatro horas del día, numeradas correlativamente desde la hora 00:00 hasta la hora 23:00 en formato militar.
+  - **Eje Vertical (Eje Y):** Representa los siete días de la semana, organizados secuencialmente desde el día lunes hasta el día domingo.
+- **Interpretación de la intensidad cromática:** Cada celda de la cuadrícula corresponde a una franja horaria específica de un día determinado. El algoritmo calcula la densidad de eventos maliciosos y asigna un tono visual en gradiente: las celdas con colores fríos, tenues o descoloridos indican actividad nula o marginal, mientras que las celdas con colores cálidos e intensos (rojos, naranjas o púrpuras saturados) señalan una elevada concentración histórica y sostenida de intentos de intrusión.
+- **Planificación de refuerzos y defensa proactiva:** El mapa de calor permite abandonar el enfoque reactivo tradicional para adoptar una postura de defensa proactiva. Al analizar los patrones recurrentes en la matriz, usted y su equipo pueden:
+  - Planificar turnos de guardia activa y reforzar la dotación de analistas en las franjas horarias donde históricamente se concentra la mayor agresividad de los atacantes, frecuentemente durante la madrugada o en las transiciones de jornada.
+  - Programar las ventanas de mantenimiento institucional, despliegue de parches de software y actualizaciones de servidores exclusivamente en las celdas de menor calor histórico, minimizando el riesgo de sufrir ataques oportunistas durante momentos en que los sistemas se encuentran vulnerables por reinicios programados.
+  - Ajustar de manera predictiva la sensibilidad de los mecanismos de bloqueo perimetral en las horas previas a los picos históricos identificados por la plataforma.
+
+---
+
+### 10.5 Honeypot Advisor
+
+El Honeypot Advisor es un módulo de asistencia inteligente basado en reglas de correlación heurística que examina de manera continua los datos agregados del período seleccionado para generar diagnósticos concisos y recomendaciones prácticas en lenguaje natural.
+
+En lugar de obligar al usuario a deducir anomalías cruzando manualmente múltiples gráficas, el Advisor evalúa desviaciones estadísticas respecto a las líneas base de comportamiento normal de la red y presenta tarjetas informativas categorizadas por nivel de prioridad.
+
+- **Ejemplos de alertas contextuales generadas por el Advisor:**
+  - *“Se detectó un volumen 3x superior al promedio desde el rango 185.x.x.x en las últimas 48 horas. Se sugiere ingresar a la sección de Lista Negra y catalogar el rango completo para revisión prioritaria.”*
+  - *“Los ataques de fuerza bruta aumentaron un 40% respecto a la semana anterior, concentrándose principalmente en horas de la madrugada. Se recomienda auditar las políticas de contraseñas y restringir los puertos de acceso perimetral.”*
+  - *“Se identificó una nueva firma de sondeo automatizado dirigida contra servidores web institucionales originada desde múltiples proveedores extranjeros. Se aconseja generar un reporte de esquema en formato PDF para someterlo a consideración del comité de seguridad.”*
+
+Cada tarjeta emitida por el Honeypot Advisor incluye accesos directos que le permiten a usted ejecutar la acción recomendada con un solo clic, ya sea aplicando filtros directos en el Threat Center, exportando una consulta delimitada de telemetría o descargando una síntesis ejecutiva para la dirección corporativa.
+
+---
+
+## 11. Ciclo de Vida Completo de una Solicitud de Logs
+
+La extracción controlada de registros de seguridad (*logs*) constituye una de las funciones más rigurosas de HoneyMetrics, ya que proporciona la materia prima probatoria para investigaciones forenses, procesos judiciales y auditorías de cumplimiento normativo. Para preservar el rendimiento de la plataforma y garantizar un gobierno estricto sobre los datos institucionales, cada solicitud transita a través de un ciclo de vida compuesto por cuatro estados posibles.
+
+### 11.1 El Proceso de Solicitud Inicial
+
+Para generar una nueva solicitud de registros, usted debe dirigirse a la pestaña de **Logs & Reportes** en el menú principal y presionar el botón **Nueva Solicitud**.
+
+En el formulario emergente, usted debe configurar los parámetros de su investigación:
+1. **Rango de Fechas y Horas:** Fecha y hora de inicio, y fecha y hora de finalización del intervalo de análisis requerido.
+2. **Filtros Específicos (Opcionales):** Nivel de severidad de los eventos (Crítica, Alta, Media, Baja), tipo de sensor trampa objetivo o direcciones IP específicas de origen.
+3. **Justificación Operativa:** Descripción breve y clara del motivo de la consulta, por ejemplo: *"Investigación de incidente de fuerza bruta registrado el 24 de octubre"*.
+
+Una vez completados los campos, la interfaz calcula una estimación del volumen de eventos comprendidos dentro de los criterios ingresados. Si el volumen proyectado es igual o menor a 50.000 eventos, el sistema inicia de inmediato el procesamiento sin requerir intervenciones externas. Si el volumen proyectado excede los 50.000 eventos, la solicitud entra obligatoriamente en el estado de aprobación por parte de la jerarquía administrativa.
+
+### 11.2 Los Cuatro Estados de una Solicitud
+
+A continuación se detalla exhaustivamente la dinámica operativa de cada uno de los cuatro estados que puede adoptar su solicitud dentro de la tabla de seguimiento:
+
+```mermaid
+flowchart TD
+    Inicio([Inicio de Solicitud]) --> Calculo{¿Volumen mayor a 50.000 eventos?}
+    Calculo -- No --> Procesando[Estado: Procesando]
+    Calculo -- Sí --> Pendiente[Estado: Pendiente de Aprobación]
+    Pendiente --> NotifTelegram[Notificación Interactiva a Telegram]
+    NotifTelegram --> Decision{Decisión del Administrador}
+    Decision -- Aprueba --> Procesando
+    Decision -- Deniega --> Rechazada[Estado: Rechazada]
+    Procesando --> Empaquetado[Extracción y Compilación de Archivo]
+    Empaquetado --> Listo[Estado: Listo para Descarga]
+    Listo --> Descarga([Descarga de JSONL o Reporte PDF])
+    Rechazada --> Fin([Fin del Ciclo / Requiere Acotar Filtros])
+```
+
+#### 1. Pendiente de Aprobación (Solo para solicitudes mayores a 50.000 eventos)
+- **Qué ocurre en Telegram:** En el instante preciso en que usted confirma una solicitud que sobrepasa el límite de 50.000 eventos, el bot oficial de HoneyMetrics en Telegram despacha una notificación de alta prioridad a los canales y dispositivos móviles de los Administradores acreditados. El mensaje transmitido contiene el nombre de usuario del solicitante, su rol institucional, el rango cronológico exacto de la petición, la justificación ingresada y el volumen estimado de registros, acompañado por dos botones interactivos con las opciones **Aprobar Solicitud** y **Rechazar Solicitud**.
+- **Cuánto tiempo puede tomar:** En condiciones habituales de oficina, el tiempo de respuesta administrativa suele oscilar entre 5 y 30 minutos. En horarios no laborales o fines de semana, este lapso puede prolongarse de acuerdo con los turnos de disponibilidad establecidos por el equipo de seguridad.
+- **Qué hacer si el Administrador no responde:** Si usted requiere la información con carácter urgente y no obtiene respuesta oportuna a través de Telegram, puede comunicarse directamente con el Administrador mediante el correo institucional indicando el código identificador de su solicitud. Alternativamente, usted puede cancelar la solicitud pendiente y generar una nueva solicitud dividiendo el intervalo temporal en segmentos más pequeños, por ejemplo solicitando únicamente las últimas seis horas o filtrando exclusivamente por severidad Crítica, para que el volumen se mantenga por debajo de los 50.000 eventos y el procesamiento se ejecute de forma automática sin aguardar autorización humana.
+
+#### 2. Procesando
+- **Dinámica del estado:** Este estado señala que la solicitud cuenta con la debida autorización, bien sea por ser inferior al umbral o por haber sido aprobada en Telegram, y que el motor de extracción se encuentra recopilando, filtrando y empaquetando los registros forenses solicitados.
+- **Indicador visual:** En la tabla de solicitudes se desplegará una barra animada de progreso y el estado se identificará con una insignia de color ámbar.
+- **Precaución para el usuario:** Durante esta etapa, se aconseja enfáticamente que usted no cierre la ventana del navegador ni recargue la pestaña mientras el sistema extrae y empaqueta los eventos. Aunque la recopilación continúa ejecutándose en el servidor, mantener abierta la ventana le permite presenciar la finalización del proceso y habilitar de inmediato el botón de descarga.
+
+!!! warning "Precaución durante el Empaquetado"
+    No cierre la pestaña del navegador ni recargue la página mientras la solicitud se encuentre en estado **Procesando**. Aunque la extracción continúa ejecutándose en el servidor, mantener activa la interfaz le permite presenciar la finalización del trabajo y acceder de inmediato al archivo resultante.
+
+#### 3. Listo
+- **Disponibilidad de la descarga:** Una vez concluida la extracción y compresión de los datos, la insignia de estado cambia inmediatamente a color verde con la etiqueta **Listo**. Al mismo tiempo, se habilita el botón de descarga directa en la columna de acciones.
+- **Procedimiento de descarga:** Usted debe hacer clic sobre el botón de descarga correspondiente a la fila de su solicitud. El navegador iniciará de forma automática la transferencia del archivo comprimido hacia la carpeta local de descargas de su equipo de cómputo.
+- **Qué contiene el archivo JSONL (*JSON Lines*):** El paquete descargado contiene un archivo de texto estructurado en el que cada línea representa un evento de seguridad individual e íntegro en formato estándar. Cada registro incluye la marca de tiempo exacta en estándar universal, la dirección IP de origen atacante, el puerto de destino pretendido, el tipo de honeypot involucrado, la firma del ataque detectado, la carga maliciosa capturada como comandos ejecutados o peticiones transmitidas, el nivel de severidad asignado y los metadatos forenses contextuales. Este formato resulta idóneo para su ingestión en herramientas de ciencia de datos, librerías de analítica avanzada o plataformas corporativas de correlación de eventos.
+
+#### 4. Rechazada
+- **Causas del rechazo:** Si el Administrador determina que la solicitud abarca un rango de tiempo desmesurado que podría comprometer la estabilidad operativa de la red, que la justificación no cumple con los protocolos de gobernanza institucional o que los datos solicitados exceden la necesidad investigativa expresada, presionará el botón de denegación en Telegram.
+- **Consecuencias en la plataforma:** El estado de la solicitud en la tabla cambiará a una insignia roja con la leyenda **Rechazada**. Al posar el cursor sobre la fila, usted podrá leer el motivo formal de rechazo consignado por el Administrador.
+- **Procedimiento para volver a solicitar:** Usted no debe intentar reenviar de manera idéntica la misma solicitud. Por el contrario, debe consultar el motivo expresado, acotar el rango de búsqueda a una franja horaria más estrecha, aplicar filtros de severidad para descartar eventos menores o justificar de manera más detallada la necesidad técnica del estudio antes de generar una nueva petición en la plataforma.
+
+---
+
+### 11.3 El Reporte Ejecutivo en Formato Esquema (PDF)
+
+De manera complementaria a los archivos técnicos en formato JSONL, HoneyMetrics permite generar e imprimir un **Reporte Ejecutivo en Formato PDF**, concebido específicamente para la comunicación estratégica hacia niveles directivos y comités de auditoría.
+
+- **Contenido estructurado del reporte:**
+  1. **Portada Institucional de Auditoría:** Contiene el título del informe, fecha y hora de emisión, identificador de auditoría, nombre del analista solicitante y rango temporal evaluado.
+  2. **Resumen Ejecutivo y Métricas Globales:** Tablas consolidadas que presentan el volumen total de eventos procesados, conteo de amenazas críticas repelidas y tasa de variación porcentual respecto a períodos precedentes.
+  3. **Distribución por Severidad:** Gráficos estadísticos de alta resolución que ilustran el balance entre eventos Críticos, Altos, Medios y Bajos.
+  4. **Cuadro de Honor de Hostilidad (Top 10 IPs Maliciosas):** Tabla detallada que enumera las diez direcciones IP más agresivas identificadas durante el período, acompañadas de su país de origen, número de tentativas de intrusión, servicios vulnerables atacados y puntaje de amenaza asignado.
+  5. **Análisis de Vectores de Invasión:** Desglose pormenorizado de los puertos de red más asediados y las modalidades de explotación predominantes, tales como ataques de fuerza bruta, inyecciones de código o escaneos estructurados.
+  6. **Conclusiones y Recomendaciones Tácticas:** Párrafos de síntesis redactados en lenguaje gerencial que orientan la toma de decisiones defensivas para el siguiente ciclo operativo.
+- **Escenarios y reuniones en las que debe ser utilizado:**
+  - **Comités Directivos de Tecnología e Información:** Permite justificar de manera gráfica y documental las inversiones en infraestructura, licencias de protección y contratación de personal especializado.
+  - **Reuniones Mensuales de Seguimiento de Ciberseguridad:** Facilita la rendición de cuentas entre el equipo táctico de analistas y la gerencia de seguridad sobre la evolución del panorama de riesgos.
+  - **Auditorías de Cumplimiento y Certificación Normativa:** Sirve como evidencia documental formal para satisfacer requerimientos de estándares internacionales, tales como ISO/IEC 27001 o regulaciones sectoriales de protección de datos personales e infraestructuras críticas, acreditando que la organización mantiene una vigilancia activa sobre su perímetro digital.
+
+---
+
+## 12. Preguntas Frecuentes Ampliadas
+
+En esta sección se presentan explicaciones detalladas ante inquietudes operativas avanzadas planteadas habitualmente por los usuarios al interactuar con HoneyMetrics.
+
+---
+
+**P6: Configuré el doble factor de autenticación en mi perfil, escaneé el código QR y guardé los códigos de recuperación, pero al iniciar sesión el sistema no me solicita el código de 6 dígitos. ¿A qué se debe esto?**
+
+*Respuesta:*  
+Esta situación se presenta debido a la existencia de una directiva global de seguridad en el servidor que debe encontrarse explícitamente activada por el Administrador del sistema para que el segundo factor de autenticación sea exigido a todos los usuarios durante el acceso. Cuando dicha directiva institucional se encuentra deshabilitada temporalmente en la configuración central de la plataforma, como suele ocurrir durante etapas de instalación inicial o ventanas de mantenimiento preventivo, el sistema adopta una política de acceso básico que valida satisfactoriamente su ingreso empleando únicamente su nombre de usuario y su contraseña habitual. Usted puede tener la total tranquilidad de que su vinculación personal no se ha extraviado, ya que su perfil conserva almacenada de forma segura la clave secreta y la sincronización con su aplicación móvil autenticadora. Tan pronto como el personal de infraestructura active la obligatoriedad general del doble factor en el servidor corporativo, la plataforma comenzará a solicitarle automáticamente el código numérico de seis dígitos en el instante de identificarse. Si usted desea que su cuenta opere de inmediato bajo la modalidad de verificación en dos pasos, comuníquese con el Administrador para consultar el cronograma institucional de habilitación de dicha directiva de seguridad.
+
+---
+
+**P7: ¿Cómo puedo usar la plataforma sin conexión a internet durante una sustentación o presentación académica?**
+
+*Respuesta:*  
+La plataforma HoneyMetrics incorpora de fábrica una modalidad especializada denominada Modo de Demostración Offline, concebida para operar de manera autónoma y proyectar datos de muestra representativos sin requerir una conexión activa a internet ni enlace con los servidores de producción. Para hacer uso de esta capacidad en una sustentación de grado, clase magistral o exposición técnica, es imprescindible que el Administrador del sistema habilite previamente esta función ingresando al panel de opciones de la plataforma antes de dar comienzo al evento. Una vez que este entorno demostrativo ha sido activado, todas las secciones esenciales del sistema, incluyendo el Dashboard de inteligencia, el Threat Center y el módulo de descarga de registros, desplegarán métricas simuladas de alta fidelidad que permiten recorrer la totalidad de las funciones analíticas con total fluidez. Usted podrá constatar visualmente que la plataforma se encuentra operando bajo esta contingencia porque en la parte superior de la pantalla se desplegará de forma permanente un banner distintivo con el rótulo **“Modo Demostración Activo”**. Esta herramienta le garantiza una exposición académica exitosa y sin sobresaltos técnicos, evitando la dependencia de redes inalámbricas comunitarias o conexiones externas inestables.
+
+---
+
+**P8: ¿Qué hace el botón [Reconectar] que aparece en el panel del Dashboard?**
+
+*Respuesta:*  
+El botón interactivo con la etiqueta **[Reconectar]** aparece en la interfaz de usuario de manera automática cuando el sistema detecta que el canal de telemetría en tiempo real, responsable de nutrir al Dashboard con las alertas generadas por los sensores de detección, ha sufrido una interrupción momentánea o ha dejado de responder. Al hacer clic firmemente sobre este botón, la plataforma ejecuta un restablecimiento selectivo de los conductos de comunicación internos, descartando el registro de error acumulado y reanudando la consulta de datos desde el origen sin obligarlo a usted a recargar o refrescar la página completa del navegador. Esta solución resulta sumamente eficiente para superar fluctuaciones transitorias en la conexión a la red local o pausas operativas breves en el servicio de monitoreo sin perder el contexto visual de su trabajo en pantalla. En caso de que usted presione el botón en repetidas ocasiones y este continúe manifestándose en la interfaz de forma persistente, el comportamiento indica que existe un corte de comunicaciones más severo en la infraestructura tecnológica. Ante esa eventualidad prolongada, usted debe abstenerse de insistir y proceder a levantar un reporte formal ante el Administrador de la plataforma o el departamento de soporte técnico institucional.
+
+---
+
+**P9: El Threat Center muestra una IP con estado "Bloqueada". ¿Eso significa que esa IP ya no puede atacar mi sistema?**
+
+*Respuesta:*  
+El estado con la etiqueta **“Bloqueada”** dentro del Threat Center de HoneyMetrics refleja que el equipo de analistas de ciberseguridad ha evaluado la evidencia forense disponible, ha catalogado formalmente dicha dirección IP como un adversario hostil comprobado y ha registrado de manera oficial la orden de contención en la base de datos de la plataforma. Sin embargo, resulta fundamental tener presente que HoneyMetrics cumple la función de centro de inteligencia, correlación y gestión estratégica de incidentes, por lo cual no aplica de manera directa ni autónoma el corte físico del tráfico de red sobre las líneas de comunicación. Para que los paquetes de datos procedentes de esa dirección hostil sean rechazados de manera efectiva antes de ingresar a los servidores corporativos, el Administrador de red debe sincronizar dicha lista negra y cargar las reglas de denegación correspondientes en los dispositivos de seguridad perimetral de la organización, tales como cortafuegos de borde o enrutadores principales. Si dichas reglas de filtrado aún no han sido transferidas y aplicadas formalmente en los equipos físicos de frontera por el personal de infraestructura, las peticiones originadas por esa dirección IP podrían continuar alcanzando el perímetro exterior de su red. Por este motivo, la catalogación como bloqueada en HoneyMetrics debe considerarse como una directiva de neutralización que requiere la validación operativa en los elementos de defensa perimetral.
+
+---
+
+**P10: ¿Por qué mi sesión se cierra automáticamente después de 30 minutos de inactividad?**
+
+*Respuesta:*  
+La terminación automática de su sesión tras transcurrir treinta minutos consecutivos sin interacción representa un mecanismo de defensa fundamental en materia de seguridad informática, orientado a resguardar la confidencialidad de la información estratégica institucional y mitigar riesgos de intrusión física. En un entorno de monitoreo de amenazas cibernéticas, una consola abierta y abandonada de manera negligente sobre un escritorio expone datos sensibles sobre vulnerabilidades corporativas, esquemas de defensa y registros de incidentes ante cualquier persona que transite por el área de trabajo. Este intervalo específico de treinta minutos ha sido calibrado minuciosamente por los estándares de seguridad de la organización para concederle a usted la flexibilidad necesaria de atender consultas telefónicas breves o revisar documentación impresa sin ser interrumpido, garantizando al mismo tiempo el bloqueo estricto de la cuenta en caso de una ausencia prolongada. Al vencerse este plazo sin que el sistema detecte pulsaciones de teclado o movimientos del cursor en la ventana de HoneyMetrics, la plataforma interrumpe el acceso de forma segura y lo conduce hacia la pantalla principal de autenticación. Cuando usted regrese a su puesto, bastará con ingresar nuevamente sus credenciales corporativas para recuperar el acceso pleno al sistema en pocos segundos.
