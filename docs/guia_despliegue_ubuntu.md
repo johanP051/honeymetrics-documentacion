@@ -69,7 +69,7 @@ Imprime la llave pública en la consola:
 cat ~/.ssh/id_ed25519_hm_v2.pub
 ```
 
-1. Copia el texto emitido completo (`ssh-ed25519 AAAA... servidor-produccion-honeymetrics`).
+1. Copia el texto emitido completo (`ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI_CLAVE_PUBLICA_COMPLETA servidor-produccion-honeymetrics`).
 2. Dirígete en tu navegador a tu repositorio en GitHub:
    `https://github.com/johanP051/honeymetrics-backend` ➔ **Settings** ➔ **Deploy keys** ➔ **Add deploy key**.
 3. **Title:** `Ubuntu Homeserver Producción` (o nombre de la máquina).
@@ -136,7 +136,7 @@ Hi johanP051/honeymetrics-backend! You've successfully authenticated, but GitHub
    ```
 
 4. **Configurar la política de dominios de correo institucional (`ALLOWED_EMAIL_DOMAINS`):**
-   Para autorizar correos de la Universidad de Cundinamarca y cuentas autorizadas de Google:
+   Para autorizar correos corporativos y cuentas verificadas de Google:
    ```env
    EMAIL_DOMAIN_POLICY=allowlist
    ALLOWED_EMAIL_DOMAINS=ucundinamarca.edu.co,gmail.com
@@ -218,7 +218,7 @@ HoneyMetrics no requiere abrir puertos entrantes (Port Forwarding) en el enrutad
 1. En el panel de **Cloudflare Zero Trust** (Networks ➔ Tunnels), copia el token del túnel configurado para tu dominio.
 2. Inyecta el token en tu `.env`:
    ```env
-   CLOUDFLARE_TUNNEL_TOKEN=eyJhIjoi...
+   CLOUDFLARE_TUNNEL_TOKEN=tu_token_cloudflare_zero_trust_aqui
    ```
 3. Recrea el servicio del túnel:
    ```bash
