@@ -64,7 +64,7 @@ HoneyMetrics v2.0 opera sobre una infraestructura híbrida y distribuida en cuat
 flowchart TB
     subgraph WAN ["Perímetro Externo / Internet"]
         Honeypot["Sensor Perimetral (Orange Pi 5)\nCowrie / Dionaea\nIP WAN Dedicada"]
-        Operator["Navegador Operador\nReact SPA (Vercel)\nHTTPS Client"]
+        Operator["Navegador Operador\nReact SPA (Cloudflare Pages)\nHTTPS Client"]
         TelegramCloud["Telegram Bot API\napi.telegram.org\nWebhooks & Callbacks"]
         CloudflareEdge["Cloudflare Edge Network\nDNS Anycast + TLS Termination\napi-honey-master-homeserver.johan-d3v.site"]
     end

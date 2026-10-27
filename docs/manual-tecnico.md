@@ -652,6 +652,8 @@ La siguiente matriz documenta los privilegios exactos configurados para cada rol
 | **Perfil Propio** | `GET /api/v1/users/me` | ✅ | ✅ | ✅ | ✅ |
 | **Perfil Propio** | `PUT /api/v1/users/me/password` | ✅ | ✅ | ✅ | ✅ |
 | **Perfil Propio** | `POST /api/v1/users/me/mfa/setup` | ✅ | ✅ | ✅ | ✅ |
+| **Perfil Propio** | `POST /api/v1/users/me/mfa/verify` | ✅ | ✅ | ✅ | ✅ |
+| **Perfil Propio** | `POST /api/v1/users/me/mfa/disable` | ✅ | ✅ | ✅ | ✅ |
 | **Threat Center** | `GET /api/v1/threats/summary` | ✅ | ✅ | ✅ | ✅ |
 | **Threat Center** | `GET /api/v1/threats-center/` | ✅ | ✅ | ✅ | ✅ |
 | **Threat Center** | `POST /api/v1/threats-center/` (Crear IOC) | ✅ | ❌ | ✅ | ❌ |
@@ -666,6 +668,7 @@ La siguiente matriz documenta los privilegios exactos configurados para cada rol
 | **Gestión Usuarios**| `POST /api/v1/users` (Aprovisionar) | ✅ | ❌ | ❌ | ❌ |
 | **Gestión Usuarios**| `PUT /api/v1/users/{id}` (Modificar rol) | ✅ | ❌ | ❌ | ❌ |
 | **Gestión Usuarios**| `DELETE /api/v1/users/{id}` (Baja) | ✅ | ❌ | ❌ | ❌ |
+| **Gestión Usuarios**| `POST /api/v1/users/{id}/mfa/reset` (Reset 2FA) | ✅ | ❌ | ❌ | ❌ |
 | **Gestión Roles** | `GET /api/v1/roles` (Listado y conteos) | ✅ | ❌ | ❌ | ❌ |
 | **Gestión Roles** | `POST /api/v1/roles` (Crear nuevo rol) | ✅ | ❌ | ❌ | ❌ |
 | **Ingesta Wazuh** | `POST /api/v1/ingest/wazuh/events` | ✅ *(Sensor)*| ❌ | ❌ | ❌ |
@@ -704,12 +707,14 @@ El almacenamiento de credenciales en la base de datos utiliza la función de der
 - **Salt Aleatorio:** Bcrypt genera un salt criptográfico de 128 bits incrustado en el hash resultante.
 - **Factor de Coste Adaptativo:** La función implementa un retardo deliberado en la ejecución de la función de resumen, haciendo inviable el cálculo masivo de ataques basados en tablas precalculadas (*Rainbow Tables*) o fuerza bruta por GPU.
 
-### 5.3 Doble Factor de Autenticación con TOTP (PyOTP)
+### 5.3 Doble Factor de Autenticación con TOTP (PyOTP) y Códigos de Respaldo
 
-La autenticación de doble factor sigue la especificación **RFC 6238 (Time-Based One-Time Password)** a través de la librería `pyotp`:
+La autenticación de doble factor sigue la especificación **RFC 6238 (Time-Based One-Time Password)** a través de la librería `pyotp` y un esquema de recuperación ante contingencias:
 
 - **Secreto Compartido:** Cadena de 160 bits codificada en Base32 generada con entropía del sistema operativo (`pyotp.random_base32()`).
 - **Ventana de Validación:** Pasos de tiempo fijos de 30 segundos. La verificación valida el token recibido contra el secreto almacenado sin tolerar reutilización del mismo token.
+- **Códigos de Respaldo de Emergencia (MFA Backup Codes):** Durante el enrolamiento (`/api/v1/users/me/mfa/verify`), el sistema genera criptográficamente 8 códigos de respaldo con formato legible `XXXX-XXXX`. Para prevenir filtraciones directas en la base de datos, cada código se almacena exclusivamente como un hash SHA-256 en la tabla `mfa_backup_codes`. Cada código es de un solo uso; tras consumirse satisfactoriamente durante el login (`/api/v1/auth/login/mfa-verify`), se registra su marca de tiempo `used_at`, imposibilitando ataques de repetición.
+- **Reseteo Administrativo de 2FA:** Ante pérdida de dispositivo y códigos de respaldo, un administrador con scope `admin:all` puede invocar `POST /api/v1/users/{id}/mfa/reset`. Este endpoint purga de forma transaccional el secreto TOTP y los códigos de respaldo asociados, desactivando `mfa_enabled` e incrementando atómicamente `auth_version` para revocar de inmediato cualquier token JWT o sesión activa del usuario comprometido.
 
 ### 5.4 Mitigación de Timing Attacks con HMAC (`compare_digest`)
 
@@ -1370,14 +1375,14 @@ Cuando el usuario supera exitosamente la autenticación (y el desafío TOTP en c
 | Scope Atómico | Severidad / Riesgo | Endpoints y Módulos Protegidos | Administrador | Consultor de Ciberseguridad | Analista de datos | Directivo de T.I. | Justificación Técnica y Perfil Operacional |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
 | `dashboard:read` | Baja (Lectura) | `GET /api/v1/dashboard/metrics`<br/>`GET /api/v1/dashboard/top-attackers` | ✅ Asignado | ✅ Asignado | ✅ Asignado | ✅ Asignado | Autoriza el acceso de solo lectura al cuadro de mando integral de ciberinteligencia, permitiendo a los operadores examinar métricas consolidadas de ataques, gráficos analíticos de tendencias y la distribución geográfica de eventos de seguridad. |
-| `threats:read` | Media (Lectura CTI) | `GET /api/v1/threats/`<br/>`GET /api/v1/threats/<built-in function id>`<br/>`GET /api/v1/threats/search` | ✅ Asignado | ✅ Asignado | ❌ Denegado | ✅ Asignado | Permite la consulta detallada del inventario de direcciones IP maliciosas, indicadores de compromiso y registros de telemetría perimetral almacenados en la base operativa, facilitando la evaluación forense sin conceder facultades de alteración de registros. |
-| `threats:write` | Alta (Modificación CTI) | `POST /api/v1/threats/`<br/>`PUT /api/v1/threats/<built-in function id>`<br/>`POST /api/v1/threats/bulk-import` | ✅ Asignado | ✅ Asignado | ❌ Denegado | ❌ Denegado | Habilita el registro de nuevos indicadores de compromiso, la actualización de puntajes de severidad y la adición de notas operativas de cacería de amenazas sobre registros existentes, garantizando la trazabilidad del analista responsable. |
-| `threats:delete` | Crítica (Remoción y Vault) | `DELETE /api/v1/threats/<built-in function id>` | ✅ Asignado | ❌ Denegado | ❌ Denegado | ❌ Denegado | Faculta la eliminación definitiva de direcciones IP sospechosas de la lista operativa, disparando de forma indivisible el resguardo pericial en la bóveda inmutable para certificar el no repudio y salvaguardar la evidencia probatoria. |
+| `threats:read` | Media (Lectura CTI) | `GET /api/v1/threats/`<br/>`GET /api/v1/threats/{id}`<br/>`GET /api/v1/threats/search` | ✅ Asignado | ✅ Asignado | ❌ Denegado | ✅ Asignado | Permite la consulta detallada del inventario de direcciones IP maliciosas, indicadores de compromiso y registros de telemetría perimetral almacenados en la base operativa, facilitando la evaluación forense sin conceder facultades de alteración de registros. |
+| `threats:write` | Alta (Modificación CTI) | `POST /api/v1/threats/`<br/>`PUT /api/v1/threats/{id}`<br/>`POST /api/v1/threats/bulk-import` | ✅ Asignado | ✅ Asignado | ❌ Denegado | ❌ Denegado | Habilita el registro de nuevos indicadores de compromiso, la actualización de puntajes de severidad y la adición de notas operativas de cacería de amenazas sobre registros existentes, garantizando la trazabilidad del analista responsable. |
+| `threats:delete` | Crítica (Remoción y Vault) | `DELETE /api/v1/threats/{id}` | ✅ Asignado | ❌ Denegado | ❌ Denegado | ❌ Denegado | Faculta la eliminación definitiva de direcciones IP sospechosas de la lista operativa, disparando de forma indivisible el resguardo pericial en la bóveda inmutable para certificar el no repudio y salvaguardar la evidencia probatoria. |
 | `logs:read` | Media (Lectura Forense) | `GET /api/v1/logs/wazuh`<br/>`GET /api/v1/logs/stats` | ✅ Asignado | ✅ Asignado | ✅ Asignado | ✅ Asignado | Otorga permisos de inspección y búsqueda interactiva sobre los eventos de auditoría y registros de alertas de Wazuh Indexer, posibilitando a los analistas correlacionar incidentes sin capacidad para alterar o expurgar la información persistida. |
-| `logs:export` | Alta (Extracción Masiva) | `POST /api/v1/logs/export`<br/>`GET /api/v1/logs/export/<built-in function id>/download` | ✅ Asignado | ✅ Asignado | ✅ Asignado | ❌ Denegado | Habilita la generación y descarga masiva de bitácoras de auditoría en formato comprimido JSONL, requiriendo validación en el cortafuegos SQL contra ataques de denegación de servicio y autorización en flujos de aprobación humana. |
+| `logs:export` | Alta (Extracción Masiva) | `POST /api/v1/logs/export`<br/>`GET /api/v1/logs/export/{id}/download` | ✅ Asignado | ✅ Asignado | ✅ Asignado | ❌ Denegado | Habilita la generación y descarga masiva de bitácoras de auditoría en formato comprimido JSONL, requiriendo validación en el cortafuegos SQL contra ataques de denegación de servicio y autorización en flujos de aprobación humana. |
 | `ml:predict` | Alta (Inferencia y Modelos) | `POST /api/v1/ml/predict`<br/>`POST /api/v1/ml/anomaly-detect` | ✅ Asignado | ❌ Denegado | ✅ Asignado | ❌ Denegado | Permite invocar los clasificadores de aprendizaje automático para predecir anomalías y vectores de ataque en telemetría de red, verificando previamente la integridad criptográfica SHA-256 de los artefactos de inferencia antes de su ejecución. |
 | `ingest:write` | Crítica (Ingesta Automatizada) | `POST /api/v1/ingest/events`<br/>`POST /api/v1/ingest/alerts` | ✅ Asignado | ❌ Denegado | ❌ Denegado | ❌ Denegado | Autoriza a sensores de red distribuidos, honeypots y pipelines automatizados la inyección continua de alertas y eventos brutos de telemetría hacia los servicios de ingesta, manteniendo segregada la autenticación de agentes respecto a usuarios interactivos. |
-| `admin:all` | Máxima (Control Maestro) | `POST /api/v1/users/`<br/>`PUT /api/v1/users/<built-in function id>`<br/>`DELETE /api/v1/users/<built-in function id>`<br/>`POST /api/v1/config/system` | ✅ Asignado | ❌ Denegado | ❌ Denegado | ❌ Denegado | Concede control administrativo absoluto sobre la totalidad de endpoints del sistema, permitiendo el aprovisionamiento de cuentas institucionales, la asignación de roles de negocio, la rotación de claves criptográficas y la configuración global de la plataforma. |
+| `admin:all` | Máxima (Control Maestro) | `POST /api/v1/users/`<br/>`PUT /api/v1/users/{id}`<br/>`DELETE /api/v1/users/{id}`<br/>`POST /api/v1/users/{id}/mfa/reset`<br/>`POST /api/v1/config/system` | ✅ Asignado | ❌ Denegado | ❌ Denegado | ❌ Denegado | Concede control administrativo absoluto sobre la totalidad de endpoints del sistema, permitiendo el aprovisionamiento de cuentas institucionales, la asignación de roles de negocio, la rotación de claves criptográficas y la configuración global de la plataforma. |
 
 #### 10.2.2 Justificación de Rendimiento: Modelo Stateless en Memoria (<0.5 ms) vs JOINs Recursivos SQL
 
