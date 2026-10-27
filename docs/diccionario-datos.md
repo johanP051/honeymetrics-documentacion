@@ -15,12 +15,12 @@
 
 Este documento refleja las migraciones Alembic presentes en el backend y los modelos SQLAlchemy correspondientes. “Obligatorio” describe `nullable=False` en la migración, no una expectativa de negocio inferida. `default ORM` identifica valores asignados por Python; no implica `DEFAULT` en PostgreSQL. Las referencias sin FK se señalan expresamente.
 
-Hay seis tablas implementadas. La política de permisos vive actualmente en código Python; `permissions` y `role_permissions` no están creadas por migraciones. Las demás extensiones listadas son propuestas sin tablas, modelos ni endpoints confirmados.
+Hay siete tablas físicas implementadas (`roles`, `users`, `threat_ips`, `threat_ips_vault`, `log_exports`, `revoked_tokens` y `mfa_backup_codes`). La política de permisos vive actualmente en código Python mediante el diccionario en memoria `ROLES_TO_SCOPES` (PBAC stateless); `permissions` y `role_permissions` no están creadas por migraciones. Las demás extensiones listadas son propuestas sin tablas, modelos ni endpoints confirmados.
 
 ## Modelo entidad-relación
 
 [FIGURA PENDIENTE: Insertar aquí imagen del Modelo Entidad-Relación (MER) StarUML]
-*Figura 1. Modelo entidad-relación verificado de HoneyMetrics v2.0; las entidades implementadas deben distinguirse con borde continuo y las extensiones propuestas con borde punteado y etiqueta «pendiente».*
+*Figura 1. Modelo entidad-relación verificado de HoneyMetrics v2.0 (7 tablas físicas en PostgreSQL 16); las entidades implementadas deben distinguirse con borde continuo y las extensiones propuestas con borde punteado y etiqueta «pendiente».*
 
 ## Trazabilidad relacional y UML
 
@@ -32,6 +32,7 @@ Hay seis tablas implementadas. La política de permisos vive actualmente en cód
 | `threat_ips_vault` | `app.models.threat.ThreatIPVault` | `CD01 ThreatIPVault` / `CD05 Threat Service` | Implementada; original_id y deleted_by_user_id son referencias lógicas, sin FK. |
 | `log_exports` | `app.models.log_export.LogExport` | `CD01 LogExport` / `CD05 Logs Service` | Implementada; metadatos e historial de exportación. |
 | `revoked_tokens` | `app.models.revoked_token.RevokedToken` | `CD06 RevokedToken` / `CD04 Auth Service` | Implementada; token_jti único para consumo atómico. |
+| `mfa_backup_codes` | `app.models.mfa_backup_code.MFABackupCode` | `CD07 MFABackupCode` | Implementada; almacena hashes SHA-256 de un solo uso para contingencia 2FA. |
 | `permissions` | No existe | `«pendiente» Permission` | Extensión propuesta; autorización actual reside en código. |
 | `role_permissions` | No existe | `«pendiente» RolePermission` | Extensión propuesta, dependiente de permissions. |
 | `user_profiles` | No existe | `«pendiente» UserProfile` | Extensión propuesta; evaluar duplicación con users. |
@@ -130,6 +131,18 @@ Hay seis tablas implementadas. La política de permisos vive actualmente en cód
 | `id` | INTEGER | PK; índice | Sí | Identificador interno autoincremental del registro de revocación. Se usa para la clave primaria y mantenimiento del repositorio; la lógica de seguridad busca tokens por token_jti, no por este valor. |
 | `token_jti` | VARCHAR | UNIQUE; índice único | Sí | Identificador único del JWT insertado para registrar consumo o revocación. La restricción UNIQUE permite que inserciones concurrentes compitan atómicamente y solo una operación consuma un desafío MFA específico. |
 | `expires_at` | TIMESTAMP WITHOUT TIME ZONE | NOT NULL | Sí | Vencimiento del token cuya jti se almacena, usado para determinar vigencia y permitir limpieza de registros expirados. No incluye zona horaria en el tipo de columna y su interpretación depende de UTC aplicado por la lógica. |
+
+### Tabla: `mfa_backup_codes`
+
+**Propósito de la tabla:** Resguardo criptográfico de códigos de respaldo para recuperación de segundo factor (MFA). Almacena exclusivamente hashes SHA-256 de un solo uso para mitigar el bloqueo de cuentas ante pérdida del dispositivo TOTP.
+
+| Nombre del Campo | Tipo de Dato | Restricción | Obligatorio | Descripción detallada |
+|---|---|---|---|---|
+| `id` | INTEGER | PK; autoincremental; índice | Sí | Identificador numérico primario de cada código de respaldo persistido en la base de datos. Asignado de forma autoincremental por PostgreSQL para gestión interna y mantenimiento, sin exponerse en respuestas directas de la API. |
+| `user_id` | INTEGER | FK (`users.id` ON DELETE CASCADE); índice | Sí | Identificador del usuario propietario del código de respaldo. La clave foránea vincula la credencial de contingencia con la cuenta institucional y garantiza la eliminación en cascada si el usuario es dado de baja del sistema. |
+| `code_hash` | VARCHAR(64) | Índice no único; NOT NULL | Sí | Resumen criptográfico SHA-256 del código de emergencia en texto plano generado durante el enrolamiento MFA. Impide la exposición de códigos válidos ante eventuales volcados de base de datos o accesos indebidos al almacenamiento relacional. |
+| `used_at` | TIMESTAMP WITHOUT TIME ZONE | Nullable en migración | No | Marca temporal que certifica el consumo exitoso del código durante el desafío de segundo factor. Su presencia invalida de inmediato cualquier reintento de uso posterior, neutralizando ataques de repetición o reutilización de códigos consumidos. |
+| `created_at` | TIMESTAMP WITHOUT TIME ZONE | NOT NULL; default ORM | Sí | Instante de generación y enrolamiento de la serie de códigos de contingencia en formato UTC. Permite auditar la vigencia temporal de los códigos y correlacionar la emisión con eventos administrativos de activación de segundo factor. |
 
 ## Extensiones propuestas pendientes
 
